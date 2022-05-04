@@ -9,11 +9,12 @@
 **IndicXlit** is a transformer-based multilingual transliteration model for roman to indic script conversion that supports 21 indic languages. It is trained on [Aksharantara]() dataset which is the largest publicly available parallel corpus contains 26 million word pairs spanning 21 Indic languages. It supports following 21 Indian languages:
 
 <!-- list the languages IndicXlit supports -->
-| <!-- -->  	 | <!-- --> 	  | <!-- --> 	   | <!-- -->	     | <!-- -->      | <!-- -->       | <!-- -->     |
-| -------------- | -------------- | -------------- | --------------- | ------------- | -------------- | ------------ |
-| Assamese (asm) | Gujarati (guj) | Kashmiri (kas) | Malayalam (mal) | Nepali (nep)  | Sanskrit (san) | Tamil (tam)  |
-| Bengali (ben)  | Hindi (hin) 	  | Konkani (gom)  | Manipuri (mni)  | Oriya (ori)   | Sindhi (snd)   | Telugu (tel) |
-| Bodo(brx)      | Kannada (kan)  | Maithili (mai) | Marathi (mar)   | Punjabi (pan) | Sinhala (sin)  | Urdu (urd)   |
+| <!-- -->  	 | <!-- --> 	  | <!-- --> 	   | <!-- -->	     | <!-- -->      | <!-- -->       |
+| -------------- | -------------- | -------------- | --------------- | ------------- | -------------- |
+| Assamese (asm) | Gujarati (guj) | Kashmiri (kas) | Malayalam (mal) | Nepali (nep)  | Sanskrit (san) |
+| Bengali (ben)  | Hindi (hin) 	  | Konkani (gom)  | Manipuri (mni)  | Oriya (ori)   | Sindhi (snd)   |
+| Bodo(brx)      | Kannada (kan)  | Maithili (mai) | Marathi (mar)   | Punjabi (pan) | Sinhala (sin)  |
+| Tamil (tam)    | Telugu (tel)	  | Urdu (urd) 	   |
 
 <!-- index with hyperlinks (Table of contents) -->
 <!-- [Download IndicXlit model]
