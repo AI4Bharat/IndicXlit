@@ -19,7 +19,6 @@
 <!-- [Download IndicXlit model]
 [Using the model to transliterate the inputs]
 
-
 [Installation]
 [Training model from scratch]
 
@@ -54,14 +53,7 @@ Roman to Indic model [v0.1]()
 
 
 ## Using the model to transliterate the inputs
-
-The model is trained on single word hence, users need to split sentence into words before running the transliteratation model when using our command line interface (The python interface has `sentence_transliteration` method to transliterate the sentences ).
-
-Here is an example snippet to split sentence into words for English and Indic languages supported by our model:
-
-<!-- code snippet to preprocess the words to create the model inputs-->
-```python
-```
+The model is trained on word as inputs hence, users need to split sentence into words before running the transliteratation model when using our command line interface.
 
 
 Follow the colab notebook to setup the environment, download the trained _IndicXlit_ model and transliterate your own text.
@@ -72,7 +64,7 @@ Command line interface --> [![Open In Colab](https://colab.research.google.com/a
 <!-- colab integratation on running the model on custom input python script-->
 Python interface       --> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1P78Tbr6zhe-5LeiKk525N3SGPKn2ofGg?usp=sharing)
 
-The python interface is useful in case you want to reuse the model for multiple translations and do not want to reinitialize the model each time
+The python interface is useful in case you want to reuse the model for multiple translations and do not want to reinitialize the model each time.
 
 
 
@@ -82,6 +74,7 @@ The python interface is useful in case you want to reuse the model for multiple 
 
 
 <!-- Installation -->
+<!-- installation requirement to run the model -->
 ## Installation
 <details><summary>Click to expand </summary>
 
@@ -100,7 +93,9 @@ pip install --editable ./
 ```
 </details>
 
-<!-- installation requirement to run the model -->
+
+
+
 
 <!-- Training model from scratch -->
 ## Training the model from scratch with the Aksharantara dataset 	
@@ -114,6 +109,7 @@ Finetuning		--> [![Open In Colab](https://colab.research.google.com/assets/colab
 <!-- code snipet for using the model through Huggingface -->
 
 
+
 ## Network and traning details
 <!-- network and training details and link to the paper  -->
 
@@ -121,18 +117,13 @@ Finetuning		--> [![Open In Colab](https://colab.research.google.com/assets/colab
 feedforward dimension of 1024 with total number of parameters of 11M
 - Loss: Cross entropy loss
 - Optimizer: Adam
+- Adam-betas: (0.9, 0.98)
+- peak learning rate: 0.001
+- learning rate scheduler: inverse-sqrt
+- tempreture sampling(T): 1.5
 - Warmup_steps: 4000
 
-Please refer to section 6 of our [paper]() for more details on training/experimental setup.
-
-
-
-
-## Evaluation result
-<!-- Evaluation results on Dakshina and Benchmark -->
-
-## Corpus details
-<!-- details about number of Mining pairs or size of training corpus -->
+Please refer to section 6 of our [paper]() for more details on training setup.
 
 
 ## Directory structure
