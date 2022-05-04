@@ -1,0 +1,84 @@
+lexicons word pairs for bn : 94546
+Unique lexicons word pairs for bn : 94546
+romanized word pairs for bn : 130378
+Unique romanized word pairs for bn : 45721
+New word pairs in romanized which are not in lexicons for bn after removing special characters from romanized: 33100
+
+
+lexicons word pairs for gu : 105267
+Unique lexicons word pairs for gu : 105267
+romanized word pairs for gu : 163376
+Unique romanized word pairs for gu : 53723
+New word pairs in romanized which are not in lexicons for gu after removing special characters from romanized: 37552
+
+
+lexicons word pairs for hi : 44204
+Unique lexicons word pairs for hi : 44204
+romanized word pairs for hi : 186521
+Unique romanized word pairs for hi : 42414
+New word pairs in romanized which are not in lexicons for hi after removing special characters from romanized: 29666
+
+
+lexicons word pairs for kn : 50624
+Unique lexicons word pairs for kn : 50624
+romanized word pairs for kn : 120677
+Unique romanized word pairs for kn : 58114
+New word pairs in romanized which are not in lexicons for kn after removing special characters from romanized: 41738
+
+
+lexicons word pairs for ml : 58382
+Unique lexicons word pairs for ml : 58382
+romanized word pairs for ml : 96013
+Unique romanized word pairs for ml : 54918
+New word pairs in romanized which are not in lexicons for ml after removing special characters from romanized: 43474
+
+
+lexicons word pairs for mr : 56303
+Unique lexicons word pairs for mr : 56303
+romanized word pairs for mr : 107853
+Unique romanized word pairs for mr : 41837
+New word pairs in romanized which are not in lexicons for mr after removing special characters from romanized: 29421
+
+
+lexicons word pairs for pa : 70612
+Unique lexicons word pairs for pa : 70612
+romanized word pairs for pa : 187697
+Unique romanized word pairs for pa : 46227
+New word pairs in romanized which are not in lexicons for pa after removing special characters from romanized: 33945
+
+
+lexicons word pairs for sd : 38523
+Unique lexicons word pairs for sd : 38523
+romanized word pairs for sd : 193912
+Unique romanized word pairs for sd : 45841
+New word pairs in romanized which are not in lexicons for sd after removing special characters from romanized: 38758
+
+
+lexicons word pairs for si : 42126
+Unique lexicons word pairs for si : 42126
+romanized word pairs for si : 151995
+Unique romanized word pairs for si : 51102
+New word pairs in romanized which are not in lexicons for si after removing special characters from romanized: 38133
+
+
+lexicons word pairs for ta : 68218
+Unique lexicons word pairs for ta : 68218
+romanized word pairs for ta : 104792
+Unique romanized word pairs for ta : 56061
+New word pairs in romanized which are not in lexicons for ta after removing special characters from romanized: 43675
+
+
+lexicons word pairs for te : 58550
+Unique lexicons word pairs for te : 58550
+romanized word pairs for te : 104224
+Unique romanized word pairs for te : 51418
+New word pairs in romanized which are not in lexicons for te after removing special characters from romanized: 38168
+
+
+lexicons word pairs for ur : 106260
+Unique lexicons word pairs for ur : 106260
+romanized word pairs for ur : 176266
+Unique romanized word pairs for ur : 34194
+New word pairs in romanized which are not in lexicons for ur after removing special characters from romanized: 23935
+
+

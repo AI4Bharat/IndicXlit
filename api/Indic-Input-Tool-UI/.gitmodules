@@ -1,0 +1,3 @@
+[submodule "quill-auto-complete"]
+	path = quill-auto-complete
+	url = https://github.com/AI4Bharat/quill-auto-complete

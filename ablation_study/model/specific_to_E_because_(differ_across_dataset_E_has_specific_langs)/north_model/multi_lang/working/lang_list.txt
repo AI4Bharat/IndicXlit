@@ -1,0 +1,11 @@
+en
+bn 
+gom 
+gu 
+hi 
+mai 
+mr 
+pa 
+sd 
+si 
+ur

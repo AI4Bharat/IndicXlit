@@ -1,0 +1,17 @@
+Things to check while running code on gcp for any language
+1. create dirs [align_data, corpus, lm, logs, working]
+2. create 3 scripts in working [preprocess_data.py, align_data.sh, extract_translit_pairs.sh]
+    - give absolute path of required dirs in each scripts (check once)
+    - change the abrivation for language according to following list in preprocess_data.py file
+    - change the abrivation for language according to following list in align_data.sh file
+    - change the abrivation for language according to following list in extract_translit_pairs.sh file
+3. create empty file "train.arpa.en" in lm dir
+    - put 2, 5 spaces in file "train.arpa.en" and save (creating blank file)
+4. before running the scripts start screen, log files and then run the following script
+    - Python3 working/preprocess_data.py
+    - bash working/align_data.sh
+    - bash working/extract_translit_pairs.sh
+ 
+
+language abrivation list:
+['hi','mr','sa','kK','ne','sd','ur','pa','gu','bn','as','or','ml','kn','ta','te']

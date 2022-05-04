@@ -1,0 +1,19 @@
+mkdir en-bn
+mkdir en-gu
+mkdir en-hi
+mkdir en-kn
+mkdir en-ml
+mkdir en-mr
+mkdir en-pa
+mkdir en-ta
+mkdir en-te
+
+mkdir en-bn/corpus
+mkdir en-gu/corpus
+mkdir en-hi/corpus
+mkdir en-kn/corpus
+mkdir en-ml/corpus
+mkdir en-mr/corpus
+mkdir en-pa/corpus
+mkdir en-ta/corpus
+mkdir en-te/corpus

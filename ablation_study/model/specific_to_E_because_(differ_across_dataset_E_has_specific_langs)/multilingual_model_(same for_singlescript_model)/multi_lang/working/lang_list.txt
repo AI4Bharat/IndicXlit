@@ -1,0 +1,15 @@
+en
+bn 
+gom 
+gu 
+hi 
+kn 
+mai 
+ml 
+mr 
+pa 
+sd 
+si 
+ta 
+te 
+ur

@@ -1,0 +1,21 @@
+CUDA_VISIBLE_DEVICES=$1 fairseq-train ../corpus-bin \
+  --wandb-project transliteration_model \
+  --save-dir ../transformer/benchmark_train_9_april_ISWE_multi \
+  --arch transformer --layernorm-embedding \
+  --task translation_multi_simple_epoch \
+  --sampling-method "temperature" \
+  --sampling-temperature 1.5 \
+  --encoder-langtok "tgt" \
+  --lang-dict lang_list.txt \
+  --lang-pairs en-as,en-bn,en-brx,en-gom,en-gu,en-hi,en-kn,en-ks,en-mai,en-ml,en-mni,en-mr,en-ne,en-or,en-pa,en-sa,en-sd,en-si,en-ta,en-te,en-ur \
+  --decoder-normalize-before --encoder-normalize-before \
+  --activation-fn gelu --adam-betas "(0.9, 0.98)"  \
+  --batch-size 1024 \
+  --decoder-attention-heads 4 --decoder-embed-dim 256 --decoder-ffn-embed-dim 1024 --decoder-layers 6 \
+  --dropout 0.5 \
+  --encoder-attention-heads 4 --encoder-embed-dim 256 --encoder-ffn-embed-dim 1024 --encoder-layers 6 \
+  --lr 0.001 --lr-scheduler inverse_sqrt \
+  --max-epoch 51 \
+  --optimizer adam  \
+  --num-workers 32 \
+  --warmup-init-lr 0 --warmup-updates 4000
