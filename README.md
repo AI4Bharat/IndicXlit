@@ -9,6 +9,7 @@
 **IndicXlit** is a transformer-based multilingual transliteration model for roman to indic script conversion that supports 21 indic languages. It is trained on [Aksharantara]() dataset which is the largest publicly available parallel corpus contains 26 million word pairs spanning 21 Indic languages. It supports following 21 Indian languages:
 
 <!-- list the languages IndicXlit supports -->
+| <!-- -->  	 | <!-- --> 	  | <!-- --> 	   | <!-- -->	     | <!-- -->      | <!-- -->       | <!-- -->     |
 | -------------- | -------------- | -------------- | --------------- | ------------- | -------------- | ------------ |
 | Assamese (asm) | Gujarati (guj) | Kashmiri (kas) | Malayalam (mal) | Nepali (nep)  | Sanskrit (san) | Tamil (tam)  |
 | Bengali (ben)  | Hindi (hin) 	  | Konkani (gom)  | Manipuri (mni)  | Oriya (ori)   | Sindhi (snd)   | Telugu (tel) |
@@ -48,12 +49,13 @@ Citing
 
 ## Download IndicXlit model
 <!-- heperlinks for downloading the models -->
+Roman to Indic model [v0.1]()
 <!-- mirror links set up the public drive -->	
 
 
 ## Using the model to transliterate the inputs
 
-The model is trained on single word and hence, users need to split sentence into words before running the transliteratation model when using our command line interface (The python interface has `sentence_transliteration` method to transliterate the sentences ).
+The model is trained on single word hence, users need to split sentence into words before running the transliteratation model when using our command line interface (The python interface has `sentence_transliteration` method to transliterate the sentences ).
 
 Here is an example snippet to split sentence into words for English and Indic languages supported by our model:
 
@@ -65,10 +67,10 @@ Here is an example snippet to split sentence into words for English and Indic la
 Follow the colab notebook to setup the environment, download the trained _IndicXlit_ model and transliterate your own text.
 
 <!-- colab integratation on running the model on custom input cli script-->
-Command line interface --> [![Open In Colab](https://colab.research.google.com/drive/1GFlqA7fpA2LLKJXtbtXSe-DqrAshuB-L?usp=sharing)]
+Command line interface --> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1GFlqA7fpA2LLKJXtbtXSe-DqrAshuB-L?usp=sharing)
 
 <!-- colab integratation on running the model on custom input python script-->
-Python interface       --> [![Open In Colab](https://colab.research.google.com/drive/1P78Tbr6zhe-5LeiKk525N3SGPKn2ofGg?usp=sharing)]
+Python interface       --> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1P78Tbr6zhe-5LeiKk525N3SGPKn2ofGg?usp=sharing)
 
 The python interface is useful in case you want to reuse the model for multiple translations and do not want to reinitialize the model each time
 
@@ -102,13 +104,13 @@ pip install --editable ./
 
 <!-- Training model from scratch -->
 ## Training the model from scratch with the Aksharantara dataset 	
-[![Open In Colab](https://colab.research.google.com/drive/1KM8M2hk6fPAI039bBLtHxxojHzo6oMQ7?usp=sharing)]
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1KM8M2hk6fPAI039bBLtHxxojHzo6oMQ7?usp=sharing)
 
 
 
 <!-- Finetuning the model on cutom dataset integrate the notebook-->
 ## Finetuning the model 
-Finetuning		--> [![Open In Colab](https://colab.research.google.com/drive/1TurBNE0Pq9_hqEOXps0FXfymsdlJotE0?usp=sharing)]
+Finetuning		--> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1TurBNE0Pq9_hqEOXps0FXfymsdlJotE0?usp=sharing)
 <!-- code snipet for using the model through Huggingface -->
 
 
@@ -201,14 +203,14 @@ We would like to hear from you if:
 
 <!-- Contributors -->
 ### Contributors
- - Yash Madhani, <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>>
- - Sushane Parthan, <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>>
- - Priyanka Bedakar, <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>>
- - Ruchi Khapra, <sub> ([AI4Bharat](https://ai4bharat.org)) </sub>>
- - Vivek Seshadri, <sub> ([Microsoft](https://www.microsoft.com/en-in/), [Karya Inc.](https://projectkarya.com/)) </sub>>
- - Anoop Kunchukuttan, <sub> ([AI4Bharat](https://ai4bharat.org), [Microsoft](https://www.microsoft.com/en-in/)) </sub>>
- - Pratyush Kumar, <sub> ([AI4Bharat](https://ai4bharat.org), [Microsoft](https://www.microsoft.com/en-in/), [IITM](https://www.iitm.ac.in)) </sub>>
- - Mitesh M. Khapra, <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>>
+ - Yash Madhani, <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>
+ - Sushane Parthan, <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>
+ - Priyanka Bedakar, <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>
+ - Ruchi Khapra, <sub> ([AI4Bharat](https://ai4bharat.org)) </sub>
+ - Vivek Seshadri, <sub> ([Microsoft](https://www.microsoft.com/en-in/), [Karya Inc.](https://projectkarya.com/)) </sub>
+ - Anoop Kunchukuttan, <sub> ([AI4Bharat](https://ai4bharat.org), [Microsoft](https://www.microsoft.com/en-in/)) </sub>
+ - Pratyush Kumar, <sub> ([AI4Bharat](https://ai4bharat.org), [Microsoft](https://www.microsoft.com/en-in/), [IITM](https://www.iitm.ac.in)) </sub>
+ - Mitesh M. Khapra, <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>
 
 
 
