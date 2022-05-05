@@ -1,7 +1,8 @@
 <div align="center">
 	<h1><b><i>IndicXlit</i></b></h1>
-	<a href="">Website</a> |
-	<a href="">Paper</a> 
+	<a href="https://indicnlp.ai4bharat.org/indic-xlit">Website</a> |
+	<a href="#download-indicxlit-model">Downloads</a> |
+	<a href="">Paper</a><br><br>
 </div>
 
 <!-- description about IndicXlit -->
@@ -16,30 +17,21 @@
 | Bodo(brx)      | Kashmiri (kas) | Manipuri (mni) | Oriya (ori)     | Sindhi (snd)   | Urdu (urd)    |
 | Gujarati (guj) | Konkani (gom)  | 
 
+
+
+
 <!-- index with hyperlinks (Table of contents) -->
-<!-- [Download IndicXlit model]
-[Using the model to transliterate the inputs]
-
-[Installation]
-[Training model from scratch]
-
-[Finetuning the model] 
-	via cloud storage
-	via Huggingface
-
-[Network and traning details]
-
-Evaluation result
-
-Corpus details
-
-
-
-Directory structure
-Citing
-	License
-	Contributors
-	Contact -->
+- [Installation](#installation)
+- [Download IndicXlit model](#download-indicxlit-model)
+- [Using the model to transliterate the inputs](#using-the-model-to-transliterate-the-inputs)
+- [Training the model from scratch with the your own dataset](#training-the-model-from-scratch-with-the-your-own-dataset)
+- [Finetuning the model on your input dataset](#finetuning-the-model-on-your-input-dataset)
+- [Network and traning details](#network-and-traning-details)
+- [Directory Structure](#directory-structure)
+- [Citing](#citing)
+  - [License](#license)
+  - [Contributors](#contributors)
+  - [Contact](#contact)
 
 
 
@@ -98,7 +90,7 @@ Follow the colab notebook to setup the environment, download the dataset and tra
 
 
 <!-- Finetuning the model on cutom dataset integrate the notebook-->
-## Finetuning the model 
+## Finetuning the model on your input dataset
 Finetuning		--> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1TurBNE0Pq9_hqEOXps0FXfymsdlJotE0?usp=sharing)
 
 The colab notebook can be used to setup the environment, download the trained IndicXlit model and prepare your custom dataset for funetuning the IndicXlit model.
