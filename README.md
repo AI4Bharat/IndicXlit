@@ -6,15 +6,15 @@
 
 <!-- description about IndicXlit -->
 
-**IndicXlit** is a transformer-based multilingual transliteration model for roman to indic script conversion that supports 21 indic languages. It is trained on [Aksharantara]() dataset which is the largest publicly available parallel corpus contains 26 million word pairs spanning 21 Indic languages. It supports following 21 Indian languages:
+***[IndicXlit](https://indicnlp.ai4bharat.org/indic-xlit)*** is a transformer-based multilingual transliteration model (~11M) for roman to indic script conversion that ***supports 20 indic languages***. It is trained on ***[Aksharantar](https://indicnlp.ai4bharat.org/aksharantar/)*** dataset which is the ***largest publicly available parallel corpus contains 26 million word pairs spanning 20 Indic languages*** at the time of writing ( 5 May 2022 ). It supports following 20 Indian languages:
 
 <!-- list the languages IndicXlit supports -->
-| <!-- -->  	 | <!-- --> 	  | <!-- --> 	   | <!-- -->	     | <!-- -->      | <!-- -->       |
-| -------------- | -------------- | -------------- | --------------- | ------------- | -------------- |
-| Assamese (asm) | Gujarati (guj) | Kashmiri (kas) | Malayalam (mal) | Nepali (nep)  | Sanskrit (san) |
-| Bengali (ben)  | Hindi (hin) 	  | Konkani (gom)  | Manipuri (mni)  | Oriya (ori)   | Sindhi (snd)   |
-| Bodo(brx)      | Kannada (kan)  | Maithili (mai) | Marathi (mar)   | Punjabi (pan) | Sinhala (sin)  |
-| Tamil (tam)    | Telugu (tel)	  | Urdu (urd) 	   |
+| <!-- -->  	 | <!-- --> 	  | <!-- --> 	   | <!-- -->	     | <!-- -->       | <!-- -->      |
+| -------------- | -------------- | -------------- | --------------- | -------------- | ------------- |
+| Assamese (asm) | Hindi (hin) 	  | Maithili (mai) | Marathi (mar)   | Punjabi (pan)  | Tamil (tam)   |
+| Bengali (ben)  | Kannada (kan)  | Malayalam (mal)| Nepali (nep)    | Sanskrit (san) | Telugu (tel)  | 
+| Bodo(brx)      | Kashmiri (kas) | Manipuri (mni) | Oriya (ori)     | Sindhi (snd)   | Urdu (urd)    |
+| Gujarati (guj) | Konkani (gom)  | 
 
 <!-- index with hyperlinks (Table of contents) -->
 <!-- [Download IndicXlit model]
@@ -43,18 +43,40 @@ Citing
 
 
 
+<!-- Installation -->
+<!-- installation requirement to run the model -->
+## Installation
+<details><summary>Click to expand </summary>
 
+```bash
+# clone IndicXli repository
+git clone https://github.com/AI4Bharat/IndicXlit.git
+
+# install Indicnlp library
+git clone https://github.com/anoopkunchukuttan/indic_nlp_library.git
+git clone https://github.com/anoopkunchukuttan/indic_nlp_resources.git
+
+# install required libraries
+pip install sacremoses pandas mock sacrebleu tensorboardX pyarrow indic-nlp-library
+
+# Install fairseq from source
+git clone https://github.com/pytorch/fairseq.git
+cd fairseq
+pip install --editable ./
+
+```
+</details>
 
 
 
 ## Download IndicXlit model
 <!-- heperlinks for downloading the models -->
-Roman to Indic model [v0.1]()
+Roman to Indic model [v0.1](https://storage.googleapis.com/indic-xlit-public/final_model/en-indic.zip)
 <!-- mirror links set up the public drive -->	
 
 
 ## Using the model to transliterate the inputs
-The model is trained on word as inputs hence, users need to split sentence into words before running the transliteratation model when using our command line interface.
+The model is trained on words as inputs hence, users need to split sentence into words before running the transliteratation model when using our command line interface.
 
 
 Follow the colab notebook to setup the environment, download the trained _IndicXlit_ model and transliterate your own text.
@@ -69,44 +91,17 @@ The python interface is useful in case you want to reuse the model for multiple 
 
 
 
-
-
-
-
-
-<!-- Installation -->
-<!-- installation requirement to run the model -->
-## Installation
-<details><summary>Click to expand </summary>
-
-```bash
-cd IndicXlit
-git clone https://github.com/anoopkunchukuttan/indic_nlp_library.git
-git clone https://github.com/anoopkunchukuttan/indic_nlp_resources.git
-# install required libraries
-pip install sacremoses pandas mock sacrebleu tensorboardX pyarrow indic-nlp-library
-
-# Install fairseq from source
-git clone https://github.com/pytorch/fairseq.git
-cd fairseq
-pip install --editable ./
-
-```
-</details>
-
-
-
-
-
 <!-- Training model from scratch -->
-## Training the model from scratch with the Aksharantara dataset 	
+## Training the model from scratch with the your own dataset 	
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1KM8M2hk6fPAI039bBLtHxxojHzo6oMQ7?usp=sharing)
-
+Follow the colab notebook to setup the environment, download the dataset and train the IndicXlit model
 
 
 <!-- Finetuning the model on cutom dataset integrate the notebook-->
 ## Finetuning the model 
 Finetuning		--> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1TurBNE0Pq9_hqEOXps0FXfymsdlJotE0?usp=sharing)
+
+The colab notebook can be used to setup the environment, download the trained IndicXlit model and prepare your custom dataset for funetuning the IndicXlit model.
 <!-- code snipet for using the model through Huggingface -->
 
 
@@ -199,7 +194,6 @@ We would like to hear from you if:
  - Sushane Parthan, <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>
  - Priyanka Bedakar, <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>
  - Ruchi Khapra, <sub> ([AI4Bharat](https://ai4bharat.org)) </sub>
- - Vivek Seshadri, <sub> ([Microsoft](https://www.microsoft.com/en-in/), [Karya Inc.](https://projectkarya.com/)) </sub>
  - Anoop Kunchukuttan, <sub> ([AI4Bharat](https://ai4bharat.org), [Microsoft](https://www.microsoft.com/en-in/)) </sub>
  - Pratyush Kumar, <sub> ([AI4Bharat](https://ai4bharat.org), [Microsoft](https://www.microsoft.com/en-in/), [IITM](https://www.iitm.ac.in)) </sub>
  - Mitesh M. Khapra, <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>
