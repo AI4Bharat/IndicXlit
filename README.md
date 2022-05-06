@@ -63,7 +63,7 @@ pip install --editable ./
 
 ## Download IndicXlit model
 <!-- heperlinks for downloading the models -->
-Roman to Indic model [v0.1](https://storage.googleapis.com/indic-xlit-public/final_model/en-indic.zip)
+Roman to Indic model [v1.0](https://storage.googleapis.com/indic-xlit-public/final_model/en-indic.zip)
 <!-- mirror links set up the public drive -->	
 
 
