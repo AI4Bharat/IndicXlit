@@ -24,10 +24,10 @@
 - [Installation](#installation)
 - [Download IndicXlit model](#download-indicxlit-model)
 - [Using the model to transliterate the inputs](#using-the-model-to-transliterate-the-inputs)
-- [Training the model from scratch with the your own dataset](#training-the-model-from-scratch-with-the-your-own-dataset)
+- [Training the model from scratch with your own dataset](#training-the-model-from-scratch-with-your-own-dataset)
 - [Finetuning the model on your input dataset](#finetuning-the-model-on-your-input-dataset)
-- [Network and traning details](#network-and-traning-details)
-- [Directory Structure](#directory-structure)
+- [Network and training details](#network-and-training-details)
+- [Directory structure](#directory-structure)
 - [Citing](#citing)
   - [License](#license)
   - [Contributors](#contributors)
@@ -68,10 +68,10 @@ Roman to Indic model [v0.1](https://storage.googleapis.com/indic-xlit-public/fin
 
 
 ## Using the model to transliterate the inputs
-The model is trained on words as inputs hence, users need to split sentence into words before running the transliteratation model when using our command line interface.
+The model is trained on words as inputs. hence, users need to split sentence into words before running the transliteratation model when using our command line interface.
 
 
-Follow the colab notebook to setup the environment, download the trained _IndicXlit_ model and transliterate your own text.
+Follow the Colab notebook to setup the environment, download the trained _IndicXlit_ model and transliterate your own text.
 
 <!-- colab integratation on running the model on custom input cli script-->
 Command line interface --> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1GFlqA7fpA2LLKJXtbtXSe-DqrAshuB-L?usp=sharing)
@@ -84,9 +84,9 @@ The python interface is useful in case you want to reuse the model for multiple 
 
 
 <!-- Training model from scratch -->
-## Training the model from scratch with the your own dataset 	
+## Training the model from scratch with your own dataset 	
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1KM8M2hk6fPAI039bBLtHxxojHzo6oMQ7?usp=sharing)
-Follow the colab notebook to setup the environment, download the dataset and train the IndicXlit model
+Follow the colab notebook to setup the environment, download the dataset and train the IndicXlit model.
 
 
 <!-- Finetuning the model on cutom dataset integrate the notebook-->
@@ -98,18 +98,18 @@ The colab notebook can be used to setup the environment, download the trained In
 
 
 
-## Network and traning details
+## Network and training details
 <!-- network and training details and link to the paper  -->
 
-- Architechture: IndicXlit uses 6 encoder and decoder layers, input embeddings of size 256 with 4 attention heads and
+- Architecture: IndicXlit uses 6 encoder and decoder layers, input embeddings of size 256 with 4 attention heads and
 feedforward dimension of 1024 with total number of parameters of 11M
 - Loss: Cross entropy loss
 - Optimizer: Adam
 - Adam-betas: (0.9, 0.98)
-- peak learning rate: 0.001
-- learning rate scheduler: inverse-sqrt
-- tempreture sampling(T): 1.5
-- Warmup_steps: 4000
+- Peak-learning-rate: 0.001
+- Learning-rate-scheduler: inverse-sqrt
+- Temperature-sampling (T): 1.5
+- Warmup-steps: 4000
 
 Please refer to section 6 of our [paper]() for more details on training setup.
 
@@ -182,13 +182,13 @@ We would like to hear from you if:
 
 <!-- Contributors -->
 ### Contributors
- - Yash Madhani, <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>
- - Sushane Parthan, <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>
- - Priyanka Bedakar, <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>
- - Ruchi Khapra, <sub> ([AI4Bharat](https://ai4bharat.org)) </sub>
- - Anoop Kunchukuttan, <sub> ([AI4Bharat](https://ai4bharat.org), [Microsoft](https://www.microsoft.com/en-in/)) </sub>
- - Pratyush Kumar, <sub> ([AI4Bharat](https://ai4bharat.org), [Microsoft](https://www.microsoft.com/en-in/), [IITM](https://www.iitm.ac.in)) </sub>
- - Mitesh M. Khapra, <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>
+ - Yash Madhani <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>
+ - Sushane Parthan <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>
+ - Priyanka Bedakar <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>
+ - Ruchi Khapra <sub> ([AI4Bharat](https://ai4bharat.org)) </sub>
+ - Anoop Kunchukuttan <sub> ([AI4Bharat](https://ai4bharat.org), [Microsoft](https://www.microsoft.com/en-in/)) </sub>
+ - Pratyush Kumar <sub> ([AI4Bharat](https://ai4bharat.org), [Microsoft](https://www.microsoft.com/en-in/), [IITM](https://www.iitm.ac.in)) </sub>
+ - Mitesh M. Khapra <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>
 
 
 
