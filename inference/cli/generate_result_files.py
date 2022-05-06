@@ -99,7 +99,7 @@ for i in res_dict.keys():
         target_word.appendChild(target_text)
         word.appendChild(target_word)
     
-    lines_output.write( ''.join(list(res_dict[i]['S'])) + '\t' + ''.join(list(res_dict[i]['H'][0][0])) )
+    f_output.write( ''.join(list(res_dict[i]['S'])) + '\t' + ''.join(list(res_dict[i]['H'][0][0])) )
 
 f_output.write('\n'.join(lines_output))
 f_output.close()
