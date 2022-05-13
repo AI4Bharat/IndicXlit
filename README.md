@@ -7,7 +7,7 @@
 
 <!-- description about IndicXlit -->
 
-***[IndicXlit](https://indicnlp.ai4bharat.org/indic-xlit)*** is a transformer-based multilingual transliteration model (~11M) for roman to Indic script conversion that ***supports 20 Indic languages***. It is trained on ***[Aksharantar](https://indicnlp.ai4bharat.org/aksharantar/)*** dataset which is the ***largest publicly available parallel corpus containing 26 million word pairs spanning 20 Indic languages*** at the time of writing ( 5 May 2022 ). It supports following 20 Indic languages:
+***[IndicXlit](https://indicnlp.ai4bharat.org/indic-xlit)*** is a transformer-based multilingual transliteration model (~11M) for roman to Indic script conversion that ***supports 20 Indic languages***. It is trained on ***[Aksharantar](https://indicnlp.ai4bharat.org/aksharantar/)*** dataset which is the ***largest publicly available parallel corpus containing 26 million word pairs spanning 20 Indic languages*** at the time of writing (5 May 2022 ). It supports following 20 Indic languages:
 
 <!-- list the languages IndicXlit supports -->
 | <!-- -->  	 | <!-- --> 	  | <!-- --> 	   | <!-- -->	     | <!-- -->       | <!-- -->      |
@@ -111,7 +111,7 @@ feedforward dimension of 1024 with total number of parameters of 11M
 - Temperature-sampling (T): 1.5
 - Warmup-steps: 4000
 
-Please refer to section 6 of our [paper]() for more details on training setup.
+Please refer to section 6 of our [paper](https://arxiv.org/abs/2205.03018) for more details on training setup.
 
 
 ## Directory structure
