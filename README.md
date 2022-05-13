@@ -168,7 +168,15 @@ IndicXlit
 ## Citing
 
 If you are using any of the resources, please cite the following article:
-
+```
+@article{Madhani2022AksharantarTB,
+  title={Aksharantar: Towards building open transliteration tools for the next billion users},
+  author={Yash Madhani and Sushane Parthan and Priyanka A. Bedekar and Ruchi Khapra and Vivek Seshadri and Anoop Kunchukuttan and Pratyush Kumar and Mitesh M. Khapra},
+  journal={ArXiv},
+  year={2022},
+  volume={abs/2205.03018}
+}
+```
 We would like to hear from you if:
 
 - You are using our resources. Please let us know how you are putting these resources to use.
@@ -177,6 +185,8 @@ We would like to hear from you if:
 
 <!-- License -->
 ### License
+
+The IndicXlit code (and models) are released under the MIT License.
 
 
 
