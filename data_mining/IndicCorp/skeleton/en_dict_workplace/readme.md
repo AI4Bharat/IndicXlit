@@ -1,3 +1,7 @@
+### Preprocess data
+- Follow the link below to preprocess the required data to mine the pairs from IndicCorp, 
+https://github.com/AI4Bharat/IndicXlit/tree/master/data_mining/IndicCorp/preprocess_data
+
 ### 1. Intractive step
 
 - In this step we take all the unique native(e.g. hindi) words from IndicCorp monolingual corpora and pass it through the Indic-En model and predict the transliteration candidate.
