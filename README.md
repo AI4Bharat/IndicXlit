@@ -97,6 +97,11 @@ The colab notebook can be used to setup the environment, download the trained In
 <!-- code snipet for using the model through Huggingface -->
 
 
+## Mining details
+Following links provides the detail description of mining from various resources,
+- Samanantar: https://github.com/AI4Bharat/IndicXlit/tree/master/data_mining/transliteration_mining_samanantar
+- IndicCorp: https://github.com/AI4Bharat/IndicXlit/tree/master/data_mining/IndicCorp/skeleton/en_dict_workplace
+
 
 ## Network and training details
 <!-- network and training details and link to the paper  -->
