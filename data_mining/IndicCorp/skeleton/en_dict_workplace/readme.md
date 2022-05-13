@@ -11,7 +11,7 @@ https://github.com/AI4Bharat/IndicXlit/tree/master/data_mining/IndicCorp/preproc
 
 ### 2. Ngram_dict_step
 
-- In this step we create ngram (e.g 4-gram) dictionary from the IndicCorp unique word list where key is ngram word and value as the list of words which contains that ngram in it.
+- In this step we create ngram (e.g 4-gram) dictionary from the IndicCorp unique word list where key is ngram word and value as the list of words which contains that ngram in it. script: https://github.com/AI4Bharat/IndicXlit/blob/master/data_mining/IndicCorp/preprocess_data/create_ngram_dict.py
 
 - Now, take all the words from ngram english dictionary for each english word (corresponding to hi-en pair <- output of interactive step) which have atleast 3 ngram (e.g 4-gram) in common. (common ngram => between english predicted word and ngram english dictionary words) 
 
