@@ -2,7 +2,7 @@
 	<h1><b><i>IndicXlit</i></b></h1>
 	<a href="https://indicnlp.ai4bharat.org/indic-xlit">Website</a> |
 	<a href="#download-indicxlit-model">Downloads</a> |
-	<a href="">Paper</a><br><br>
+	<a href="https://arxiv.org/abs/2205.03018">Paper</a><br><br>
 </div>
 
 <!-- description about IndicXlit -->
