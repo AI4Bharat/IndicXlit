@@ -12,12 +12,10 @@
 <!-- list the languages IndicXlit supports -->
 | <!-- -->  	 | <!-- --> 	  | <!-- --> 	   | <!-- -->	     | <!-- -->       | <!-- -->      |
 | -------------- | -------------- | -------------- | --------------- | -------------- | ------------- |
-| Assamese (asm) | Hindi (hin) 	  | Maithili (mai) | Marathi (mar)   | Punjabi (pan)  | Tamil (tam)   |
-| Bengali (ben)  | Kannada (kan)  | Malayalam (mal)| Nepali (nep)    | Sanskrit (san) | Telugu (tel)  | 
-| Bodo(brx)      | Kashmiri (kas) | Manipuri (mni) | Oriya (ori)     | Sindhi (snd)   | Urdu (urd)    |
-| Gujarati (guj) | Konkani (gom)  | 
-
-
+| Assamese (asm) | Bengali (ben)  | Bodo(brx)      | Gujarati (guj)  | Hindi (hin)    | Kannada (kan) |
+| Kashmiri (kas) | Konkani (gom)  | Maithili (mai) | Malayalam (mal) | Manipuri (mni) | Marathi (mar) | 
+| Nepali (nep)   | Oriya (ori)    | Punjabi (pan)  |  Sanskrit (san) | Sindhi (snd)   |  Tamil (tam)  |
+| Telugu (tel)   |  Urdu (urd)    | 
 
 
 <!-- index with hyperlinks (Table of contents) -->
