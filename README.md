@@ -122,6 +122,32 @@ IndicXlit
 ├── api
 ├── corpus_preprocessing
 │	 └── Collating_existing_dataset
+│	 ├── Checker
+│        │   ├── Transliteration_Checker.java
+│        │   └── Transliteration_Checker.py
+│	 │   └── README.md
+│        ├── Analysis
+│        │   ├── GIT_analysis.py
+│        │   └── len_stats.py
+│        ├── Benchmark_data_from_JSONS(Karya)
+│        │   ├── Benchmark_Named_entities.py
+│        │   └── Benchmark_Transliteration_data.py
+│        ├── Create_Unique_list_from_datasets
+│        │   ├── IndicCorp
+│        │   │   ├── Consolidate_SWE.py
+│        │   │   ├── Create_Smaller_Text_Files.py
+│        │   │   ├── Join_My_Dict_SWE.py
+│        │   │   ├── Text_to_CSV_Smaller_Files.py
+│        │   │   └── gcld3.py
+│        │   ├── LDCIL
+│        │   │   ├── LDCIL-Text_to_CSVs.py
+│        │   │   └── Parse_LDCIL_Data.py
+│        │   └── Words_freq_probability_after_kenlm
+│        │       └── Extract_Prob_Create_Samples_JSON.py
+│        └── Pre_process_arabic_scripts
+│        │   └── clean_urdu.py
+│        └── README.md
+│
 ├── data_mining
 │	 ├── IndicCorp
 │	 │	 ├── preprocess_data
