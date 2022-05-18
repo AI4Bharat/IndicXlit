@@ -1,6 +1,6 @@
 // const API_URL = "//xlit-api.ai4bharat.org";
 // const API_URL ="http://localhost:8001";
-const API_URL ="https://wicked-shrimp-61.loca.lt";
+const API_URL ="https://localhost:8000";
 const LANGS_API = API_URL + "/languages";
 const LEARN_API = API_URL + "/learn";
 

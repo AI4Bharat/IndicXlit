@@ -1,32 +1,44 @@
 from flask import Flask, jsonify, make_response
 from datetime import datetime
-import xlit_translit
+# import xlit_translit
+from ai4bharat.transliteration import XlitEngine
+
+import logging
+logging.basicConfig(level=logging.WARNING)
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
 
 ## ---------------------------- API End-points ------------------------------ ##
-
-NUM_SUGGESTIONS = 10
+# NUM_SUGGESTIONS = 10
 
 LANGS = {
+        'as': 'Assamese',
         'bn': 'Bengali',
+        'brx': 'Bodo',
         'gu' : 'Gujarati',
         'hi': 'Hindi',
         'kn': 'Kannada',
+        'ks': 'Kashmiri',
+        'gom': 'Konkani',
+        'mai': 'Maithili',
         'ml': 'Malayalam',
+        'mni': 'Manipuri',
         'mr': 'Marathi',
+        'ne': 'Nepali',
+        'or': 'Oriya',
         'pa': 'Panjabi',
+        'sa': 'Sanskrit',
+        'sd': 'Sindhi',
+        'si': 'Sinhala',
         'ta': 'Tamil',
         'te': 'Telugu',
-        'gom': 'Konkani(goan)',
-        'mai': 'Maithili',
-        'sa': 'Sanskrit'
+        'ur': 'Urdu'
         }
 
 EXPOSED_LANGS = [{
         "Author": "AI4Bharat", # or your name
-        "CompiledDate": "28-November-2021", # date on which model was trained
+        "CompiledDate": "9-April-2021", # date on which model was trained
         "IsStable": True,
         "DisplayName": lang,
         "Identifier": code, #ISO 639-1 code
@@ -35,7 +47,7 @@ EXPOSED_LANGS = [{
 ]
 
 
-model = xlit_translit.Model('multi_lang', NUM_SUGGESTIONS, NUM_SUGGESTIONS)
+e = XlitEngine(beam=10, nbest=10)
 
 
 @app.route('/languages', methods = ['GET', 'POST'])
@@ -60,7 +72,7 @@ def xlit_api(lang_code, eng_word):
         response['error'] = 'Invalid scheme identifier. Supported languages are: '+ str(LANGS)
         return jsonify(response)
 
-    response['result'] = model.translate_word(eng_word, lang_code, rescore = True )
+    response['result'] = e.translit_word(eng_word, target_lang=lang_code, rescore=1)[lang_code]
     # response['result'] = transliterate_word(eng_word, lang_code, NUM_SUGGESTIONS)
     return jsonify(response)
 

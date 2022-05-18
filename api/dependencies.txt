@@ -9,3 +9,4 @@ tensorboardX
 pyarrow 
 indic-nlp-library
 fairseq @ git+https://github.com/pytorch/fairseq.git
+ai4bharat-transliteration

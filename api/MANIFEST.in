@@ -1,0 +1,2 @@
+include ai4bharat/transliteration/models/*
+include dependencies.txt
