@@ -102,12 +102,6 @@
         "vocab"   : "corpus-bin/dict.sd"
     },
 
-    "si": {
-        "name"    : "Sinhala - සිංහල",
-        "eng_name": "sinhala",
-        "vocab"   : "corpus-bin/dict.si"
-    },
-
     "ta": {
         "name"    : "Tamil - தமிழ்",
         "eng_name": "tamil",
