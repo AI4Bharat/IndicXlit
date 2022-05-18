@@ -1,0 +1,436 @@
+# import torch
+# import torch.nn as nn
+import numpy as np
+import pandas as pd
+import random
+import sys
+import os
+import json
+import enum
+import traceback
+from indicnlp.tokenize.indic_tokenize import trivial_tokenize
+from indicnlp.normalize.indic_normalize import IndicNormalizerFactory
+from .custom_interactive import Transliterator
+import re
+
+import logging
+logging.basicConfig(level=logging.WARNING)
+
+F_DIR = os.path.dirname(os.path.realpath(__file__))
+
+class XlitError(enum.Enum):
+    lang_err = "Unsupported langauge ID requested ;( Please check available languages."
+    string_err = "String passed is incompatable ;("
+    internal_err = "Internal crash ;("
+    unknown_err = "Unknown Failure"
+    loading_err = "Loading failed ;( Check if metadata/paths are correctly configured."
+
+
+
+from collections.abc import Iterable
+from pydload import dload
+import zipfile
+
+# added by yash
+MODEL_DOWNLOAD_URL_PREFIX = 'https://storage.googleapis.com/indic-xlit-public/final_model/indicxlit-en-indic-v1.0.zip'
+
+RESCORE_DOWNLOAD_URL_PREFIX = 'https://storage.googleapis.com/indic-xlit-public/final_model/word_prob_dicts.zip'
+
+
+def is_folder_writable(folder):
+    try:
+        os.makedirs(folder, exist_ok=True)
+        tmp_file = os.path.join(folder, '.write_test')
+        with open(tmp_file, 'w') as f:
+            f.write('Permission Check')
+        os.remove(tmp_file)
+        return True
+    except:
+        return False
+
+def is_directory_writable(path):
+    if os.name == 'nt':
+        return is_folder_writable(path)
+    return os.access(path, os.W_OK | os.X_OK)
+
+class XlitEngine():
+    """
+    For Managing the top level tasks and applications of transliteration
+
+    Global Variables: F_DIR
+    """
+    def __init__(self, lang2use = "all", beam=4, nbest=1, config_path = "models/default_lineup.json"):
+
+        lineup = json.load( open(os.path.join(F_DIR, config_path), encoding='utf-8') )
+        self.lang_config = {}
+        if isinstance(lang2use, str):
+            if lang2use == "all":
+                self.lang_config = lineup
+            elif lang2use in lineup:
+                self.lang_config[lang2use] = lineup[lang2use]
+            else:
+                raise Exception("XlitError: The entered Langauge code not found. Available are {}".format(lineup.keys()) )
+
+        elif isinstance(lang2use, Iterable):
+                for l in lang2use:
+                    try:
+                        self.lang_config[l] = lineup[l]
+                    except:
+                        print("XlitError: Language code {} not found, Skipping...".format(l))
+        else:
+            raise Exception("XlitError: lang2use must be a list of language codes (or) string of single language code" )
+
+        if is_directory_writable(F_DIR):
+            models_path = os.path.join(F_DIR, 'models')
+        else:
+            user_home = os.path.expanduser("~")
+            models_path = os.path.join(user_home, '.AI4Bharat_Xlit_Models')
+        os.makedirs(models_path, exist_ok=True)
+        self.download_models(models_path)
+        self.download_rescore_dicts(models_path)
+        
+        self.langs = {}
+        # self.lang_model = {}
+        for la in self.lang_config:
+            try:
+
+                self.langs[la] = self.lang_config[la]["name"]
+            except Exception as error:
+                print("XlitError: Failure in loading {} \n".format(la), error)
+                print(XlitError.loading_err.value)
+
+
+
+
+        # added by yash
+
+        print("Initializing Multilingual model for transliteration")
+        
+        assert beam >= nbest , "beam should be grater than equal to nbest"
+
+        # initialize the model
+        self.transliterator = Transliterator(
+            f"{models_path}/indicxlit-en-indic-v1.0/corpus-bin", f"{models_path}/indicxlit-en-indic-v1.0/transformer/indicxlit.pt", beam, nbest, batch_size = 32
+        )
+        
+
+        # loading the word_prob_dict for rescoring module
+        self.word_prob_dict_wrapped_dict = {}
+        for la in self.langs:
+            self.word_prob_dict_wrapped_dict[la] = json.load(open(f"{models_path}/word_prob_dicts/word_prob_dicts/{la}_word_prob_dict.json", 'r'))
+
+
+        
+    def download_models(self, models_path):
+        '''
+        Download models from bucket
+        '''
+        # added by yash
+        # model_path = os.path.join(models_path, lang_name)
+        if not os.path.isdir(models_path+'/indicxlit-en-indic-v1.0/transformer'):
+            print('Downloading Multilingual model for transliteration')
+            remote_url = MODEL_DOWNLOAD_URL_PREFIX
+            downloaded_zip_path = os.path.join(models_path,'indicxlit-en-indic-v1.0.zip')
+            
+            dload(url=remote_url, save_to_path=downloaded_zip_path, max_time=None)
+
+            if not os.path.isfile(downloaded_zip_path):
+                exit(f'ERROR: Unable to download model from {remote_url} into {models_path}')
+
+            with zipfile.ZipFile(downloaded_zip_path, 'r') as zip_ref:
+                zip_ref.extractall(downloaded_zip_path.replace('.zip',''))
+
+            if os.path.isdir(models_path+'/indicxlit-en-indic-v1.0/transformer'):
+                os.remove(downloaded_zip_path)
+            else:
+                exit(f'ERROR: Unable to find models in {models_path} after download')
+        return
+
+    def download_rescore_dicts(self, models_path):
+        '''
+        Download language model probablitites dictionaries
+        '''
+        if not os.path.isdir(models_path+'/word_prob_dicts'):
+            # added by yash
+            print('Downloading  language model probablitites dictionaries for rescoring module')
+            remote_url = RESCORE_DOWNLOAD_URL_PREFIX
+            downloaded_zip_path = os.path.join(models_path,'word_prob_dicts.zip')
+            
+            dload(url=remote_url, save_to_path=downloaded_zip_path, max_time=None)
+
+            if not os.path.isfile(downloaded_zip_path):
+                exit(f'ERROR: Unable to download model from {remote_url} into {models_path}')
+
+            with zipfile.ZipFile(downloaded_zip_path, 'r') as zip_ref:
+                zip_ref.extractall(downloaded_zip_path.replace('.zip',''))
+
+            if os.path.isdir(models_path+'/word_prob_dicts'):
+                os.remove(downloaded_zip_path)
+            else:
+                exit(f'ERROR: Unable to find models in {models_path} after download')
+        return
+
+
+
+    def pre_process(self, words, target_lang):
+        
+        # small caps 
+        words = [word.lower() for word in words]
+
+        # normalize and tokenize the words
+        # normalized_words = self.normalize(words)
+
+        # manully mapping certain characters
+        # normalized_words = self.hard_normalizer(normalized_words)
+
+        # convert the word into sentence which contains space separated chars
+        words = [' '.join(list(word)) for word in words]
+        
+        # adding language token
+        words = ['__'+ target_lang +'__ ' + word for word in words]
+
+        return words
+
+    def rescore(self, res_dict, result_dict, target_lang, alpha ):
+        
+        alpha = alpha
+        # word_prob_dict = {}
+        word_prob_dict = self.word_prob_dict_wrapped_dict[target_lang]
+
+        candidate_word_prob_norm_dict = {}
+        candidate_word_result_norm_dict = {}
+
+        input_data = {}
+        for i in res_dict.keys():
+            input_data[res_dict[i]['S']] = []
+            for j in range(len(res_dict[i]['H'])):
+                input_data[res_dict[i]['S']].append( res_dict[i]['H'][j][0] )
+        
+        for src_word in input_data.keys():
+            candidates = input_data[src_word]
+
+            candidates = [' '.join(word.split(' ')) for word in candidates]
+            
+            total_score = 0
+
+            if src_word.lower() in result_dict.keys():
+                for candidate_word in candidates:
+                    if candidate_word in result_dict[src_word.lower()].keys():
+                        total_score += result_dict[src_word.lower()][candidate_word]
+            
+            candidate_word_result_norm_dict[src_word.lower()] = {}
+            
+            for candidate_word in candidates:
+                candidate_word_result_norm_dict[src_word.lower()][candidate_word] = (result_dict[src_word.lower()][candidate_word]/total_score)
+
+            candidates = [''.join(word.split(' ')) for word in candidates ]
+            
+            total_prob = 0 
+            
+            for candidate_word in candidates:
+                if candidate_word in word_prob_dict.keys():
+                    total_prob += word_prob_dict[candidate_word]        
+            
+            candidate_word_prob_norm_dict[src_word.lower()] = {}
+            for candidate_word in candidates:
+                if candidate_word in word_prob_dict.keys():
+                    candidate_word_prob_norm_dict[src_word.lower()][candidate_word] = (word_prob_dict[candidate_word]/total_prob)
+            
+        output_data = {}
+        for src_word in input_data.keys():
+            
+            temp_candidates_tuple_list = []
+            candidates = input_data[src_word]
+            candidates = [ ''.join(word.split(' ')) for word in candidates]
+            
+            
+            for candidate_word in candidates:
+                if candidate_word in word_prob_dict.keys():
+                    temp_candidates_tuple_list.append((candidate_word, alpha*candidate_word_result_norm_dict[src_word.lower()][' '.join(list(candidate_word))] + (1-alpha)*candidate_word_prob_norm_dict[src_word.lower()][candidate_word] ))
+                else:
+                    temp_candidates_tuple_list.append((candidate_word, 0 ))
+
+            temp_candidates_tuple_list.sort(key = lambda x: x[1], reverse = True )
+            
+            temp_candidates_list = []
+            for cadidate_tuple in temp_candidates_tuple_list: 
+                temp_candidates_list.append(' '.join(list(cadidate_tuple[0])))
+
+            output_data[src_word] = temp_candidates_list
+
+        return output_data
+
+    def post_process(self, translation_str, target_lang, rescore):
+        lines = translation_str.split('\n')
+
+        list_s = [line for line in lines if 'S-' in line]
+        # list_t = [line for line in lines if 'T-' in line]
+        list_h = [line for line in lines if 'H-' in line]
+        # list_d = [line for line in lines if 'D-' in line]
+
+        list_s.sort(key = lambda x: int(x.split('\t')[0].split('-')[1]) )
+        # list_t.sort(key = lambda x: int(x.split('\t')[0].split('-')[1]) )
+        list_h.sort(key = lambda x: int(x.split('\t')[0].split('-')[1]) )
+        # list_d.sort(key = lambda x: int(x.split('\t')[0].split('-')[1]) )
+
+        res_dict = {}
+        for s in list_s:
+            s_id = int(s.split('\t')[0].split('-')[1])
+            
+            res_dict[s_id] = { 'S' : s.split('\t')[1] }
+            
+            # for t in list_t:
+            #     t_id = int(t.split('\t')[0].split('-')[1])
+            #     if s_id == t_id:
+            #         res_dict[s_id]['T'] = t.split('\t')[1] 
+
+            res_dict[s_id]['H'] = []
+            # res_dict[s_id]['D'] = []
+            
+            for h in list_h:
+                h_id = int(h.split('\t')[0].split('-')[1])
+
+                if s_id == h_id:
+                    res_dict[s_id]['H'].append( ( h.split('\t')[2], pow(2,float(h.split('\t')[1])) ) )
+            
+            # for d in list_d:
+            #     d_id = int(d.split('\t')[0].split('-')[1])
+            
+            #     if s_id == d_id:
+            #         res_dict[s_id]['D'].append( ( d.split('\t')[2], pow(2,float(d.split('\t')[1]))  ) )
+
+        for r in res_dict.keys():
+            res_dict[r]['H'].sort(key = lambda x : float(x[1]) ,reverse =True)
+            # res_dict[r]['D'].sort(key = lambda x : float(x[1]) ,reverse =True)
+        
+
+        # for rescoring 
+        result_dict = {}
+        for i in res_dict.keys():            
+            result_dict[res_dict[i]['S']] = {}
+            for j in range(len(res_dict[i]['H'])):
+                 result_dict[res_dict[i]['S']][res_dict[i]['H'][j][0]] = res_dict[i]['H'][j][1]
+        
+        
+        transliterated_word_list = []
+        if rescore:
+            output_dir = self.rescore(res_dict, result_dict, target_lang, alpha = 0.9)            
+            for src_word in output_dir.keys():
+                for j in range(len(output_dir[src_word])):
+                    transliterated_word_list.append( output_dir[src_word][j] )
+
+        else:
+            for i in res_dict.keys():
+                # transliterated_word_list.append( res_dict[i]['S'] + '  :  '  + res_dict[i]['H'][0][0] )
+                for j in range(len(res_dict[i]['H'])):
+                    transliterated_word_list.append( res_dict[i]['H'][j][0] )
+
+        # remove extra spaces
+        # transliterated_word_list = [''.join(pair.split(':')[0].split(' ')[1:]) + ' : ' + ''.join(pair.split(':')[1].split(' ')) for pair in transliterated_word_list]
+
+        transliterated_word_list = [''.join(word.split(' ')) for word in transliterated_word_list]
+
+        return transliterated_word_list
+
+    def translit_word(self, words, target_lang="default", rescore=1):
+        
+        assert isinstance(words, str)
+
+        if not isinstance(words, list):
+            words = [words,]
+        
+        # check for blank lines
+        words = [word for word in words if word]
+
+        # exit if invalid inputs
+        if not words:
+            print("error : Please insert valid inputs : pass atleast one word")
+            return
+
+        # check if there is non-english characters
+        pattern = '[^a-zA-Z]'    
+        words = [ word for word in words if not re.compile(pattern).search(word) ]
+        
+        if not words:
+            print("error : Please insert valid inputs : only pass english characters ")
+            return
+        
+        if (target_lang in self.langs):
+            # Passing the list of words
+            try:
+                perprcossed_words = self.pre_process(words, target_lang)
+                translation_str = self.transliterator.translate(perprcossed_words)
+                transliterated_word_list = self.post_process(translation_str, target_lang, rescore)
+            except Exception as error:
+                    print("XlitError:", traceback.format_exc())
+                    print(XlitError.internal_err.value)
+                    return XlitError.internal_err
+
+            # print(transliterated_word_list)
+            return {target_lang:transliterated_word_list}
+        
+        elif target_lang == "default":
+            try:
+                res_dict = {}
+                for la in self.langs:
+                    perprcossed_words = self.pre_process(words, la)
+                    translation_str = self.transliterator.translate(perprcossed_words)
+                    transliterated_word_list = self.post_process(translation_str, la, rescore)
+                    res_dict[la] = transliterated_word_list
+                return res_dict
+
+            except Exception as error:
+                print("XlitError:", traceback.format_exc())
+                print(XlitError.internal_err.value)
+                return XlitError.internal_err
+
+        else:
+            print("XlitError: Unknown Langauge requested", target_lang)
+            print(XlitError.lang_err.value)
+            return XlitError.lang_err
+
+    def translit_sentence(self, eng_sentence, target_lang="default", rescore=1):
+        if eng_sentence == "":
+            return []
+
+        if (target_lang in self.langs):
+            try:
+                out_str = ""
+                for word in eng_sentence.split():
+                    res_ = self.translit_word(word, target_lang, rescore)
+                    out_str = out_str + res_[target_lang][0] + " "
+                return {target_lang:out_str[:-1]}
+
+            except Exception as error:
+                print("XlitError:", traceback.format_exc())
+                print(XlitError.internal_err.value)
+                return XlitError.internal_err
+
+        elif target_lang == "default":
+            try:
+                res_dict = {}
+                for la in self.langs:
+                    out_str = ""
+                    for word in eng_sentence.split():
+                        res_ = self.translit_word(word, la, rescore)
+                        out_str = out_str + res_[la][0] + " "
+                    res_dict[la] = out_str[:-1]
+                return res_dict
+
+            except Exception as error:
+                print("XlitError:", traceback.format_exc())
+                print(XlitError.internal_err.value)
+                return XlitError.internal_err
+
+        else:
+            print("XlitError: Unknown Langauge requested", target_lang)
+            print(XlitError.lang_err.value)
+            return XlitError.lang_err
+
+   
+
+if __name__ == "__main__":
+
+    engine = XlitEngine()
+    y = engine.translit_sentence("Hello World !")
+    print(y)

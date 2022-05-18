@@ -1,0 +1,10 @@
+pydload
+flask
+flask_cors
+gevent
+sacremoses 
+pandas 
+mock 
+tensorboardX 
+pyarrow 
+indic-nlp-library
