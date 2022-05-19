@@ -77,7 +77,7 @@ Command line interface --> [![Open In Colab](https://colab.research.google.com/a
 <!-- colab integratation on running the model on custom input python script-->
 Python interface       --> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1P78Tbr6zhe-5LeiKk525N3SGPKn2ofGg?usp=sharing)
 
-The python interface is useful in case you want to reuse the model for multiple translations and do not want to reinitialize the model each time.
+The python interface is useful in case you want to reuse the model for multiple translations and do not want to reinitialize the model each time. Moreover, rescoring option is available in python interface, but not in command line interface.
 
 
 
