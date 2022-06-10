@@ -65,7 +65,7 @@ class XlitEngine():
     """
     For Managing the top level tasks and applications of transliteration
     """
-    def __init__(self, lang2use = "all", beam=4, nbest=1, config_path = "models/default_lineup.json", rescore=True):
+    def __init__(self, lang2use = "all", beam=4, config_path = "models/default_lineup.json", rescore=True):
 
         self.langs = []
         if isinstance(lang2use, str):
@@ -96,12 +96,10 @@ class XlitEngine():
         # added by yash
 
         print("Initializing Multilingual model for transliteration")
-        
-        assert beam >= nbest , "beam should be grater than equal to nbest"
 
         # initialize the model
         self.transliterator = Transliterator(
-            os.path.join(models_path, CHARS_FOLDER), os.path.join(models_path, MODEL_FILE), beam, nbest, batch_size = 32
+            os.path.join(models_path, CHARS_FOLDER), os.path.join(models_path, MODEL_FILE), beam, batch_size = 32
         )
         
         self._rescore = rescore
@@ -327,7 +325,7 @@ class XlitEngine():
 
         return transliterated_word_list
 
-    def translit_word(self, word, target_lang="default"):
+    def translit_word(self, word, target_lang="default", topk=1):
         # TODO @Yash: The code seems to be directly taken from NMT. Pls adapt for xlit to remove unnecessary things
 
         # exit if invalid inputs
@@ -349,7 +347,7 @@ class XlitEngine():
             # Passing the list of words
             try:
                 perprcossed_words = self.pre_process(words, target_lang)
-                translation_str = self.transliterator.translate(perprcossed_words)
+                translation_str = self.transliterator.translate(perprcossed_words, nbest=topk)
                 transliterated_word_list = self.post_process(translation_str, target_lang)
             except Exception as error:
                     print("XlitError:", traceback.format_exc())
@@ -365,7 +363,7 @@ class XlitEngine():
                 res_dict = {}
                 for la in self.langs:
                     perprcossed_words = self.pre_process(words, la)
-                    translation_str = self.transliterator.translate(perprcossed_words)
+                    translation_str = self.transliterator.translate(perprcossed_words, nbest=topk)
                     transliterated_word_list = self.post_process(translation_str, la)
                     res_dict[la] = transliterated_word_list
                 return res_dict

@@ -89,7 +89,7 @@ def make_batches(lines, cfg, task, max_positions, encode_fn):
 # added
 class Transliterator:
     def __init__(
-        self, data_bin_dir, model_checkpoint_path, beam, nbest, batch_size = 32
+        self, data_bin_dir, model_checkpoint_path, beam, batch_size = 32
     ):
 
         self.parser = options.get_interactive_generation_parser()
@@ -104,7 +104,7 @@ class Transliterator:
             buffer_size = batch_size + 1,
             task = "translation_multi_simple_epoch",
             beam = beam,
-            nbest = nbest,
+            # nbest = nbest,
             # source_lang = 'en' ,
             # target_lang = 'mlt' ,
             # encoder_langtok = "tgt" ,
@@ -218,7 +218,7 @@ class Transliterator:
             x = self.tokenizer.decode(x)
         return x
 
-    def translate(self, inputs):
+    def translate(self, inputs, nbest=1):
 
         start_id = 0
         # for inputs in buffered_read(self.cfg.interactive.input, self.cfg.interactive.buffer_size):
@@ -294,7 +294,7 @@ class Transliterator:
                         ) + '\n'
 
             # Process top predictions
-            for hypo in hypos[: min(len(hypos), self.cfg.generation.nbest)]:
+            for hypo in hypos[: min(len(hypos), nbest)]:
                 hypo_tokens, hypo_str, alignment = utils.post_process_prediction(
                     hypo_tokens=hypo["tokens"].int().cpu(),
                     src_str=src_str,
