@@ -17,6 +17,10 @@ import logging
 logging.basicConfig(level=logging.WARNING)
 
 F_DIR = os.path.dirname(os.path.realpath(__file__))
+ALL_LANGS = open(os.path.join(F_DIR, "lang_list.txt")).read().strip().split('\n')
+SUPPORTED_INDIC_LANGS = set(ALL_LANGS)
+if "en" in SUPPORTED_INDIC_LANGS:
+    SUPPORTED_INDIC_LANGS.remove("en")
 
 class XlitError(enum.Enum):
     lang_err = "Unsupported langauge ID requested ;( Please check available languages."
@@ -60,26 +64,22 @@ def is_directory_writable(path):
 class XlitEngine():
     """
     For Managing the top level tasks and applications of transliteration
-
-    Global Variables: F_DIR
     """
     def __init__(self, lang2use = "all", beam=4, nbest=1, config_path = "models/default_lineup.json", rescore=True):
 
-        lineup = json.load( open(os.path.join(F_DIR, config_path), encoding='utf-8') )
-        self.lang_config = {}
+        self.langs = []
         if isinstance(lang2use, str):
             if lang2use == "all":
-                self.lang_config = lineup
-            elif lang2use in lineup:
-                self.lang_config[lang2use] = lineup[lang2use]
+                self.langs = list(SUPPORTED_INDIC_LANGS)
+            elif lang2use in SUPPORTED_INDIC_LANGS:
+                self.langs.append(lang2use)
             else:
-                raise Exception("XlitError: The entered Langauge code not found. Available are {}".format(lineup.keys()) )
-
+                raise Exception("XlitError: The entered Langauge code not found. Available are {}".format(SUPPORTED_INDIC_LANGS) )
         elif isinstance(lang2use, Iterable):
                 for l in lang2use:
-                    try:
-                        self.lang_config[l] = lineup[l]
-                    except:
+                    if l in SUPPORTED_INDIC_LANGS:
+                        self.langs.append(l)
+                    else:
                         print("XlitError: Language code {} not found, Skipping...".format(l))
         else:
             raise Exception("XlitError: lang2use must be a list of language codes (or) string of single language code" )
@@ -92,16 +92,6 @@ class XlitEngine():
         models_path = os.path.join(models_path, XLIT_VERSION)
         os.makedirs(models_path, exist_ok=True)
         self.download_models(models_path)
-        
-        self.langs = {}
-        # self.lang_model = {}
-        for la in self.lang_config:
-            try:
-
-                self.langs[la] = self.lang_config[la]["name"]
-            except Exception as error:
-                print("XlitError: Failure in loading {} \n".format(la), error)
-                print(XlitError.loading_err.value)
 
         # added by yash
 
@@ -390,14 +380,14 @@ class XlitEngine():
             print(XlitError.lang_err.value)
             return XlitError.lang_err
 
-    def translit_sentence(self, eng_sentence, target_lang="default"):
-        if eng_sentence == "":
+    def translit_sentence(self, input_sentence, target_lang="default"):
+        if input_sentence == "":
             return []
 
         if (target_lang in self.langs):
             try:
                 out_str = ""
-                for word in eng_sentence.split():
+                for word in input_sentence.split():
                     res_ = self.translit_word(word, target_lang)
                     out_str = out_str + res_[target_lang][0] + " "
                 return {target_lang:out_str[:-1]}
@@ -412,7 +402,7 @@ class XlitEngine():
                 res_dict = {}
                 for la in self.langs:
                     out_str = ""
-                    for word in eng_sentence.split():
+                    for word in input_sentence.split():
                         res_ = self.translit_word(word, la)
                         out_str = out_str + res_[la][0] + " "
                     res_dict[la] = out_str[:-1]
