@@ -45,8 +45,8 @@ from ai4bharat.transliteration import XlitEngine
 
 ```py
 
-e = XlitEngine("hi", beam=10, nbest=5)
-out = e.translit_word("computer", rescore=1)
+e = XlitEngine("hi", beam=10, nbest=5, rescore=True)
+out = e.translit_word("computer")
 print(out)
 # output:{'hi': ['कंप्यूटर', 'कम्प्यूटर', 'कॉम्प्यूटर', 'कम्प्युटर', 'कंप्युटर']}
 ```
@@ -60,8 +60,8 @@ Note:
 **Example 2** : word Transliteration without rescoring
 ```py
 
-e = XlitEngine("hi", beam=10, nbest=5)
-out = e.translit_word("computer", rescore=0)
+e = XlitEngine("hi", beam=10, nbest=5, rescore=False)
+out = e.translit_word("computer")
 print(out)
 # output:{'hi': ['कम्प्यूटर', 'कंप्यूटर', 'कॉम्प्यूटर', 'कम्प्युटर', 'कंप्युटर']}
 ```

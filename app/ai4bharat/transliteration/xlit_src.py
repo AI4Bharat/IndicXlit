@@ -63,7 +63,7 @@ class XlitEngine():
 
     Global Variables: F_DIR
     """
-    def __init__(self, lang2use = "all", beam=4, nbest=1, config_path = "models/default_lineup.json"):
+    def __init__(self, lang2use = "all", beam=4, nbest=1, config_path = "models/default_lineup.json", rescore=True):
 
         lineup = json.load( open(os.path.join(F_DIR, config_path), encoding='utf-8') )
         self.lang_config = {}
@@ -92,7 +92,6 @@ class XlitEngine():
         models_path = os.path.join(models_path, XLIT_VERSION)
         os.makedirs(models_path, exist_ok=True)
         self.download_models(models_path)
-        self.download_dicts(models_path)
         
         self.langs = {}
         # self.lang_model = {}
@@ -115,13 +114,15 @@ class XlitEngine():
             os.path.join(models_path, CHARS_FOLDER), os.path.join(models_path, MODEL_FILE), beam, nbest, batch_size = 32
         )
         
-
-        # loading the word_prob_dict for rescoring module
-        self.word_prob_dicts = {}
-        for la in self.langs:
-            self.word_prob_dicts[la] = json.load(open(
-                os.path.join(models_path, DICTS_FOLDER, DICT_FILE_FORMAT%la)
-            ))
+        self._rescore = rescore
+        if self._rescore:
+            self.download_dicts(models_path)
+            # loading the word_prob_dict for rescoring module
+            self.word_prob_dicts = {}
+            for la in self.langs:
+                self.word_prob_dicts[la] = json.load(open(
+                    os.path.join(models_path, DICTS_FOLDER, DICT_FILE_FORMAT%la)
+                ))
 
         
     def download_models(self, models_path):
@@ -264,7 +265,7 @@ class XlitEngine():
 
         return output_data
 
-    def post_process(self, translation_str, target_lang, rescore):
+    def post_process(self, translation_str, target_lang):
         lines = translation_str.split('\n')
 
         list_s = [line for line in lines if 'S-' in line]
@@ -317,7 +318,7 @@ class XlitEngine():
         
         
         transliterated_word_list = []
-        if rescore:
+        if self._rescore:
             output_dir = self.rescore(res_dict, result_dict, target_lang, alpha = 0.9)            
             for src_word in output_dir.keys():
                 for j in range(len(output_dir[src_word])):
@@ -336,20 +337,15 @@ class XlitEngine():
 
         return transliterated_word_list
 
-    def translit_word(self, words, target_lang="default", rescore=1):
-        
-        assert isinstance(words, str)
-
-        if not isinstance(words, list):
-            words = [words,]
-        
-        # check for blank lines
-        words = [word for word in words if word]
+    def translit_word(self, word, target_lang="default"):
+        # TODO @Yash: The code seems to be directly taken from NMT. Pls adapt for xlit to remove unnecessary things
 
         # exit if invalid inputs
-        if not words:
-            print("error : Please insert valid inputs : pass atleast one word")
+        if not word:
+            print("error : Please insert valid inputs : pass one word")
             return
+        
+        words = [word, ]
 
         # check if there is non-english characters
         pattern = '[^a-zA-Z]'    
@@ -364,7 +360,7 @@ class XlitEngine():
             try:
                 perprcossed_words = self.pre_process(words, target_lang)
                 translation_str = self.transliterator.translate(perprcossed_words)
-                transliterated_word_list = self.post_process(translation_str, target_lang, rescore)
+                transliterated_word_list = self.post_process(translation_str, target_lang)
             except Exception as error:
                     print("XlitError:", traceback.format_exc())
                     print(XlitError.internal_err.value)
@@ -380,7 +376,7 @@ class XlitEngine():
                 for la in self.langs:
                     perprcossed_words = self.pre_process(words, la)
                     translation_str = self.transliterator.translate(perprcossed_words)
-                    transliterated_word_list = self.post_process(translation_str, la, rescore)
+                    transliterated_word_list = self.post_process(translation_str, la)
                     res_dict[la] = transliterated_word_list
                 return res_dict
 
@@ -394,7 +390,7 @@ class XlitEngine():
             print(XlitError.lang_err.value)
             return XlitError.lang_err
 
-    def translit_sentence(self, eng_sentence, target_lang="default", rescore=1):
+    def translit_sentence(self, eng_sentence, target_lang="default"):
         if eng_sentence == "":
             return []
 
@@ -402,7 +398,7 @@ class XlitEngine():
             try:
                 out_str = ""
                 for word in eng_sentence.split():
-                    res_ = self.translit_word(word, target_lang, rescore)
+                    res_ = self.translit_word(word, target_lang)
                     out_str = out_str + res_[target_lang][0] + " "
                 return {target_lang:out_str[:-1]}
 
@@ -417,7 +413,7 @@ class XlitEngine():
                 for la in self.langs:
                     out_str = ""
                     for word in eng_sentence.split():
-                        res_ = self.translit_word(word, la, rescore)
+                        res_ = self.translit_word(word, la)
                         out_str = out_str + res_[la][0] + " "
                     res_dict[la] = out_str[:-1]
                 return res_dict
