@@ -32,10 +32,14 @@ from pydload import dload
 import zipfile
 
 # added by yash
-MODEL_DOWNLOAD_URL_PREFIX = 'https://storage.googleapis.com/indic-xlit-public/final_model/indicxlit-en-indic-v1.0.zip'
+MODEL_DOWNLOAD_URL = 'https://storage.googleapis.com/indic-xlit-public/final_model/indicxlit-en-indic-v1.0.zip'
+DICTS_DOWNLOAD_URL = 'https://storage.googleapis.com/indic-xlit-public/final_model/word_prob_dicts.zip'
+XLIT_VERSION = "v1.0" # If model/dict is changed on the storage, do not forget to change this variable in-order to force-download new assets
 
-RESCORE_DOWNLOAD_URL_PREFIX = 'https://storage.googleapis.com/indic-xlit-public/final_model/word_prob_dicts.zip'
-
+MODEL_FILE = 'transformer/indicxlit.pt'
+CHARS_FOLDER = 'corpus-bin'
+DICTS_FOLDER = 'word_prob_dicts'
+DICT_FILE_FORMAT = '%s_word_prob_dict.json'
 
 def is_folder_writable(folder):
     try:
@@ -85,9 +89,10 @@ class XlitEngine():
         else:
             user_home = os.path.expanduser("~")
             models_path = os.path.join(user_home, '.AI4Bharat_Xlit_Models')
+        models_path = os.path.join(models_path, XLIT_VERSION)
         os.makedirs(models_path, exist_ok=True)
         self.download_models(models_path)
-        self.download_rescore_dicts(models_path)
+        self.download_dicts(models_path)
         
         self.langs = {}
         # self.lang_model = {}
@@ -99,9 +104,6 @@ class XlitEngine():
                 print("XlitError: Failure in loading {} \n".format(la), error)
                 print(XlitError.loading_err.value)
 
-
-
-
         # added by yash
 
         print("Initializing Multilingual model for transliteration")
@@ -110,15 +112,16 @@ class XlitEngine():
 
         # initialize the model
         self.transliterator = Transliterator(
-            f"{models_path}/indicxlit-en-indic-v1.0/corpus-bin", f"{models_path}/indicxlit-en-indic-v1.0/transformer/indicxlit.pt", beam, nbest, batch_size = 32
+            os.path.join(models_path, CHARS_FOLDER), os.path.join(models_path, MODEL_FILE), beam, nbest, batch_size = 32
         )
         
 
         # loading the word_prob_dict for rescoring module
-        self.word_prob_dict_wrapped_dict = {}
+        self.word_prob_dicts = {}
         for la in self.langs:
-            self.word_prob_dict_wrapped_dict[la] = json.load(open(f"{models_path}/word_prob_dicts/word_prob_dicts/{la}_word_prob_dict.json", 'r'))
-
+            self.word_prob_dicts[la] = json.load(open(
+                os.path.join(models_path, DICTS_FOLDER, DICT_FILE_FORMAT%la)
+            ))
 
         
     def download_models(self, models_path):
@@ -126,11 +129,11 @@ class XlitEngine():
         Download models from bucket
         '''
         # added by yash
-        # model_path = os.path.join(models_path, lang_name)
-        if not os.path.isdir(models_path+'/indicxlit-en-indic-v1.0/transformer'):
+        model_file_path = os.path.join(models_path, MODEL_FILE)
+        if not os.path.isfile(model_file_path):
             print('Downloading Multilingual model for transliteration')
-            remote_url = MODEL_DOWNLOAD_URL_PREFIX
-            downloaded_zip_path = os.path.join(models_path,'indicxlit-en-indic-v1.0.zip')
+            remote_url = MODEL_DOWNLOAD_URL
+            downloaded_zip_path = os.path.join(models_path, 'model.zip')
             
             dload(url=remote_url, save_to_path=downloaded_zip_path, max_time=None)
 
@@ -138,23 +141,24 @@ class XlitEngine():
                 exit(f'ERROR: Unable to download model from {remote_url} into {models_path}')
 
             with zipfile.ZipFile(downloaded_zip_path, 'r') as zip_ref:
-                zip_ref.extractall(downloaded_zip_path.replace('.zip',''))
+                zip_ref.extractall(models_path)
 
-            if os.path.isdir(models_path+'/indicxlit-en-indic-v1.0/transformer'):
+            if os.path.isfile(model_file_path):
                 os.remove(downloaded_zip_path)
             else:
                 exit(f'ERROR: Unable to find models in {models_path} after download')
         return
 
-    def download_rescore_dicts(self, models_path):
+    def download_dicts(self, models_path):
         '''
         Download language model probablitites dictionaries
         '''
-        if not os.path.isdir(models_path+'/word_prob_dicts'):
+        dicts_folder = os.path.join(models_path, DICTS_FOLDER)
+        if not os.path.isdir(dicts_folder):
             # added by yash
-            print('Downloading  language model probablitites dictionaries for rescoring module')
-            remote_url = RESCORE_DOWNLOAD_URL_PREFIX
-            downloaded_zip_path = os.path.join(models_path,'word_prob_dicts.zip')
+            print('Downloading language model probablitites dictionaries for rescoring module')
+            remote_url = DICTS_DOWNLOAD_URL
+            downloaded_zip_path = os.path.join(models_path, 'dicts.zip')
             
             dload(url=remote_url, save_to_path=downloaded_zip_path, max_time=None)
 
@@ -162,9 +166,9 @@ class XlitEngine():
                 exit(f'ERROR: Unable to download model from {remote_url} into {models_path}')
 
             with zipfile.ZipFile(downloaded_zip_path, 'r') as zip_ref:
-                zip_ref.extractall(downloaded_zip_path.replace('.zip',''))
+                zip_ref.extractall(models_path)
 
-            if os.path.isdir(models_path+'/word_prob_dicts'):
+            if os.path.isdir(dicts_folder):
                 os.remove(downloaded_zip_path)
             else:
                 exit(f'ERROR: Unable to find models in {models_path} after download')
@@ -195,7 +199,7 @@ class XlitEngine():
         
         alpha = alpha
         # word_prob_dict = {}
-        word_prob_dict = self.word_prob_dict_wrapped_dict[target_lang]
+        word_prob_dict = self.word_prob_dicts[target_lang]
 
         candidate_word_prob_norm_dict = {}
         candidate_word_result_norm_dict = {}
@@ -367,7 +371,8 @@ class XlitEngine():
                     return XlitError.internal_err
 
             # print(transliterated_word_list)
-            return {target_lang:transliterated_word_list}
+            # return {target_lang:transliterated_word_list}
+            return transliterated_word_list
         
         elif target_lang == "default":
             try:

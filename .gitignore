@@ -127,3 +127,7 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+#### New Additions ###
+
+app/ai4bharat/transliteration/models/v*
