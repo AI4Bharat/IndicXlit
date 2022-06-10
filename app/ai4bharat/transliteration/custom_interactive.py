@@ -143,10 +143,14 @@ class Transliterator:
             or self.cfg.dataset.batch_size <= self.cfg.interactive.buffer_size
         ), "--batch-size cannot be larger than --buffer-size"
 
-        # Fix seed for stochastic decoding
-        if self.cfg.common.seed is not None and not self.cfg.generation.no_seed_provided:
-            np.random.seed(self.cfg.common.seed)
-            utils.set_torch_seed(self.cfg.common.seed)
+
+        # FIXME: Following lines are commented out by GokulNC due to some erros on CPU
+        # GokulNC: Why do we need seeding for inference? What is stochastic decoding?
+
+        # # Fix seed for stochastic decoding
+        # if self.cfg.common.seed is not None and not self.cfg.generation.no_seed_provided:
+        #     np.random.seed(self.cfg.common.seed)
+        #     utils.set_torch_seed(self.cfg.common.seed)
 
         self.use_cuda = torch.cuda.is_available() and not self.cfg.common.cpu
 

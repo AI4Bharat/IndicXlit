@@ -26,7 +26,7 @@ This package provides support for:
 |or |Oriya - ଓଡ଼ିଆ 	|
 |pa |Panjabi - ਪੰਜਾਬੀ       |
 |sa |Sanskrit - संस्कृत 	|
-|sd |Sindhi - سنڌي‎        |
+|sd |Sindhi - سنڌي        |
 |si |Sinhala - සිංහල       |
 |ta |Tamil - தமிழ்         |
 |te |Telugu - తెలుగు        |
@@ -136,6 +136,16 @@ If debug mode enabled port will be 8000, else port will be 80.
 Example:
 http://localhost:80/tl/ta/amma
 http://localhost:80/languages
+
+---
+
+## Debugging errors
+
+If you face any of the following errors:
+> ValueError: numpy.ndarray size changed, may indicate binary incompatibility. Expected 88 from C header, got 80 from PyObject
+> ValueError: Please build (or rebuild) Cython components with `python setup.py build_ext --inplace`.
+
+Run: `pip install --upgrade numpy`
 
 ---
 
