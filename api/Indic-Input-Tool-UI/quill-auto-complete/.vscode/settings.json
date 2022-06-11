@@ -1,6 +1,0 @@
-{
-  "files.eol": "\n",
-  "files.insertFinalNewline": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.formatOnSave": true
-}
