@@ -130,4 +130,5 @@ dmypy.json
 
 #### New Additions ###
 
-app/ai4bharat/transliteration/models/v*
+*.pt
+*.zip

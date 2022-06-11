@@ -1,6 +1,6 @@
 # AI4Bharat Transliteration Application
 
-A deep transliteration engine for major languages of the Indian sub-continent.
+A deep transliteration engine for major languages of the Indian subcontinent.
 
 This package provides support for:
 1. Python Library for transliteration from Roman to Native text (using Transformer-based models)
@@ -12,7 +12,7 @@ This package provides support for:
 |---|---------------------|
 |as |Assamese - অসমীয়া	|
 |bn |Bengali - বাংলা        |
-|brx|Bodo - बड़ो	|
+|brx|Boro - बड़ो	|
 |gu |Gujarati - ગુજરાતી      |
 |hi |Hindi - हिंदी           |
 |kn |Kannada - ಕನ್ನಡ        |
@@ -45,14 +45,14 @@ from ai4bharat.transliteration import XlitEngine
 
 ```py
 
-e = XlitEngine("hi", beam=10, rescore=True)
+e = XlitEngine("hi", beam_width=10, rescore=True)
 out = e.translit_word("computer", topk=5)
 print(out)
 # output:{'hi': ['कंप्यूटर', 'कम्प्यूटर', 'कॉम्प्यूटर', 'कम्प्युटर', 'कंप्युटर']}
 ```
 
 Note:
-- `beam` increases beam search size, resulting in improved accuracy but increases time/compute.
+- `beam_width` increases beam search size, resulting in improved accuracy but increases time/compute.
 - `topk` returns only specified number of top results.
 - `rescore` return the rescored candidates.   
 
@@ -60,7 +60,7 @@ Note:
 **Example 2** : word Transliteration without rescoring
 ```py
 
-e = XlitEngine("hi", beam=10, rescore=False)
+e = XlitEngine("hi", beam_width=10, rescore=False)
 out = e.translit_word("computer", topk=5)
 print(out)
 # output:{'hi': ['कम्प्यूटर', 'कंप्यूटर', 'कॉम्प्यूटर', 'कम्प्युटर', 'कंप्युटर']}
@@ -70,7 +70,7 @@ print(out)
 
 ```py
 
-e = XlitEngine("ta", beam=10)
+e = XlitEngine("ta", beam_width=10)
 out = e.translit_sentence("vanakkam ulagam")
 print(out)
 # output:{'ta': 'வணக்கம் உலகம்'}
@@ -83,7 +83,7 @@ Note:
 
 ```py
 
-e = XlitEngine(["ta", "ml"], beam=10)
+e = XlitEngine(["ta", "ml"], beam_width=10)
 # leave empty or use "all" to load all available languages
 # e = XlitEngine("all)
 
@@ -105,7 +105,7 @@ print(out)
 **Example 5** : Transliteration for all available languages
 ```py
 
-e = XlitEngine(beam=10)
+e = XlitEngine(beam_width=10)
 out = e.translit_sentence("Hello World")
 print(out)
 # output: 
