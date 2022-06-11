@@ -163,7 +163,7 @@ class XlitEngineTransformer():
 
 
 
-    def pre_process(self, words, target_lang):
+    def pre_process(self, words, lang_code):
         
         # small caps 
         words = [word.lower() for word in words]
@@ -178,7 +178,7 @@ class XlitEngineTransformer():
         words = [' '.join(list(word)) for word in words]
         
         # adding language token
-        words = ['__'+ target_lang +'__ ' + word for word in words]
+        words = ['__'+ lang_code +'__ ' + word for word in words]
 
         return words
 
@@ -323,7 +323,7 @@ class XlitEngineTransformer():
 
         return transliterated_word_list
 
-    def translit_word(self, word, target_lang="default", topk=1):
+    def translit_word(self, word, lang_code="default", topk=4):
         # TODO @Yash: The code seems to be directly taken from NMT. Pls adapt for xlit to remove unnecessary things
 
         # exit if invalid inputs
@@ -341,22 +341,22 @@ class XlitEngineTransformer():
             print("error : Please insert valid inputs : only pass english characters ")
             return
         
-        if (target_lang in self.langs):
+        if (lang_code in self.langs):
             # Passing the list of words
             try:
-                perprcossed_words = self.pre_process(words, target_lang)
+                perprcossed_words = self.pre_process(words, lang_code)
                 translation_str = self.transliterator.translate(perprcossed_words, nbest=topk)
-                transliterated_word_list = self.post_process(translation_str, target_lang)
+                transliterated_word_list = self.post_process(translation_str, lang_code)
             except Exception as error:
                     print("XlitError:", traceback.format_exc())
                     print(XlitError.internal_err.value)
                     return XlitError.internal_err
 
             # print(transliterated_word_list)
-            # return {target_lang:transliterated_word_list}
+            # return {lang_code:transliterated_word_list}
             return transliterated_word_list
         
-        elif target_lang == "default":
+        elif lang_code == "default":
             try:
                 res_dict = {}
                 for la in self.langs:
@@ -372,34 +372,34 @@ class XlitEngineTransformer():
                 return XlitError.internal_err
 
         else:
-            print("XlitError: Unknown Langauge requested", target_lang)
+            print("XlitError: Unknown Langauge requested", lang_code)
             print(XlitError.lang_err.value)
             return XlitError.lang_err
 
-    def translit_sentence(self, input_sentence, target_lang="default"):
+    def translit_sentence(self, input_sentence, lang_code="default"):
         if input_sentence == "":
             return []
 
-        if (target_lang in self.langs):
+        if (lang_code in self.langs):
             try:
                 out_str = ""
                 for word in input_sentence.split():
-                    res_ = self.translit_word(word, target_lang)
-                    out_str = out_str + res_[target_lang][0] + " "
-                return {target_lang:out_str[:-1]}
+                    res_ = self.translit_word(word, lang_code, topk=1)
+                    out_str = out_str + res_[lang_code][0] + " "
+                return {lang_code:out_str[:-1]}
 
             except Exception as error:
                 print("XlitError:", traceback.format_exc())
                 print(XlitError.internal_err.value)
                 return XlitError.internal_err
 
-        elif target_lang == "default":
+        elif lang_code == "default":
             try:
                 res_dict = {}
                 for la in self.langs:
                     out_str = ""
                     for word in input_sentence.split():
-                        res_ = self.translit_word(word, la)
+                        res_ = self.translit_word(word, la, topk=1)
                         out_str = out_str + res_[la][0] + " "
                     res_dict[la] = out_str[:-1]
                 return res_dict
@@ -410,7 +410,7 @@ class XlitEngineTransformer():
                 return XlitError.internal_err
 
         else:
-            print("XlitError: Unknown Langauge requested", target_lang)
+            print("XlitError: Unknown Langauge requested", lang_code)
             print(XlitError.lang_err.value)
             return XlitError.lang_err
 
