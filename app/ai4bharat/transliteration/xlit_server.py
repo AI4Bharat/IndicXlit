@@ -1,8 +1,28 @@
+"""
+Expose Transliteration Engine as an HTTP API.
+
+USAGE:
+```
+from ai4bharat.transliteration import xlit_server
+app, engine = xlit_server.get_app()
+app.run(host='0.0.0.0', port=8000)
+```
+Sample URLs:
+    http://localhost:8000/tl/ta/amma
+    http://localhost:8000/languages
+
+FORMAT:
+    Based on the Varnam API standard
+    https://api.varnamproject.com/tl/hi/bharat
+"""
+
 from flask import Flask, jsonify, request, make_response
 from uuid import uuid4
 from datetime import datetime
 import traceback
 import enum
+
+from .utils import LANG_CODE_TO_DISPLAY_NAME
 
 class XlitError(enum.Enum):
     lang_err = "Unsupported langauge ID requested ;( Please check available languages."
@@ -13,6 +33,28 @@ class XlitError(enum.Enum):
 
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
+
+## ----------------------------- Xlit Engine -------------------------------- ##
+
+from .xlit_src import XlitEngine
+
+MAX_SUGGESTIONS = 8
+DEFAULT_NUM_SUGGESTIONS = 5
+
+engine = XlitEngine(beam_width=MAX_SUGGESTIONS, rescore=True, model_type="transformer")
+engine.exposed_langs = [
+    {
+        "LangCode": lang_code,
+        "Identifier": lang_code,
+        "DisplayName": LANG_CODE_TO_DISPLAY_NAME[lang_code],
+        "Author": "AI4Bharat",
+        "CompiledDate": "16-May-2022",
+        "IsStable": True
+    } for lang_code in engine.langs
+]
+
+def get_app():
+    return app, engine
 
 ## ---------------------------- API End-points ------------------------------ ##
 
@@ -43,7 +85,7 @@ def xlit_api(lang_code, eng_word):
 
     try:
         ## Limit char count to --> 70
-        xlit_result = engine.translit_word(eng_word[:70], lang_code)
+        xlit_result = engine.translit_word(eng_word[:70], lang_code, topk=DEFAULT_NUM_SUGGESTIONS)
     except Exception as e:
         xlit_result = XlitError.internal_err
 
@@ -70,21 +112,3 @@ def reverse_xlit_api(lang_code, word):
     # TODO: Implement?
     response['error'] = 'Not yet implemented!'
     return jsonify(response)
-
-## ----------------------------- Xlit Engine -------------------------------- ##
-
-from .xlit_src import XlitEngine
-engine = XlitEngine()
-engine.exposed_langs = [
-    {
-        "LangCode": code,
-        "Identifier": code,
-        "DisplayName": name,
-        "Author": "AI4Bharat",
-        "CompiledDate": "16-May-2021",
-        "IsStable": True
-    } for code, name in engine.langs.items()
-]
-
-def get_app():
-    return app, engine

@@ -20,12 +20,12 @@ This package provides support for:
 |gom|Konkani Goan - कोंकणी  |
 |mai|Maithili - मैथिली       |
 |ml |Malayalam - മലയാളം    |
-|mni|Manipuri - मणिपुरी	|
+|mni|Manipuri - ꯃꯤꯇꯩꯂꯣꯟ	|
 |mr |Marathi - मराठी        |
 |ne |Nepali - नेपाली 	|
 |or |Oriya - ଓଡ଼ିଆ 	|
 |pa |Panjabi - ਪੰਜਾਬੀ       |
-|sa |Sanskrit - संस्कृत 	|
+|sa |Sanskrit - संस्कृतम् 	|
 |sd |Sindhi - سنڌي        |
 |si |Sinhala - සිංහල       |
 |ta |Tamil - தமிழ்         |
@@ -115,11 +115,11 @@ print(out)
 
 ### Web API Server
 
-Running a flask server in 3 lines:
+Running a flask server in a 3-line script:
 ```py
 from ai4bharat.transliteration import xlit_server
 app, engine = xlit_server.get_app()
-app.run(debug=True, host='0.0.0.0', port=8000)
+app.run(host='0.0.0.0', port=8000)
 ```
 
 You can also check the extended [sample script](https://github.com/AI4Bharat/IndianNLP-Transliteration/blob/master/apps/api_expose.py) as shown below:
