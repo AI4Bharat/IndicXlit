@@ -112,3 +112,47 @@ def reverse_xlit_api(lang_code, word):
     # TODO: Implement?
     response['error'] = 'Not yet implemented!'
     return jsonify(response)
+
+@app.route('/transliterate', methods=['POST'])
+def ulca_api():
+    '''
+    ULCA-compliant endpoint. See for sample request-response:
+    https://github.com/ULCA-IN/ulca/tree/master/specs/examples/model/transliteration-model
+    '''
+    data = request.get_json(force=True)
+    
+    if "input" not in data or "config" not in data:
+        return jsonify({
+            "status": {
+                "statusCode": 400,
+                "message": "Ensure `input` and `config` fields missing."
+            }
+        }), 400
+    
+    if data["config"]["language"]["sourceLanguage"] != "en" or data["config"]["language"]["targetLanguage"] not in engine.langs:
+        return jsonify({
+            "status": {
+                "statusCode": 501,
+                "message": "The mentioned language-pair is not supported yet."
+            }
+        }), 501
+    
+    is_sentence = data["config"]["isSentence"] if "isSentence" in data["config"] else False
+    num_suggestions = 1 if is_sentence else (data["config"]["numSuggestions"] if "numSuggestions" in data["config"] else 5)
+    target_lang_code = data["config"]["language"]["targetLanguage"]
+
+    outputs = []
+    for item in data["input"]:
+        if is_sentence:
+            item["target"] = [engine.translit_sentence(item["source"], lang_code=target_lang_code)]
+        else:
+            item["source"] = item["source"][:32]
+            item["target"] = engine.translit_word(item["source"], lang_code=target_lang_code, topk=num_suggestions)
+    
+    return {
+        "output": data["input"],
+        # "status": {
+        #     "statusCode": 200,
+        #     "message" : "success"
+        # }
+    }, 200
