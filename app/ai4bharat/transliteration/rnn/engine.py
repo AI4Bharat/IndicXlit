@@ -44,7 +44,8 @@ class XlitEngineRNN():
 
     Global Variables: F_DIR
     """
-    def __init__(self, lang2use = "all", rescore=True):
+    def __init__(self, lang2use = "all", beam_width = 4, rescore=True):
+        self.beam_width = beam_width
 
         lineup = json.load( open(CONFIG_PATH, encoding='utf-8') )
         self.lang_config = {}
@@ -74,7 +75,7 @@ class XlitEngineRNN():
         os.makedirs(models_path, exist_ok=True)
         self.download_models(models_path)
 
-        self.langs = {}
+        self.langs = set()
         self.lang_model = {}
         for la in self.lang_config:
             try:
@@ -90,7 +91,7 @@ class XlitEngineRNN():
                                     self.lang_config[la]["script"]),
                     vocab_file = vocab_file,
                 )
-                self.langs[la] = self.lang_config[la]["name"]
+                self.langs.append(la)
             except Exception as error:
                 print("XlitError: Failure in loading {} \n".format(la), error)
                 print(XlitError.loading_err.value)
@@ -120,13 +121,13 @@ class XlitEngineRNN():
                     exit(f'ERROR: Unable to find models in {lang_model_path} after download')
         return
 
-    def translit_word(self, eng_word, lang_code = "default", topk = 4, beam_width = 4):
+    def translit_word(self, eng_word, lang_code = "default", topk = 4):
         if eng_word == "":
             return []
 
         if (lang_code in self.langs):
             try:
-                res_list = self.lang_model[lang_code].inferencer(eng_word, beam_width = beam_width)
+                res_list = self.lang_model[lang_code].inferencer(eng_word, beam_width = self.beam_width)
                 return res_list[:topk]
 
             except Exception as error:
@@ -138,7 +139,7 @@ class XlitEngineRNN():
             try:
                 res_dict = {}
                 for la in self.lang_model:
-                    res = self.lang_model[la].inferencer(eng_word, beam_width = beam_width)
+                    res = self.lang_model[la].inferencer(eng_word, beam_width = self.beam_width)
                     res_dict[la] = res[:topk]
                 return res_dict
 
@@ -153,7 +154,7 @@ class XlitEngineRNN():
             return XlitError.lang_err
 
 
-    def translit_sentence(self, eng_sentence, lang_code = "default", beam_width = 4):
+    def translit_sentence(self, eng_sentence, lang_code = "default"):
         if eng_sentence == "":
             return []
 
@@ -161,7 +162,7 @@ class XlitEngineRNN():
             try:
                 out_str = ""
                 for word in eng_sentence.split():
-                    res_ = self.lang_model[lang_code].inferencer(word, beam_width = beam_width)
+                    res_ = self.lang_model[lang_code].inferencer(word, beam_width = self.beam_width)
                     out_str = out_str + res_[0] + " "
                 return out_str[:-1]
 
@@ -176,7 +177,7 @@ class XlitEngineRNN():
                 for la in self.lang_model:
                     out_str = ""
                     for word in eng_sentence.split():
-                        res_ = self.lang_model[la].inferencer(word, beam_width = beam_width)
+                        res_ = self.lang_model[la].inferencer(word, beam_width = self.beam_width)
                         out_str = out_str + res_[0] + " "
                     res_dict[la] = out_str[:-1]
                 return res_dict

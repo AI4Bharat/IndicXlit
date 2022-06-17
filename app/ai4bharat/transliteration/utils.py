@@ -6,9 +6,9 @@ LANG_CODE_TO_DISPLAY_NAME = {
     ## Indic-scripts
     'as' : "Assamese - অসমীয়া",
     'bn' : "Bengali - বাংলা",
+    'gom': "Goan Konkani - कोंकणी",
     'gu' : "Gujarati - ગુજરાતી",
     'hi' : "Hindi - हिंदी",
-    'gom': "Konkani (Goan) - कोंकणी",
     'mai': "Maithili - मैथिली",
     'mr': "Marathi - मराठी",
     'ne': "Nepali - नेपाली",

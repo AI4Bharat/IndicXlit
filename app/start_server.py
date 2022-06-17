@@ -12,7 +12,7 @@ else:
     from gevent.pywsgi import WSGIServer
 
     cors = CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
-    http_server = WSGIServer((8888), app)
+    http_server = WSGIServer((PORT), app)
 
     print("Starting production server...")
     http_server.serve_forever()

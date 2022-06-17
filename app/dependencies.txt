@@ -2,10 +2,10 @@ pydload
 flask
 flask_cors
 gevent
-sacremoses 
-pandas 
-mock 
-tensorboardX 
-pyarrow 
-indic-nlp-library
-fairseq @ git+https://github.com/pytorch/fairseq.git
+sacremoses
+pandas
+tqdm
+mock
+tensorboardX
+pyarrow
+fairseq

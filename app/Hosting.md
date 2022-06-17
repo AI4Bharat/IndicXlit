@@ -1,16 +1,24 @@
-[Install Caddy](https://caddyserver.com/docs/install)
+# Hosting
+
+## Pre-requisites
+1. [Install Caddy](https://caddyserver.com/docs/install)
+2. `sudo apt install libnss3-tools`
+
+## Running server
 
 ```
-sudo apt install libnss3-tools
+python start_server.py
 ```
+
+## Reverse-proxying and connecting to a domain
 
 Non-blocking:
 ```
-caddy start
-caddy stop
+sudo caddy start
+sudo caddy stop
 ```
 
 Blocking:
 ```
-caddy run
+sudo caddy run
 ```

@@ -39,18 +39,18 @@ app.config['JSON_AS_ASCII'] = False
 from .xlit_src import XlitEngine
 
 MAX_SUGGESTIONS = 8
-DEFAULT_NUM_SUGGESTIONS = 5
+DEFAULT_NUM_SUGGESTIONS = 6
 
 engine = XlitEngine(beam_width=MAX_SUGGESTIONS, rescore=True, model_type="transformer")
 engine.exposed_langs = [
     {
-        "LangCode": lang_code,
-        "Identifier": lang_code,
+        "LangCode": lang_code, # ISO-639 code
+        "Identifier": lang_code, # ISO-639 code
         "DisplayName": LANG_CODE_TO_DISPLAY_NAME[lang_code],
-        "Author": "AI4Bharat",
-        "CompiledDate": "16-May-2022",
-        "IsStable": True
-    } for lang_code in engine.langs
+        "Author": "AI4Bharat", # Name of developer / team
+        "CompiledDate": "09-April-2022", # date on which model was trained
+        "IsStable": True, # Set `False` if the model is experimental
+    } for lang_code in sorted(engine.langs)
 ]
 
 def get_app():

@@ -1,7 +1,6 @@
 {
 
     "bn": {
-        "name"    : "Bengali - বাংলা",
         "eng_name": "bengali",
         "script"  : "bengali/bn_scripts.json",
         "vocab"   : "bengali/bn_words_a4b.json",
@@ -9,7 +8,6 @@
     },
 
     "gu": {
-        "name"    : "Gujarati - ગુજરાતી",
         "eng_name": "gujarati",
         "script"  : "gujarati/gu_scripts.json",
         "vocab"   : "gujarati/gu_words_a4b.json",
@@ -17,7 +15,6 @@
     },
 
     "hi": {
-        "name"    : "Hindi - हिंदी",
         "eng_name": "hindi",
         "script"  : "hindi/hi_scripts.json",
         "vocab"   : "hindi/hi_words_a4b.json",
@@ -25,7 +22,6 @@
     },
 
     "kn": {
-        "name"    : "Kannada - ಕನ್ನಡ",
         "eng_name": "kannada",
         "script"  : "kannada/kn_scripts.json",
         "vocab"   : "kannada/kn_words_a4b.json",
@@ -33,7 +29,6 @@
     },
 
     "gom": {
-        "name"    : "Konkani (Goan) - कोंकणी",
         "eng_name": "konkani",
         "script"  : "konkani/gom_scripts.json",
         "vocab"   : "konkani/gom_words_subset.json",
@@ -41,7 +36,6 @@
     },
 
     "mai": {
-        "name"    : "Maithili - मैथिली",
         "eng_name": "maithili",
         "script"  : "maithili/mai_scripts.json",
         "vocab"   : "maithili/mai_words_subset.json",
@@ -50,7 +44,6 @@
 
 
     "ml": {
-        "name"    : "Malayalam - മലയാളം",
         "eng_name": "malayalam",
         "script"  : "malayalam/ml_scripts.json",
         "vocab"   : "malayalam/ml_words_a4b.json",
@@ -58,7 +51,6 @@
     },
 
     "mr": {
-        "name"    : "Marathi - मराठी",
         "eng_name": "marathi",
         "script"  : "marathi/mr_scripts.json",
         "vocab"   : "marathi/mr_words_a4b.json",
@@ -66,7 +58,6 @@
     },
 
     "pa": {
-        "name"    : "Panjabi - ਪੰਜਾਬੀ",
         "eng_name": "panjabi",
         "script"  : "panjabi/pa_scripts.json",
         "vocab"   : "panjabi/pa_words_a4b.json",
@@ -74,7 +65,6 @@
     },
 
     "sd": {
-        "name"    : "Sindhi - سنڌي‎",
         "eng_name": "sindhi",
         "script"  : "sindhi/sd_scripts.json",
         "vocab"   : "sindhi/sd_words_ccset.json",
@@ -82,7 +72,6 @@
     },
 
     "si": {
-        "name"    : "Sinhala - සිංහල",
         "eng_name": "sinhala",
         "script"  : "sinhala/si_scripts.json",
         "vocab"   : "sinhala/si_words_ccset.json",
@@ -90,7 +79,6 @@
     },
 
     "ta": {
-        "name"    : "Tamil - தமிழ்",
         "eng_name": "tamil",
         "script"  : "tamil/ta_scripts.json",
         "vocab"   : "tamil/ta_words_a4b.json",
@@ -98,7 +86,6 @@
     },
 
     "te": {
-        "name"    : "Telugu - తెలుగు",
         "eng_name": "telugu",
         "script"  : "telugu/te_scripts.json",
         "vocab"   : "telugu/te_words_a4b.json",
@@ -106,7 +93,6 @@
     },
 
     "ur": {
-        "name"    : "Urdu - اُردُو",
         "eng_name": "urdu",
         "script"  : "urdu/ur_scripts.json",
         "vocab"   : "urdu/ur_words_ccset.json",

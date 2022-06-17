@@ -31,7 +31,7 @@ Translation = namedtuple("Translation", "src_str hypos pos_scores alignments")
 
 
 F_DIR = os.path.dirname(os.path.realpath(__file__))
-LANG_LIST_FILE = os.path.join(F_DIR, "lang_list.txt")
+LANG_LIST_FILE = os.path.join(F_DIR, "models", "lang_list.txt")
 
 ALL_LANGS = open(LANG_LIST_FILE).read().strip().split('\n')
 SUPPORTED_INDIC_LANGS = set(ALL_LANGS)

@@ -1,20 +1,14 @@
-# import torch
-# import torch.nn as nn
-import numpy as np
-import pandas as pd
-import random
-import sys
 import os
 import json
 import enum
 import traceback
-from indicnlp.tokenize.indic_tokenize import trivial_tokenize
-from indicnlp.normalize.indic_normalize import IndicNormalizerFactory
-from .custom_interactive import Transliterator, SUPPORTED_INDIC_LANGS
 import re
+import tqdm
 
 import logging
 logging.basicConfig(level=logging.WARNING)
+
+from .custom_interactive import Transliterator, SUPPORTED_INDIC_LANGS
 
 F_DIR = os.path.dirname(os.path.realpath(__file__))
 
@@ -65,18 +59,18 @@ class XlitEngineTransformer():
     """
     def __init__(self, lang2use = "all", beam_width=4, rescore=True):
 
-        self.langs = []
+        self.langs = set()
         if isinstance(lang2use, str):
             if lang2use == "all":
-                self.langs = list(SUPPORTED_INDIC_LANGS)
+                self.langs = SUPPORTED_INDIC_LANGS
             elif lang2use in SUPPORTED_INDIC_LANGS:
-                self.langs.append(lang2use)
+                self.langs.add(lang2use)
             else:
                 raise Exception("XlitError: The entered Langauge code not found. Available are {}".format(SUPPORTED_INDIC_LANGS) )
         elif isinstance(lang2use, Iterable):
                 for l in lang2use:
                     if l in SUPPORTED_INDIC_LANGS:
-                        self.langs.append(l)
+                        self.langs.add(l)
                     else:
                         print("XlitError: Language code {} not found, Skipping...".format(l))
         else:
@@ -105,7 +99,7 @@ class XlitEngineTransformer():
             self.download_dicts(models_path)
             # loading the word_prob_dict for rescoring module
             self.word_prob_dicts = {}
-            for la in self.langs:
+            for la in tqdm.tqdm(self.langs, desc="Loading dicts into RAM"):
                 self.word_prob_dicts[la] = json.load(open(
                     os.path.join(models_path, DICTS_FOLDER, DICT_FILE_FORMAT%la)
                 ))
@@ -134,6 +128,9 @@ class XlitEngineTransformer():
                 os.remove(downloaded_zip_path)
             else:
                 exit(f'ERROR: Unable to find models in {models_path} after download')
+            
+            print("Models downloaded to:", models_path)
+            print("NOTE: When uninstalling this library, REMEMBER to delete the models manually")
         return
 
     def download_dicts(self, models_path):
@@ -376,17 +373,20 @@ class XlitEngineTransformer():
             print(XlitError.lang_err.value)
             return XlitError.lang_err
 
-    def translit_sentence(self, input_sentence, lang_code="default"):
-        if input_sentence == "":
-            return []
+    def translit_sentence(self, eng_sentence, lang_code="default"):
+        if not eng_sentence:
+            return eng_sentence
+        
+        eng_sentence = eng_sentence.lower()
+        matches = re.findall("[a-zA-Z]+", eng_sentence)
 
         if (lang_code in self.langs):
             try:
-                out_str = ""
-                for word in input_sentence.split():
-                    res_ = self.translit_word(word, lang_code, topk=1)
-                    out_str = out_str + res_[lang_code][0] + " "
-                return {lang_code:out_str[:-1]}
+                out_str = eng_sentence
+                for match in matches:
+                    result = self.translit_word(match, lang_code, topk=1)[0]
+                    out_str = re.sub(match, result, out_str, 1)
+                return out_str
 
             except Exception as error:
                 print("XlitError:", traceback.format_exc())
@@ -397,11 +397,11 @@ class XlitEngineTransformer():
             try:
                 res_dict = {}
                 for la in self.langs:
-                    out_str = ""
-                    for word in input_sentence.split():
-                        res_ = self.translit_word(word, la, topk=1)
-                        out_str = out_str + res_[la][0] + " "
-                    res_dict[la] = out_str[:-1]
+                    out_str = eng_sentence
+                    for match in matches:
+                        result = self.translit_word(match, la, topk=1)[la][0]
+                        out_str = re.sub(match, result, out_str, 1)
+                    res_dict[la] = out_str
                 return res_dict
 
             except Exception as error:
