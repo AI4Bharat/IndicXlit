@@ -2,20 +2,23 @@
 	<h1><b><i>IndicXlit</i></b></h1>
 	<a href="https://indicnlp.ai4bharat.org/indic-xlit">Website</a> |
 	<a href="#download-indicxlit-model">Downloads</a> |
-	<a href="https://arxiv.org/abs/2205.03018">Paper</a><br><br>
+	<a href="https://arxiv.org/abs/2205.03018">Paper</a> |
+  <a href="https://xlit.ai4bharat.org/">Demo</a> |
+  <a href="https://pypi.org/project/ai4bharat-transliteration">Python Library</a>
+  <br><br>
 </div>
 
 <!-- description about IndicXlit -->
 
-***[IndicXlit](https://indicnlp.ai4bharat.org/indic-xlit)*** is a transformer-based multilingual transliteration model (~11M) for roman to Indic script conversion that ***supports 20 Indic languages***. It is trained on ***[Aksharantar](https://indicnlp.ai4bharat.org/aksharantar/)*** dataset which is the ***largest publicly available parallel corpus containing 26 million word pairs spanning 20 Indic languages*** at the time of writing (5 May 2022 ). It supports following 20 Indic languages:
+***[IndicXlit](https://indicnlp.ai4bharat.org/indic-xlit)*** is a transformer-based multilingual transliteration model (~11M) for roman to native script conversion that ***supports 21 Indic languages***. It is trained on ***[Aksharantar](https://indicnlp.ai4bharat.org/aksharantar/)*** dataset which is the ***largest publicly available parallel corpus containing 26 million word pairs spanning 20 Indic languages*** at the time of writing (5 May 2022). It supports following 21 Indic languages:
 
 <!-- list the languages IndicXlit supports -->
 | <!-- -->  	 | <!-- --> 	  | <!-- --> 	   | <!-- -->	     | <!-- -->       | <!-- -->      |
 | -------------- | -------------- | -------------- | --------------- | -------------- | ------------- |
-| Assamese (asm) | Bengali (ben)  | Bodo(brx)      | Gujarati (guj)  | Hindi (hin)    | Kannada (kan) |
+| Assamese (asm) | Bengali (ben)  |  Bodo (brx)    | Gujarati (guj)  | Hindi (hin)    | Kannada (kan) |
 | Kashmiri (kas) | Konkani (gom)  | Maithili (mai) | Malayalam (mal) | Manipuri (mni) | Marathi (mar) | 
-| Nepali (nep)   | Oriya (ori)    | Punjabi (pan)  |  Sanskrit (san) | Sindhi (snd)   |  Tamil (tam)  |
-| Telugu (tel)   |  Urdu (urd)    | 
+| Nepali (nep)   | Oriya (ori)    | Punjabi (pan)  |  Sanskrit (san) | Sindhi (snd)   | Sinhala (sin) |
+|  Tamil (tam)   |  Telugu (tel)  |   Urdu (urd)   | 
 
 
 <!-- index with hyperlinks (Table of contents) -->
