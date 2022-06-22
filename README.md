@@ -26,6 +26,7 @@
 - [Table of contents](#table-of-contents)
 - [Resources](#resources)
   - [Download IndicXlit model](#download-indicxlit-model)
+  - [Accessing on ULCA](#accessing-on-ulca)
 - [Running Inference](#running-inference)
   - [Command line interface](#command-line-interface)
   - [Python Inference](#python-inference)
@@ -50,6 +51,9 @@
 <!-- heperlinks for downloading the models -->
 Roman to Indic model [v1.0](https://storage.googleapis.com/indic-xlit-public/final_model/indicxlit-en-indic-v1.0.zip)
 <!-- mirror links set up the public drive -->	
+
+### Accessing on ULCA
+You can try out our models at [ULCA](https://bhashini.gov.in/ulca/model/explore-models) and filter for IndicTrans models.
 
 
 ## Running Inference
