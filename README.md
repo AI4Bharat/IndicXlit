@@ -20,6 +20,18 @@
 | Nepali (nep)   | Oriya (ori)    | Punjabi (pan)  |  Sanskrit (san) | Sindhi (snd)   | Sinhala (sin) |
 |  Tamil (tam)   |  Telugu (tel)  |   Urdu (urd)   | 
 
+### Evaluation Results
+
+IndicXlit is evaluated on [Dakshina benchmark](https://github.com/google-research-datasets/dakshina) and [Aksharantar benchmark](https://indicnlp.ai4bharat.org/aksharantar/). IndicXlit achieves state-of-theart results on the Dakshina testset and also
+provide baseline results on the new Aksharantar testset. The Top-1 results are summarized below. For more details, refer [paper](https://arxiv.org/abs/2205.03018)
+
+
+| languages | asm | ben | brx | guj | hin | kan | kas | kok | mai | mal | mni | mar | nep | ori | pan | san | tam | tel | urd |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Dakshina | - | 55.49 | - | 62.02 | 60.56 | 77.18 | - | - | - | 63.56 | - | 64.85 | - | - | 47.24 | - | 68.10 | 73.38 | 42.12 | 61.45 |
+| Aksharantar (native words) | 60.27 | 61.70 | 70.79 | 61.89 | 55.59 | 76.18 | 28.76 | 63.06 | 72.06 | 64.73 | 83.19 | 63.72 | 80.25 | 58.90 | 40.27 | 78.63 | 69.78 | 84.69 | 48.37 |
+| Aksharantar (named entities) | 38.62 | 37.12 | 30.32 | 48.89 | 58.87 | 49.92 | 20.23 | 34.36 | 42.82 | 33.93 | 44.12 | 53.57 | 52.67 | 30.63 | 36.08 | 24.06 | 42.12 | 51.82 | 47.77 |
+
 
 <!-- index with hyperlinks (Table of contents) -->
 ## Table of contents
@@ -70,7 +82,7 @@ Command line interface --> [![Open In Colab](https://colab.research.google.com/a
 <!-- colab integratation on running the model on custom input python script-->
 Python interface       --> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1P78Tbr6zhe-5LeiKk525N3SGPKn2ofGg?usp=sharing)
 
-The python interface is useful in case you want to reuse the model for multiple translations and do not want to reinitialize the model each time. Moreover, rescoring option is available in python interface, but not in command line interface.
+The python interface is useful in case you want to reuse the model for multiple translations and do not want to reinitialize the model each time. Moreover, re-ranking option is available in python interface, but not in command line interface.
 
 
 ## Training model
@@ -241,8 +253,8 @@ wget https://storage.googleapis.com/indic-xlit-public/final_model/evaluate_resul
 The above evaluation steps and code for `generate_result_files.py` are further documented in the colab notebook 
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1KM8M2hk6fPAI039bBLtHxxojHzo6oMQ7?usp=sharing)
 
-### Detailed benchmarking results
-Refer to [Benchmarks](#benchmarks) for results of IndicXlit model on Dakshina and Aksharantar benchmarks.
+### Detailed evaluation results
+Refer to [Evaluation Results](#evaluation-results) for results of IndicXlit model on Dakshina and Aksharantar benchmarks.
 Please refer to section 7 of our [paper](https://arxiv.org/abs/2205.03018) for detailed discussion of the results
 
 
