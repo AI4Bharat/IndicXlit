@@ -399,7 +399,7 @@ class XlitEngineTransformer():
                 for la in self.langs:
                     out_str = eng_sentence
                     for match in matches:
-                        result = self.translit_word(match, la, topk=1)[la][0]
+                        result = self.translit_word(match, la, topk=1)[0]
                         out_str = re.sub(match, result, out_str, 1)
                     res_dict[la] = out_str
                 return res_dict
