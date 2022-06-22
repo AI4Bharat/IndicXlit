@@ -10,7 +10,7 @@
 
 <!-- description about IndicXlit -->
 
-***[IndicXlit](https://indicnlp.ai4bharat.org/indic-xlit)*** is a transformer-based multilingual transliteration model (~11M) for roman to native script conversion that ***supports 21 Indic languages***. It is trained on ***[Aksharantar](https://indicnlp.ai4bharat.org/aksharantar/)*** dataset which is the ***largest publicly available parallel corpus containing 26 million word pairs spanning 20 Indic languages*** at the time of writing (5 May 2022). It supports following 21 Indic languages:
+***[IndicXlit](https://indicnlp.ai4bharat.org/indic-xlit)*** is a transformer-based multilingual transliteration model (~11M) for roman to native script conversion that ***supports 20 Indic languages and Sinhala language***. It is trained on ***[Aksharantar](https://indicnlp.ai4bharat.org/aksharantar/)*** dataset which is the ***largest publicly available parallel corpus containing 26 million word pairs spanning 20 Indic languages*** at the time of writing (5 May 2022). It supports Sinhala language and following 20 Indic languages:
 
 <!-- list the languages IndicXlit supports -->
 | <!-- -->  	 | <!-- --> 	  | <!-- --> 	   | <!-- -->	     | <!-- -->       | <!-- -->      |
@@ -23,22 +23,26 @@
 
 <!-- index with hyperlinks (Table of contents) -->
 ## Table of contents
-- [Installation](#installation)
-- [Download IndicXlit model](#download-indicxlit-model)
-- [Using the model to transliterate the inputs](#using-the-model-to-transliterate-the-inputs)
-- [Training the model from scratch with your own dataset](#training-the-model-from-scratch-with-your-own-dataset)
-- [Finetuning the model on your input dataset](#finetuning-the-model-on-your-input-dataset)
-- [Network and training details](#network-and-training-details)
+- [Table of contents](#table-of-contents)
+- [Resources](#resources)
+  - [Download IndicXlit model](#download-indicxlit-model)
+- [Running Inference](#running-inference)
+  - [Command line interface](#command-line-interface)
+  - [Python Inference](#python-inference)
+- [Training model](#training-model)
+  - [Setting up your environment](#setting-up-your-environment)
+  - [Details of models and hyperparameters](#details-of-models-and-hyperparameters)
+  - [Training procedure and code](#training-procedure-and-code)
+  - [WandB plots](#wandb-plots)
+  - [Evaluating trained model](#evaluating-trained-model)
+  - [Detailed benchmarking results](#detailed-benchmarking-results)
+- [Finetuning model on your data](#finetuning-model-on-your-data)
+- [Mining details](#mining-details)
 - [Directory structure](#directory-structure)
 - [Citing](#citing)
   - [License](#license)
   - [Contributors](#contributors)
   - [Contact](#contact)
-
-
-
-<!-- Installation -->
-
 
 
 ## Resources
