@@ -53,7 +53,7 @@ Roman to Indic model [v1.0](https://storage.googleapis.com/indic-xlit-public/fin
 <!-- mirror links set up the public drive -->	
 
 ### Accessing on ULCA
-You can try out our models at [ULCA](https://bhashini.gov.in/ulca/model/explore-models) and filter for IndicTrans models.
+You can try out our model at [ULCA](https://bhashini.gov.in/ulca/model/explore-models) and filter for IndicXlit model.
 
 
 ## Running Inference
