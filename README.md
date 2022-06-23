@@ -93,9 +93,6 @@ The python interface is useful in case you want to reuse the model for multiple 
 # clone IndicXli repository
 git clone https://github.com/AI4Bharat/IndicXlit.git
 
-# install Indicnlp library
-git clone https://github.com/anoopkunchukuttan/indic_nlp_resources.git
-
 # install required libraries
 pip install indic-nlp-library
 
