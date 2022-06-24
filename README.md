@@ -88,7 +88,7 @@ To transliterate into hindi, select Hindi from the list and enter your sentence 
 <img src="./sample_images/transliterate_sentence.png" width=50% height=50% />
 </p>
 <br>
-
+</details>
 	
 ### Accessing on ULCA
 You can try out our model at [ULCA](https://bhashini.gov.in/ulca/model/explore-models) and filter for IndicXlit model.
