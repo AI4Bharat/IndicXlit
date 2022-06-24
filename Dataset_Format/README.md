@@ -45,4 +45,5 @@ A random sample from Hindi (hin) Train dataset.
   - Data from Uniform Sampling method. (Ak-Uni)
   - Data from Most Frequent words sampling method. (Ak-Freq)
   
-  
+[All individual Datasets](https://console.cloud.google.com/storage/browser/indic-xlit-public) |
+[Aksharantar](https://huggingface.co/datasets/ai4bharat/Aksharantar/tree/main)
