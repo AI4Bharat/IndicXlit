@@ -1,13 +1,17 @@
-1. Intractive step
+### Preprocess data
+- Follow the link below to preprocess the required data to mine the pairs from IndicCorp, 
+https://github.com/AI4Bharat/IndicXlit/tree/master/data_mining/IndicCorp/preprocess_data
+
+### 1. Intractive step
 
 - In this step we take all the unique native(e.g. hindi) words from IndicCorp monolingual corpora and pass it through the Indic-En model and predict the transliteration candidate.
 
 - output would be hi-en pairs { number of pairs will be same as number of unique words in unique native(e.g. Hindi) list from IndicCorp }
 
 
-2. Ngram_dict_step
+### 2. Ngram_dict_step
 
-- In this step we create ngram (e.g 4-gram) dictionary from the IndicCorp unique word list where key is ngram word and value as the list of words which contains that ngram in it.
+- In this step we create ngram (e.g 4-gram) dictionary from the IndicCorp unique word list where key is ngram word and value as the list of words which contains that ngram in it. script: https://github.com/AI4Bharat/IndicXlit/blob/master/data_mining/IndicCorp/preprocess_data/create_ngram_dict.py
 
 - Now, take all the words from ngram english dictionary for each english word (corresponding to hi-en pair <- output of interactive step) which have atleast 3 ngram (e.g 4-gram) in common. (common ngram => between english predicted word and ngram english dictionary words) 
 
@@ -18,7 +22,7 @@
 
 - create new hi-en pairs from this simillar new english words collected from ngram english dictionary for each hi word.
 
-3. Scoring_pairs_step
+### 3. Scoring_pairs_step
 
 - Now in this step we score the hi-en pair with both model in both direction [ Indic-En and En-Indic ]  
 

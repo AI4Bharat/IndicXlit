@@ -1,0 +1,102 @@
+{
+
+    "bn": {
+        "eng_name": "bengali",
+        "script"  : "bengali/bn_scripts.json",
+        "vocab"   : "bengali/bn_words_a4b.json",
+        "weight"  : "bengali/bn_101_model.pth"
+    },
+
+    "gu": {
+        "eng_name": "gujarati",
+        "script"  : "gujarati/gu_scripts.json",
+        "vocab"   : "gujarati/gu_words_a4b.json",
+        "weight"  : "gujarati/gu_101_model.pth"
+    },
+
+    "hi": {
+        "eng_name": "hindi",
+        "script"  : "hindi/hi_scripts.json",
+        "vocab"   : "hindi/hi_words_a4b.json",
+        "weight"  : "hindi/hi_111_model.pth"
+    },
+
+    "kn": {
+        "eng_name": "kannada",
+        "script"  : "kannada/kn_scripts.json",
+        "vocab"   : "kannada/kn_words_a4b.json",
+        "weight"  : "kannada/kn_101_model.pth"
+    },
+
+    "gom": {
+        "eng_name": "konkani",
+        "script"  : "konkani/gom_scripts.json",
+        "vocab"   : "konkani/gom_words_subset.json",
+        "weight"  : "konkani/gom_122_model.pth"
+    },
+
+    "mai": {
+        "eng_name": "maithili",
+        "script"  : "maithili/mai_scripts.json",
+        "vocab"   : "maithili/mai_words_subset.json",
+        "weight"  : "maithili/mai_122_model.pth"
+    },
+
+
+    "ml": {
+        "eng_name": "malayalam",
+        "script"  : "malayalam/ml_scripts.json",
+        "vocab"   : "malayalam/ml_words_a4b.json",
+        "weight"  : "malayalam/ml_101_model.pth"
+    },
+
+    "mr": {
+        "eng_name": "marathi",
+        "script"  : "marathi/mr_scripts.json",
+        "vocab"   : "marathi/mr_words_a4b.json",
+        "weight"  : "marathi/mr_102_model.pth"
+    },
+
+    "pa": {
+        "eng_name": "panjabi",
+        "script"  : "panjabi/pa_scripts.json",
+        "vocab"   : "panjabi/pa_words_a4b.json",
+        "weight"  : "panjabi/pa_101_model.pth"
+    },
+
+    "sd": {
+        "eng_name": "sindhi",
+        "script"  : "sindhi/sd_scripts.json",
+        "vocab"   : "sindhi/sd_words_ccset.json",
+        "weight"  : "sindhi/sd_101_model.pth"
+    },
+
+    "si": {
+        "eng_name": "sinhala",
+        "script"  : "sinhala/si_scripts.json",
+        "vocab"   : "sinhala/si_words_ccset.json",
+        "weight"  : "sinhala/si_101_model.pth"
+    },
+
+    "ta": {
+        "eng_name": "tamil",
+        "script"  : "tamil/ta_scripts.json",
+        "vocab"   : "tamil/ta_words_a4b.json",
+        "weight"  : "tamil/ta_101_model.pth"
+    },
+
+    "te": {
+        "eng_name": "telugu",
+        "script"  : "telugu/te_scripts.json",
+        "vocab"   : "telugu/te_words_a4b.json",
+        "weight"  : "telugu/te_101_model.pth"
+    },
+
+    "ur": {
+        "eng_name": "urdu",
+        "script"  : "urdu/ur_scripts.json",
+        "vocab"   : "urdu/ur_words_ccset.json",
+        "weight"  : "urdu/ur_101_model.pth"
+    }
+
+}

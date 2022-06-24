@@ -1,0 +1,11 @@
+pydload
+flask
+flask_cors
+gevent
+sacremoses
+pandas
+tqdm
+mock
+tensorboardX
+pyarrow
+fairseq

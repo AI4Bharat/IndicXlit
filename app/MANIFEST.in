@@ -1,0 +1,3 @@
+include ai4bharat/transliteration/transformer/models/lang_list.txt
+include ai4bharat/transliteration/rnn/models/default_lineup.json
+include dependencies.txt
