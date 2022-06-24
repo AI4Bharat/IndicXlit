@@ -38,6 +38,8 @@ provide baseline results on the new Aksharantar testset. The Top-1 results are s
 - [Table of contents](#table-of-contents)
 - [Resources](#resources)
   - [Download IndicXlit model](#download-indicxlit-model)
+  - [Using hosted APIs](#using-hosted-apis)
+    - [Sample screenshot of translate_sentence POST request](#sample-screenshot-of-translate_sentence-post-request)
   - [Accessing on ULCA](#accessing-on-ulca)
 - [Running Inference](#running-inference)
   - [Command line interface](#command-line-interface)
@@ -64,6 +66,30 @@ provide baseline results on the new Aksharantar testset. The Top-1 results are s
 Roman to Indic model [v1.0](https://storage.googleapis.com/indic-xlit-public/final_model/indicxlit-en-indic-v1.0.zip)
 <!-- mirror links set up the public drive -->	
 
+### Using hosted APIs
+
+<details><summary>Click to expand </summary>
+
+#### Sample screenshot of sentence transliteration
+<br>
+<p align="left">
+<img src="./sample_images/main_page.png" width=50% height=50% />
+</p>
+
+Select the language from drop down list given at top left corner.
+<br>
+<p align="left">
+<img src="./sample_images/select_language.png" width=50% height=50% />
+</p>
+	
+To transliterate into hindi, select Hindi from the list and enter your sentence in the "text" field:
+<br>
+<p align="left">
+<img src="./sample_images/transliterate_sentence.png" width=50% height=50% />
+</p>
+<br>
+
+	
 ### Accessing on ULCA
 You can try out our model at [ULCA](https://bhashini.gov.in/ulca/model/explore-models) and filter for IndicXlit model.
 
