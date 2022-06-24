@@ -388,76 +388,121 @@ Following links provides the detail description of mining from various resources
 <!-- dir structure for the repo -->
 ```
 IndicXlit
+├── Checker
+│   ├── README.md
+│   ├── Transliteration_Checker.java
+│   └── Transliteration_Checker.py
+├── Dataset_Format
+│   ├── Create_Aksharantar_JSONL.py
+│   └── README.md
+├── LICENSE
+├── README.md
+├── ULCA_Format
+│   ├── README.md
+│   └── ULCA_dataset.py
 ├── ablation_study
-├── api
+│   ├── data_filteration
+│   │   ├── data_filteration_with_benchmark_test_dakshina_test_valid
+│   │   └── data_filteration_with_dakshina_test_valid
+│   └── model
+│       ├── monolingual_model
+│       ├── multilingual_model_(same for_singlescript_model)
+│       ├── north_model
+│       ├── preprocessing_for_rescoring
+│       ├── south_model
+│       └── specific_to_E_because_(differ_across_dataset_E_has_specific_langs)
+├── app
+│   ├── Caddyfile
+│   ├── Hosting.md
+│   ├── MANIFEST.in
+│   ├── README.md
+│   ├── ai4bharat
+│   │   ├── __init__.py
+│   │   └── transliteration
+│   ├── api_expose.py
+│   ├── auto_certif_renew.py
+│   ├── dependencies.txt
+│   ├── setup.py
+│   └── start_server.py
 ├── corpus_preprocessing
-│	 └── Collating_existing_dataset
-│	 ├── Checker
-│        │   ├── Transliteration_Checker.java
-│        │   └── Transliteration_Checker.py
-│	 │   └── README.md
-│        ├── Analysis
-│        │   ├── GIT_analysis.py
-│        │   └── len_stats.py
-│        ├── Benchmark_data_from_JSONS(Karya)
-│        │   ├── Benchmark_Named_entities.py
-│        │   └── Benchmark_Transliteration_data.py
-│        ├── Create_Unique_list_from_datasets
-│        │   ├── IndicCorp
-│        │   │   ├── Consolidate_SWE.py
-│        │   │   ├── Create_Smaller_Text_Files.py
-│        │   │   ├── Join_My_Dict_SWE.py
-│        │   │   ├── Text_to_CSV_Smaller_Files.py
-│        │   │   └── gcld3.py
-│        │   ├── LDCIL
-│        │   │   ├── LDCIL-Text_to_CSVs.py
-│        │   │   └── Parse_LDCIL_Data.py
-│        │   └── Words_freq_probability_after_kenlm
-│        │       └── Extract_Prob_Create_Samples_JSON.py
-│        └── Pre_process_arabic_scripts
-│        │   └── clean_urdu.py
-│        └── README.md
-│
+│   ├── Analysis
+│   │   ├── GIT_analysis.py
+│   │   ├── README.md
+│   │   └── len_stats.py
+│   ├── Benchmark_data_from_JSONS(Karya)
+│   │   ├── Benchmark_Named_entities.py
+│   │   ├── Benchmark_Transliteration_data.py
+│   │   └── README.md
+│   ├── Collating_existing_dataset
+│   │   ├── collate_data.ipynb
+│   │   ├── dataset_info.csv
+│   │   └── stats_detail.txt
+│   ├── Create_Unique_list_from_datasets
+│   │   ├── IndicCorp
+│   │   ├── LDCIL
+│   │   ├── README.md
+│   │   └── Words_freq_probability_after_kenlm
+│   └── Pre_process_arabic_scripts
+│       ├── README.md
+│       └── clean_urdu.py
 ├── data_mining
-│	 ├── IndicCorp
-│	 │	 ├── preprocess_data
-│	 │	 │	 ├── create_ngram_dict.py
-│	 │	 │	 ├── filter_data_ks.py
-│	 │	 │	 ├── filter_data.py
-│	 │	 │	 └── filter_data_ur.py
-│	 │	 └── skeleton
-│	 │	     └── en_dict_workplace
-│	 │	         ├── interactive_step
-│	 │	         ├── ngram_dict_step
-│	 │	         ├── scoring_pairs_step
-│	 │	         	 ├── average_score
-│	 │	         	 ├── en_indic_model_scoring
-│	 │	         	 ├── indic_en_model_scoring
-│	 │	         
-│	 └── transliteration_mining_samanantar
-│	     ├── align_data.sh
-│	     ├── convert_csv.py
-│	     ├── extract_translit_pairs.sh
-│	     ├── final_output.zip
-│	     ├── install_tools.txt
-│	     ├── model_run_steps.txt
-│	     ├── preprocess_data.py
-│	     ├── readme.md
-│	     ├── samanantar_pairs_count.xlsx
-│	     └── validation_script.py
+│   ├── IndicCorp
+│   │   ├── preprocess_data
+│   │   └── skeleton
+│   ├── readme.md
+│   └── transliteration_mining_samanantar
+│       ├── align_data.sh
+│       ├── convert_csv.py
+│       ├── extract_translit_pairs.sh
+│       ├── install_tools.txt
+│       ├── model_run_steps.txt
+│       ├── preprocess_data.py
+│       ├── readme.md
+│       ├── samanantar_pairs_count.xlsx
+│       └── validation_script.py
 ├── inference
-│	 └── cli
+│   ├── cli
+│   │   ├── generate_result_files.py
+│   │   ├── interactive.sh
+│   │   ├── lang_list.txt
+│   │   └── transliterate_word.sh
+│   └── python
+│       ├── custom_interactive.py
+│       ├── lang_list.txt
+│       ├── test_api_inference.py
+│       └── xlit_translit.py
 ├── model_training_scripts
-│	 ├── binarizing
-│	 ├── data_filtration
-│	 │	 ├── combining_data_acrooss_lang.py
-│	 │	 ├── refresh_data_train_all_test_valid.py
-│	 │	 └── refresh_test_valid_data.py
-│	 ├── evaluate
-│	 ├── generation
-│	 ├── training
-│	 └── vocab_creation
-└── README.md
+│   ├── README.md
+│   ├── binarizing
+│   │   └── preprocess_all_lang.sh
+│   ├── data_filtration
+│   │   ├── combining_data_acrooss_lang.py
+│   │   ├── refresh_data_train_all_test_valid.py
+│   │   └── refresh_test_valid_data.py
+│   ├── evaluate
+│   │   ├── evaluate_result_with_rescore_option.py
+│   │   ├── final_result.sh
+│   │   └── final_result_without_rescoring.sh
+│   ├── generation
+│   │   ├── generate.sh
+│   │   └── generate_result_files.py
+│   ├── skeleton
+│   │   ├── blank_file.txt
+│   │   ├── creating_dir_struct.sh
+│   │   ├── indiccorp
+│   │   ├── mined_data
+│   │   ├── multi_lang
+│   │   ├── preprocess_data
+│   │   └── working
+│   ├── training
+│   │   ├── lang_list.txt
+│   │   └── train.sh
+│   └── vocab_creation
+│       └── preprocess.sh
+└── sample_images
+    ├── main_page.png
+    ├── select_language.png
+    └── transliterate_sentence.png
 ```
 
 <!-- citing information -->
