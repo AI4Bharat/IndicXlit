@@ -39,7 +39,6 @@ provide baseline results on the new Aksharantar testset. The Top-1 results are s
 - [Resources](#resources)
   - [Download IndicXlit model](#download-indicxlit-model)
   - [Using hosted APIs](#using-hosted-apis)
-    - [Sample screenshot of translate_sentence POST request](#sample-screenshot-of-translate_sentence-post-request)
   - [Accessing on ULCA](#accessing-on-ulca)
 - [Running Inference](#running-inference)
   - [Command line interface](#command-line-interface)
@@ -99,7 +98,7 @@ You can try out our model at [ULCA](https://bhashini.gov.in/ulca/model/explore-m
 <!-- ## Using the model to transliterate the inputs -->
 The model is trained on words as inputs. hence, users need to split sentence into words before running the transliteratation model when using our command line interface.
 
-Follow the Colab notebook to setup the environment, download the trained _IndicXlit_ model and transliterate your own text.
+Follow the Colab notebook to setup the environment, download the trained _IndicXlit_ model and transliterate your own text. GPU support is given in command line interface.
 
 <!-- colab integratation on running the model on custom input cli script-->
 Command line interface --> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1GFlqA7fpA2LLKJXtbtXSe-DqrAshuB-L?usp=sharing)
