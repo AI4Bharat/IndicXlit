@@ -20,7 +20,7 @@ data_resources = {
     'Assamese' : ['I','S','W','M'],
     'Bengali' : ['I','S','W','M','D','Br','F'],
     'Bodo' : ['I','M'],
-    'Konkani' : ['I','E','M'],
+    'Konkani' : ['I','Br','M','AI'],
     'Gujarati' : ['I','S','W','M','D','Br','F'],
     'Hindi' : ['I','S','W','M','D','AI','XC','XB','Br','F'],
     'Kannada' : ['I','S','W','M','D'],
@@ -106,7 +106,8 @@ norm = {
     'sd': 'sd',
 }
 
-Lang = ['hi','gu','mr','pa','ta','te','ur','bn','ml','mai','kok']
+# Lang = ['hi','gu','mr','pa','ta','te','ur','bn','ml','mai','kok']
+Lang = []
 # Train
 for lang in Lang:
     all_data = list()
@@ -124,7 +125,7 @@ for lang in Lang:
                 pass
             else:
                 Dakshina = [(normalizer.normalize(tup[0]), tup[1]) for tup in Dakshina]
-            print("Total_words:" + str(len(Dakshina)))
+            print("Total_words D:" + str(len(Dakshina)))
 
     #### Existing
    
@@ -137,7 +138,7 @@ for lang in Lang:
             else:
                 AI = [(normalizer.normalize(tup[0]), tup[1]) for tup in AI]
 
-            print("Total_words:" + str(len(AI)))
+            print("Total_words AI:" + str(len(AI)))
     
     if 'XB' in data_resources[mapping[lang]]: 
         with open(f'/Users/priyankabedekar/Desktop/IndicXlit_Code/All_model_data_ulca/Existing/{lang}/Xlit-IITB-Par_{lang}.txt') as E:
@@ -153,13 +154,13 @@ for lang in Lang:
     if 'Br' in data_resources[mapping[lang]]: 
         with open(f'/Users/priyankabedekar/Desktop/IndicXlit_Code/All_model_data_ulca/Existing/{lang}/Brahminet_{lang}.txt') as E:
             Br = list([(row[0],row[1].lower()) for row in csv.reader(E, delimiter ='\t')])
-            # if lang in ['ur']:
-            #     # Existing = [(normalize(tup[0]), tup[1]) for tup in Existing]
-            #     pass
-            # else:
-            Br = [(normalizer.normalize(tup[0]), tup[1]) for tup in Br]
+            if lang in ['ur']:
+                # Existing = [(normalize(tup[0]), tup[1]) for tup in Existing]
+                pass
+            else:
+                Br = [(normalizer.normalize(tup[0]), tup[1]) for tup in Br]
 
-            print("Total_words:" + str(len(Br)))
+            print("Total_words Br:" + str(len(Br)))
 
     if 'XC' in data_resources[mapping[lang]]: 
         with open(f'/Users/priyankabedekar/Desktop/IndicXlit_Code/All_model_data_ulca/Existing/{lang}/Xlit-Crowd_{lang}.txt') as E:
@@ -174,6 +175,8 @@ for lang in Lang:
 
     if 'F' in data_resources[mapping[lang]]: 
         with open(f'/Users/priyankabedekar/Desktop/IndicXlit_Code/All_model_data_ulca/Existing/{lang}/FIRE-2013-Track_{lang}.txt') as E:
+            # for i in csv.reader(E, delimiter ='\t'):
+            #     print(i[0])
             F = list([(row[0],row[1].lower()) for row in csv.reader(E, delimiter ='\t')])
             if lang in ['ur']:
                 # Existing = [(normalize(tup[0]), tup[1]) for tup in Existing]
@@ -287,7 +290,7 @@ for lang in Lang:
                         print("Pairs Left: " + str(len(pair)))
 
                     # Existing_Pairs
-                     'AI','XC','XB','Br','F','NAI'
+
                     if 'AI' in data_resources[mapping[lang]]:
                         E = [k for k in set(AI).intersection(pair)]
                         print(len(E))
@@ -377,14 +380,11 @@ for lang in Lang:
     # Create a multiline json
     json_list = json.loads(df.to_json(orient = "records"))
 
-    with open(f'/Users/priyankabedekar/Desktop/IndicXlit_Code/All_Data/JSONL/{map_3[lang]}/{map_3[lang]}_existing_train.json', 'w', encoding='utf-8') as f:
+    with open(f'/Users/priyankabedekar/Desktop/IndicXlit_Code/All_model_data_ulca/JSONL/{map_3[lang]}/{map_3[lang]}_existing_train.json', 'w', encoding='utf-8') as f:
         for item in json_list:
             f.write("%s\n" % json.dumps(item, ensure_ascii=False))
     end = time.time()
     print(f"{mapping[lang]}:" + str(end-start))
-
-
-
 
 
 def create_zip(file_name, file_dir):
@@ -427,9 +427,9 @@ map_2 = {
 
 split = 'train'
 
-# Lang = ['ben','guj','hin','kok','mai','mal','mar','pan','tam','tel','urd']
 
-Lang = ['ben']
+Lang = ['ben','guj','hin','kok','mai','mal','mar','pan','tam','tel','urd']
+
 with open (f'/Users/priyankabedekar/Desktop/IndicXlit_Code/All_model_data_ulca/ULCA/ULCA_IndicXlit_existing_{split}.csv', 'w') as stats:
     w = csv.writer(stats)
     w.writerow(['S.No','Source','Pair','DatasetName','Link'])
@@ -441,13 +441,19 @@ with open (f'/Users/priyankabedekar/Desktop/IndicXlit_Code/All_model_data_ulca/U
         with open(f'/Users/priyankabedekar/Desktop/IndicXlit_Code/All_model_data_ulca/JSONL/{lang}/{lang}_existing_{split}.json','r') as JSONL:
             List = list(JSONL)
         for pair in List:
-            dict = json.loads(pair)
+            dict = json.loads(pair)    
 
             try:
-                source[dict["source"]].append([dict["english word"],dict["native word"]])
+                if dict["source"] == "IndicCorp":
+                    source[dict["source"]].append([dict["english word"],dict["native word"],dict["score"]])
+                else:
+                    source[dict["source"]].append([dict["english word"],dict["native word"]])
             except KeyError:
                 source[dict["source"]] = []
-                source[dict["source"]].append([dict["english word"],dict["native word"]])
+                if dict["source"] == "IndicCorp":
+                    source[dict["source"]].append([dict["english word"],dict["native word"],dict["score"]])
+                else:
+                    source[dict["source"]].append([dict["english word"],dict["native word"]])
         for i in source.keys():
             jsonArray = source[i]
             words = []
@@ -456,12 +462,30 @@ with open (f'/Users/priyankabedekar/Desktop/IndicXlit_Code/All_model_data_ulca/U
 
             data = f'/Users/priyankabedekar/Desktop/IndicXlit_Code/All_model_data_ulca/ulca/{split}/{map_2[lang]}/data.json'
 
-            pd.DataFrame(jsonArray).to_csv(CSV, index=False, header=["sourceText","targetText"])
+            if i == "IndicCorp":
+                pd.DataFrame(jsonArray).to_csv(CSV, index=False, header=["sourceText","targetText","scores"])
+                with open(CSV, encoding='utf-8', newline='') as csvf:
+                    words = [
+                        {
+                            "sourceText": row["sourceText"],
+                            "targetText": row["targetText"],
+                            "collectionMethod": {
+                                "collectionDetails": {
+                                    "alignmentScore": eval(row["scores"])
+                                }
+                             }
+                        }
+                        for row in csv.DictReader(csvf)
+                    ]
+            else:
 
-            with open(CSV, encoding='utf-8', newline='') as csvf: 
-                csvReader = csv.DictReader(csvf) 
-                for row in csvReader:
-                    words.append(row)
+                pd.DataFrame(jsonArray).to_csv(CSV, index=False, header=["sourceText","targetText"])
+
+                with open(CSV, encoding='utf-8', newline='') as csvf: 
+                    csvReader = csv.DictReader(csvf) 
+                    for row in csvReader:
+                        words.append(row)
+
             with open(data, 'w', encoding='utf-8', newline='') as jsonf: 
                 jsonString = json.dumps(words, ensure_ascii= False, indent=4)
                 jsonf.write(jsonString)
@@ -489,32 +513,32 @@ with open (f'/Users/priyankabedekar/Desktop/IndicXlit_Code/All_model_data_ulca/U
             elif i == 'Xlit-Crowd':
                 params = open(f'/Users/priyankabedekar/Desktop/IndicXlit_Code/All_model_data_ulca/ulca/params_xc.json', 'r')
                 name = {
-                f'{i}': f"{i} en-{map_2[lang]} transliteration data"}
+                f'{i}': f"{i} en-{map_2[lang]} Transliteration Data"}
 
             elif i == 'Xlit-IITB-Par':
                 params = open(f'/Users/priyankabedekar/Desktop/IndicXlit_Code/All_model_data_ulca/ulca/params_xb.json', 'r')
                 name = {
-                f'{i}': f"{i} en-{map_2[lang]} transliteration data"}
+                f'{i}': f"{i} en-{map_2[lang]} Transliteration Data"}
             
             elif i == 'Brahminet':
                 params = open(f'/Users/priyankabedekar/Desktop/IndicXlit_Code/All_model_data_ulca/ulca/params_b.json', 'r')
                 name = {
-                f'{i}': f"{i} en-{map_2[lang]} transliteration data"}
+                f'{i}': f"{i} en-{map_2[lang]} Transliteration Data"}
             
             elif i == 'FIRE-2013-Track':
                 params = open(f'/Users/priyankabedekar/Desktop/IndicXlit_Code/All_model_data_ulca/ulca/params_f.json', 'r')
                 name = {
-                f'{i}': f"{i} en-{map_2[lang]} transliteration data"}
+                f'{i}': f"{i} en-{map_2[lang]} Transliteration Data"}
             
             elif i == 'AI4B-StoryWeaver':
                 params = open(f'/Users/priyankabedekar/Desktop/IndicXlit_Code/All_model_data_ulca/ulca/params_a.json', 'r')
                 name = {
-                f'{i}': f"{i} trainset en-{map_2[lang]} transliteration data"}
+                f'{i}': f"{i} trainset en-{map_2[lang]} Transliteration Data"}
             
             elif i == 'NotAI-tech':
                 params = open(f'/Users/priyankabedekar/Desktop/IndicXlit_Code/All_model_data_ulca/ulca/params_na.json', 'r')
                 name = {
-                f'{i}': f"{i} trainset en-{map_2[lang]} transliteration data"}
+                f'{i}': f"{i} trainset en-{map_2[lang]} Transliteration Data"}
             
             else:
                 params = open(f'/Users/priyankabedekar/Desktop/IndicXlit_Code/All_model_data_ulca/ulca/params.json', 'r')
@@ -532,11 +556,11 @@ with open (f'/Users/priyankabedekar/Desktop/IndicXlit_Code/All_model_data_ulca/U
                 'Dakshina'  :f"This Data is from the Dakshina {split} set, For more details, refer the paper: https://arxiv.org/abs/2007.01176",
                 'IndicCorp' :f"This {split} subset contains the transliteration pairs mined from largest publicly available monolingual corpora, refer the papers: https://doi.org/10.48550/arXiv.2005.00085, https://arxiv.org/abs/2205.03018",
                 'Samanantar':f"This {split} subset contains the transliteration pairs mined from largest publicly available parallel translation corpora, refer the papers: https://doi.org/10.48550/arXiv.2104.05596, https://arxiv.org/abs/2205.03018",
-                'Wikidata'  :f"This {split} subset contains the transliteration pairs extracted from wikidata."
+                'Wikidata'  :f"This {split} subset contains the transliteration pairs extracted from wikidata.",
                 'Xlit-Crowd':"This train subset contains transliteration pairs obtained via crowdsourcing by asking workers to transliterate Hindi words into the Roman script, refer paper for more details: https://aclanthology.org/L14-1713/",
                 'Xlit-IITB-Par':"This train subset contains Hindi-English Transliteration pairs mined from parallel translation corpora, refer paper for more details: https://www.cfilt.iitb.ac.in/iitb_parallel/lrec2018_iitbparallel.pdf",
-                'FIRE-2013-Track':"This train subset contains the transliteration pairs sourced from dataset released as part of track 2013, refer the paper: https://www.isical.ac.in/~fire/wn/STTS/2013-translit_search-track_overview.pdf",
-                'Brahminet':"This train subset contains the transliteration pairs from publicly available Brahminet corpus, refer paper: https://aclanthology.org/N15-3017/",
+                'FIRE-2013-Track':"This train subset contains the transliteration pairs sourced from dataset released as part of track 2013, refer paper for more details: https://www.isical.ac.in/~fire/wn/STTS/2013-translit_search-track_overview.pdf",
+                'Brahminet':"This train subset contains the transliteration pairs from publicly available Brahminet corpus, refer paper for more details: https://aclanthology.org/N15-3017/",
                 'AI4B-StoryWeaver':"This train subset contains the transliteration pairs from publicly available Story Weaver dataset.",
                 'NotAI-tech':"This train subset contains the transliteration pairs from publicly available NotAI-tech corpus.",
             }
