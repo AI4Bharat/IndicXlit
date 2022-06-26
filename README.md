@@ -234,7 +234,7 @@ The above steps are further documented in our colab notebook
 
 Please refer to section 6 of our [paper](https://arxiv.org/abs/2205.03018) for more details of our training hyperparameters.
 ### WandB plots
-[IndicXlit en-indic model]
+[IndicXlit en-indic model](https://wandb.ai/cs20s002/transliteration_model/runs/3gdvqx6e?workspace=user-cs20s002)
 
 ### Evaluating trained model
 The trained model will get saved in the transformer directory. It will have the following files:
