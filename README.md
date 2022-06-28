@@ -150,7 +150,9 @@ Please refer to section 6 of our [paper](https://arxiv.org/abs/2205.03018) for m
 The high level steps we follow for training are as follows:
 
 Organize the train/test/valid data in corpus dir such that it has all the files containing parallel data for en-X lang pair in the following format
+
 train_x.en for training file of en-X lang pair which contains the space separated roman characters in each line 
+
 train_x.x for training file of en-X lang pair which contains the space separated Indic characters in each line 
 
 ```bash
@@ -265,9 +267,9 @@ fairseq-generate corpus-bin \
 done
 ```
 
-To test the models after training, use `generate_result_files.py` to convert the fairseq output file into xml files and 'evaluate_result_with_rescore_option.py' to compute accuracies.
+To test the models after training, use `generate_result_files.py` to convert the fairseq output file into xml files and `evaluate_result_with_rescore_option.py` to compute accuracies.
 
-evaluate_result_with_rescore_option.py can be downloaded using following link,
+`evaluate_result_with_rescore_option.py` can be downloaded using following link,
 ```bash
 wget https://storage.googleapis.com/indic-xlit-public/final_model/evaluate_result_with_rescore_option.py
 ```
@@ -287,7 +289,9 @@ Please refer to section 7 of our [paper](https://arxiv.org/abs/2205.03018) for d
 The high level steps for finetuning on your own dataset are:
 
 Organize the train/test/valid data in corpus dir such that it has all the files containing parallel data for en-X lang pair in the following format
+
 train_x.en for training file of en-X lang pair which contains the space separated roman characters in each line 
+
 train_x.x for training file of en-X lang pair which contains the space separated Indic characters in each line 
 
 ```bash
@@ -537,6 +541,7 @@ The IndicXlit code (and models) are released under the MIT License.
  - Sushane Parthan <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>
  - Priyanka Bedakar <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>
  - Ruchi Khapra <sub> ([AI4Bharat](https://ai4bharat.org)) </sub>
+ - Gokul NC <sub> ([AI4Bharat](https://ai4bharat.org)) </sub>
  - Anoop Kunchukuttan <sub> ([AI4Bharat](https://ai4bharat.org), [Microsoft](https://www.microsoft.com/en-in/)) </sub>
  - Pratyush Kumar <sub> ([AI4Bharat](https://ai4bharat.org), [Microsoft](https://www.microsoft.com/en-in/), [IITM](https://www.iitm.ac.in)) </sub>
  - Mitesh M. Khapra <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>
