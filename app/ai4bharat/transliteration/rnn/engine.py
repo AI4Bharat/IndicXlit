@@ -91,9 +91,9 @@ class XlitEngineRNN():
                                     self.lang_config[la]["script"]),
                     vocab_file = vocab_file,
                 )
-                self.langs.append(la)
+                self.langs.add(la)
             except Exception as error:
-                print("XlitError: Failure in loading {} \n".format(la), error)
+                print("XlitError: Failure in loading {} \n".format(la), traceback.format_exc())
                 print(XlitError.loading_err.value)
 
     def download_models(self, models_path):

@@ -18,7 +18,7 @@ with pathlib.Path('dependencies.txt').open() as requirements_txt:
 # This call to setup() does all the work
 setup(
     name="ai4bharat-transliteration",
-    version="1.0.0",
+    version="1.0.0.2",
     description="Indic-Xlit: Transliteration library for Indic Languages. Conversion of text from English to 21 languages of South Asia.",
     long_description=README,
     long_description_content_type="text/markdown",

@@ -26,8 +26,10 @@ from pydload import dload
 import zipfile
 
 # added by yash
-MODEL_DOWNLOAD_URL = 'https://storage.googleapis.com/indic-xlit-public/final_model/indicxlit-en-indic-v1.0.zip'
-DICTS_DOWNLOAD_URL = 'https://storage.googleapis.com/indic-xlit-public/final_model/word_prob_dicts.zip'
+MODEL_DOWNLOAD_URL = 'https://github.com/AI4Bharat/IndicXlit/releases/download/v1.0/indicxlit-en-indic-v1.0.zip'
+DICTS_DOWNLOAD_URL = 'https://github.com/AI4Bharat/IndicXlit/releases/download/v1.0/word_prob_dicts.zip'
+# MODEL_DOWNLOAD_URL = 'https://storage.googleapis.com/indic-xlit-public/final_model/indicxlit-en-indic-v1.0.zip'
+# DICTS_DOWNLOAD_URL = 'https://storage.googleapis.com/indic-xlit-public/final_model/word_prob_dicts.zip'
 XLIT_VERSION = "v1.0" # If model/dict is changed on the storage, do not forget to change this variable in-order to force-download new assets
 
 MODEL_FILE = 'transformer/indicxlit.pt'
