@@ -22,7 +22,7 @@ from datetime import datetime
 import traceback
 import enum
 
-from .utils import LANG_CODE_TO_DISPLAY_NAME
+from .utils import LANG_CODE_TO_DISPLAY_NAME, RTL_LANG_CODES
 
 class XlitError(enum.Enum):
     lang_err = "Unsupported langauge ID requested ;( Please check available languages."
@@ -50,6 +50,7 @@ engine.exposed_langs = [
         "Author": "AI4Bharat", # Name of developer / team
         "CompiledDate": "09-April-2022", # date on which model was trained
         "IsStable": True, # Set `False` if the model is experimental
+        "Direction": "rtl" if lang_code in RTL_LANG_CODES else "ltr",
     } for lang_code in sorted(engine.langs)
 ]
 

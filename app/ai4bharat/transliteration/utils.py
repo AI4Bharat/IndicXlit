@@ -31,3 +31,12 @@ LANG_CODE_TO_DISPLAY_NAME = {
     'brx': "Boro - बड़ो",
     'mni': "Manipuri - ꯃꯤꯇꯩꯂꯣꯟ",
 }
+
+RTL_LANG_CODES = {
+    'dv',  # "Dhivehi - ދިވެހި"
+    'ks',  # "Kashmiri - كٲشُر"
+    'pnb', # "Punjabi (Western) - پن٘جابی"
+    'sd',  # "Sindhi - سنڌي"
+    'skr', # "Saraiki - سرائیکی"
+    'ur',  # "Urdu - اُردُو"
+}
