@@ -10,9 +10,9 @@
 
 <!-- description about IndicXlit -->
 
-***[IndicXlit](https://indicnlp.ai4bharat.org/indic-xlit)*** is a transformer-based multilingual transliteration model (~11M) for roman to native script conversion that ***supports 21 Indic languages***. It is trained on ***[Aksharantar](https://indicnlp.ai4bharat.org/aksharantar/)*** dataset which is the ***largest publicly available parallel corpus containing 26 million word pairs spanning 20 Indic languages*** at the time of writing (5 May 2022). It supports following 21 Indic languages:
+***[IndicXlit](https://indicnlp.ai4bharat.org/indic-xlit)*** is a transformer-based multilingual transliteration model (~11M) for Roman to native script conversion that ***supports 21 Indic languages***. It is trained on ***[Aksharantar](https://indicnlp.ai4bharat.org/aksharantar/)*** dataset which is the ***largest publicly available parallel corpus containing 26 million word pairs spanning 20 Indic languages*** at the time of writing (5 May 2022). It supports the following 21 Indic languages:
 
-<!-- list the languages IndicXlit supports -->
+<!-- list of languages IndicXlit supports -->
 | <!-- -->  	 | <!-- --> 	  | <!-- --> 	   | <!-- -->	     | <!-- -->       | <!-- -->      |
 | -------------- | -------------- | -------------- | --------------- | -------------- | ------------- |
 | Assamese (asm) | Bengali (ben)  |  Bodo (brx)    | Gujarati (guj)  | Hindi (hin)    | Kannada (kan) |
@@ -22,11 +22,10 @@
 
 ### Evaluation Results
 
-IndicXlit is evaluated on [Dakshina benchmark](https://github.com/google-research-datasets/dakshina) and [Aksharantar benchmark](https://indicnlp.ai4bharat.org/aksharantar/). IndicXlit achieves state-of-theart results on the Dakshina testset and also
-provide baseline results on the new Aksharantar testset. The Top-1 results are summarized below. For more details, refer [paper](https://arxiv.org/abs/2205.03018)
+IndicXlit is evaluated on [Dakshina benchmark](https://github.com/google-research-datasets/dakshina) and [Aksharantar benchmark](https://indicnlp.ai4bharat.org/aksharantar/). IndicXlit achieves state-of-the-art results on the Dakshina testset and also provides baseline results on the new Aksharantar testset. The Top-1 results are summarized below. For more details, refer [paper](https://arxiv.org/abs/2205.03018).
 
 
-| languages | asm | ben | brx | guj | hin | kan | kas | kok | mai | mal | mni | mar | nep | ori | pan | san | tam | tel | urd |
+| Languages | asm | ben | brx | guj | hin | kan | kas | kok | mai | mal | mni | mar | nep | ori | pan | san | tam | tel | urd |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Dakshina | - | 55.49 | - | 62.02 | 60.56 | 77.18 | - | - | - | 63.56 | - | 64.85 | - | - | 47.24 | - | 68.10 | 73.38 | 42.12 | 61.45 |
 | Aksharantar (native words) | 60.27 | 61.70 | 70.79 | 61.89 | 55.59 | 76.18 | 28.76 | 63.06 | 72.06 | 64.73 | 83.19 | 63.72 | 80.25 | 58.90 | 40.27 | 78.63 | 69.78 | 84.69 | 48.37 |
@@ -40,9 +39,9 @@ provide baseline results on the new Aksharantar testset. The Top-1 results are s
   - [Download IndicXlit model](#download-indicxlit-model)
   - [Using hosted APIs](#using-hosted-apis)
   - [Accessing on ULCA](#accessing-on-ulca)
-- [Running Inference](#running-inference)
+- [Running inference](#running-inference)
   - [Command line interface](#command-line-interface)
-  - [Python Inference](#python-inference)
+  - [Python interface](#python-interface)
 - [Training model](#training-model)
   - [Setting up your environment](#setting-up-your-environment)
   - [Details of models and hyperparameters](#details-of-models-and-hyperparameters)
@@ -61,13 +60,13 @@ provide baseline results on the new Aksharantar testset. The Top-1 results are s
 
 ## Resources
 ### Download IndicXlit model
-<!-- heperlinks for downloading the models -->
+<!-- hyperlinks for downloading the models -->
 Roman to Indic model [v1.0](https://storage.googleapis.com/indic-xlit-public/final_model/indicxlit-en-indic-v1.0.zip)
 <!-- mirror links set up the public drive -->	
 
 ### Using hosted APIs
 
-<details><summary>Click to expand </summary>
+<details><summary> Click to expand </summary>
 
 #### Sample screenshot of sentence transliteration
 <br>
@@ -75,13 +74,13 @@ Roman to Indic model [v1.0](https://storage.googleapis.com/indic-xlit-public/fin
 <img src="./sample_images/main_page.png" width=50% height=50% />
 </p>
 
-Select the language from drop down list given at top left corner.
+Select the language from drop-down list given at top left corner:
 <br>
 <p align="left">
 <img src="./sample_images/select_language.png" width=50% height=50% />
 </p>
 	
-To transliterate into hindi, select Hindi from the list and enter your sentence in the "text" field:
+To transliterate into Hindi, select Hindi from the list and enter your sentence in the "text" field:
 <br>
 <p align="left">
 <img src="./sample_images/transliterate_sentence.png" width=50% height=50% />
@@ -96,32 +95,32 @@ You can try out our model at [ULCA](https://bhashini.gov.in/ulca/model/explore-m
 ## Running Inference
 ### Command line interface
 <!-- ## Using the model to transliterate the inputs -->
-The model is trained on words as inputs. hence, users need to split sentence into words before running the transliteratation model when using our command line interface.
+The model is trained on words as inputs. Hence, users need to split sentences into words before running the transliteration model when using our command line interface.
 
 Follow the Colab notebook to setup the environment, download the trained _IndicXlit_ model and transliterate your own text. GPU support is given in command line interface.
 
-<!-- colab integratation on running the model on custom input cli script-->
+<!-- colab integratation on running the model on custom input cli script -->
 Command line interface --> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1GFlqA7fpA2LLKJXtbtXSe-DqrAshuB-L?usp=sharing)
 
-### Python Inference
-<!-- colab integratation on running the model on custom input python script-->
-Python interface       --> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1P78Tbr6zhe-5LeiKk525N3SGPKn2ofGg?usp=sharing)
+### Python interface
+<!-- colab integratation on running the model on custom input python script -->
+Python interface --> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1P78Tbr6zhe-5LeiKk525N3SGPKn2ofGg?usp=sharing)
 
-The python interface is useful in case you want to reuse the model for multiple translations and do not want to reinitialize the model each time. Moreover, re-ranking option is available in python interface, but not in command line interface.
+The python interface is useful in case you want to reuse the model for multiple translations and do not want to reinitialize the model each time. Moreover, re-ranking option is available in Python interface, but not in command line interface.
 
 
 ## Training model
 ###  Setting up your environment
-<details><summary>Click to expand </summary>
+<details><summary> Click to expand </summary>
 
 ```bash
-# clone IndicXli repository
+# Clone IndicXlit repository
 git clone https://github.com/AI4Bharat/IndicXlit.git
 
-# install required libraries
+# Install required libraries
 pip install indic-nlp-library
 
-# Install fairseq from source
+# Install Fairseq from source
 git clone https://github.com/pytorch/fairseq.git
 cd fairseq
 pip install --editable ./
@@ -131,11 +130,11 @@ pip install --editable ./
 
 
 ## Details of models and hyperparameters
-<!-- network and training details and link to the paper  -->
+<!-- network and training details and link to the paper -->
 
 - Architecture: IndicXlit uses 6 encoder and decoder layers, input embeddings of size 256 with 4 attention heads and
-feedforward dimension of 1024 with total number of parameters of 11M
-- Loss: Cross entropy loss
+feedforward dimension of 1024, with a total of 11M parameters.
+- Loss: Cross-Entropy loss
 - Optimizer: Adam
 - Adam-betas: (0.9, 0.98)
 - Peak-learning-rate: 0.001
@@ -149,11 +148,9 @@ Please refer to section 6 of our [paper](https://arxiv.org/abs/2205.03018) for m
 
 The high level steps we follow for training are as follows:
 
-Organize the train/test/valid data in corpus dir such that it has all the files containing parallel data for en-X lang pair in the following format
-
-train_x.en for training file of en-X lang pair which contains the space separated roman characters in each line 
-
-train_x.x for training file of en-X lang pair which contains the space separated Indic characters in each line 
+- Organize the train/test/valid data in corpus directory such that it has all the files containing parallel data for en-X (English-X) language pairs in the following format:
+  - train_x.en for training file of en-X language pair which contains the space separated Roman characters in each line.
+  - train_x.x for training file of en-X language pair which contains the space separated Indic language characters in each line.
 
 ```bash
 # corpus/
@@ -175,25 +172,25 @@ train_x.x for training file of en-X lang pair which contains the space separated
 
 ```
 
-Joint the training files across all languages
+- Combine the training files (joint training) across all languages.
 ```bash
 # corpus/
 # ├── train_combine.cmb
 # └── train_combine.en
 ```
 
-Create the joint vocabulary using all the combined training data. 
+- Create the joint vocabulary using all the combined training data. 
 ```bash
 fairseq-preprocess \
-   --trainpref corpus/train_combine  \
+   --trainpref corpus/train_combine \
    --source-lang en --target-lang cmb \
    --workers 256 \
    --destdir corpus-bin
 ```
 
-Create the binarized data required for fairseq for each langauge separately using joint vocabulary
+- Create the binarized data required for Fairseq for each language separately using joint vocabulary.
 ```bash
-for lang_abr in bn gu hi kn ml mr pa sd si ta te ur
+for lang_abr in as bn brx gom gu hi kn ks mai ml mni mr ne or pa sa sd si ta te ur
 do
    fairseq-preprocess \
    --trainpref corpus/train_$lang_abr --validpref corpus/valid_$lang_abr --testpref corpus/test_$lang_abr \
@@ -205,9 +202,9 @@ do
 done
 ```
 
-Add all languages codes to `lang_list.txt` file and save it in the same dir
+- Add all language codes to `lang_list.txt` file and save it in the same directory.
 
-Start training with fairseq-train command. Please refer to [fairseq documentaion](https://fairseq.readthedocs.io/en/latest/command_line_tools.html) to know more about each of these options
+- Start training with fairseq-train command. Please refer to [Fairseq documentaion](https://fairseq.readthedocs.io/en/latest/command_line_tools.html) to know more about each of these options.
 ```bash
 # training script
 fairseq-train corpus-bin \
@@ -218,34 +215,34 @@ fairseq-train corpus-bin \
   --sampling-temperature 1.5 \
   --encoder-langtok "tgt" \
   --lang-dict lang_list.txt \
-  --lang-pairs en-bn,en-gu,en-hi,en-kn,en-ml,en-mr,en-pa,en-sd,en-si,en-ta,en-te,en-ur  \
+  --lang-pairs en-as,en-bn,en-brx,en-gom,en-gu,en-hi,en-kn,en-ks,en-mai,en-ml,en-mni,en-mr,en-ne,en-or,en-pa,en-sa,en-sd,en-si,en-ta,en-te,en-ur \
   --decoder-normalize-before --encoder-normalize-before \
-  --activation-fn gelu --adam-betas "(0.9, 0.98)"  \
+  --activation-fn gelu --adam-betas "(0.9, 0.98)" \
   --batch-size 1024 \
   --decoder-attention-heads 4 --decoder-embed-dim 256 --decoder-ffn-embed-dim 1024 --decoder-layers 6 \
   --dropout 0.5 \
   --encoder-attention-heads 4 --encoder-embed-dim 256 --encoder-ffn-embed-dim 1024 --encoder-layers 6 \
   --lr 0.001 --lr-scheduler inverse_sqrt \
   --max-epoch 51 \
-  --optimizer adam  \
+  --optimizer adam \
   --num-workers 32 \
   --warmup-init-lr 0 --warmup-updates 4000
 ```
-The above steps are further documented in our colab notebook
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1KM8M2hk6fPAI039bBLtHxxojHzo6oMQ7?usp=sharing)
+The above steps are further documented in our Colab notebook --> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1KM8M2hk6fPAI039bBLtHxxojHzo6oMQ7?usp=sharing)
 
 Please refer to section 6 of our [paper](https://arxiv.org/abs/2205.03018) for more details of our training hyperparameters.
-### WandB plots
-[IndicXlit en-indic model](https://wandb.ai/cs20s002/transliteration_model/runs/3gdvqx6e?workspace=user-cs20s002)
 
-### Evaluating trained model
-The trained model will get saved in the transformer directory. It will have the following files:
+### WandB plots
+[IndicXlit en-indic model](https://wandb.ai/cs20s002/transliteration_model/runs/3gdvqx6e?workspace=user-cs20s002).
+
+### Evaluating a trained model
+- The trained model is aved in the transformer directory. It will have the following files:
 ```bash
 # transformer/
 # └── checkpoint_best.pt
 ```
 
-To generate the outputs after training, use following generation script which will generate the predictions and save it in output dir.
+- To generate outputs after training, use the following generation script to predict outputs which are saved in the output directory.
 ```bash
 for lang_abr in as bn brx gom gu hi kn ks mai ml mni mr ne or pa sa sd si ta te ur
 do
@@ -267,32 +264,31 @@ fairseq-generate corpus-bin \
 done
 ```
 
-To test the models after training, use `generate_result_files.py` to convert the fairseq output file into xml files and `evaluate_result_with_rescore_option.py` to compute accuracies.
+- To test the models post training, use `generate_result_files.py` to convert the Fairseq output file into XML files and `evaluate_result_with_rescore_option.py` to compute accuracies.
 
-`evaluate_result_with_rescore_option.py` can be downloaded using following link,
+- `evaluate_result_with_rescore_option.py` can be downloaded using the following link:
 ```bash
 wget https://storage.googleapis.com/indic-xlit-public/final_model/evaluate_result_with_rescore_option.py
 ```
 
-The above evaluation steps and code for `generate_result_files.py` are further documented in the colab notebook 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1KM8M2hk6fPAI039bBLtHxxojHzo6oMQ7?usp=sharing)
+The above evaluation steps and code for `generate_result_files.py` are further documented in the Colab notebook --> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1KM8M2hk6fPAI039bBLtHxxojHzo6oMQ7?usp=sharing)
 
 ### Detailed evaluation results
 Refer to [Evaluation Results](#evaluation-results) for results of IndicXlit model on Dakshina and Aksharantar benchmarks.
-Please refer to section 7 of our [paper](https://arxiv.org/abs/2205.03018) for detailed discussion of the results
+Please refer to section 7 of our [paper](https://arxiv.org/abs/2205.03018) for a detailed discussion of the results.
 
 
-<!-- Finetuning the model on cutom dataset integrate the notebook-->
+<!-- Finetuning the model on cutom dataset and integrate the notebook -->
 
 ## Finetuning the model on your input dataset
 
 The high level steps for finetuning on your own dataset are:
 
-Organize the train/test/valid data in corpus dir such that it has all the files containing parallel data for en-X lang pair in the following format
+- Organize the train/test/valid data in corpus directory such that it has all the files containing parallel data for en-X language pair in the following format:
 
-train_x.en for training file of en-X lang pair which contains the space separated roman characters in each line 
+  - train_x.en for training file of en-X language pair which contains the space separated Roman characters in each line.
 
-train_x.x for training file of en-X lang pair which contains the space separated Indic characters in each line 
+  - train_x.x for training file of en-X language pair which contains the space separated Indic characters in each line.
 
 ```bash
 # corpus/
@@ -314,8 +310,7 @@ train_x.x for training file of en-X lang pair which contains the space separated
 
 ```
 
-
-To download and decompress the model file and joint vocabulary files use following commmand,
+- To download and decompress the model file and joint vocabulary files use the following commmand.
 
 ```bash
 # download the IndicXlit models
@@ -323,9 +318,10 @@ wget https://storage.googleapis.com/indic-xlit-public/final_model/indicxlit-en-i
 unzip indicxlit-en-indic-v1.0.zip
 ```
 
-binarizing the files using the joint dictionaries
+- Binarizing the files using the joint dictionaries.
+
 ```bash
-for lang_abr in bn gu hi kn ml mr pa sd si ta te ur
+for lang_abr in as bn brx gu hi kn ml mr pa sd si ta te ur
 do
    fairseq-preprocess \
    --trainpref corpus/train_$lang_abr --validpref corpus/valid_$lang_abr --testpref corpus/test_$lang_abr \
@@ -336,16 +332,16 @@ do
 done
 ```
 
-Add all languages codes to `lang_list.txt` file and save it in the same dir
+- Add all language codes to `lang_list.txt` file and save it in the same directory.
 
-Please refer to fairseq documentaion to know more about each of these options (https://fairseq.readthedocs.io/en/latest/command_line_tools.html)
+- Please refer to [Fairseq documentaion](https://fairseq.readthedocs.io/en/latest/command_line_tools.html) to know more about each of these options.
 ```bash
 
-# We will use fairseq-train to finetune the model:
-# some notable args:
-# --lr                  -> learning rate. From our limited experiments, we find that lower learning rates like 3e-5 works best for finetuning.
-# --restore-file        -> reload the pretrained checkpoint and start training from here (change this path for indic-en. Currently its is set to en-indic)
-# --reset-*             -> reset and not use lr scheduler, dataloader, optimizer etc of the older checkpoint
+# We will use fairseq-train to finetune the model
+# Some notable args:
+# --lr                  -> Learning Rate. From our limited experiments, we find that lower learning rates like 3e-5 works best for finetuning.
+# --restore-file        -> Reload the pretrained checkpoint and start training from here (change this path for Indic-en; currently it is set to en-Indic).
+# --reset-*             -> reset and not use lr scheduler, dataloader, optimizer etc of the older checkpoint.
 
 fairseq-train corpus-bin \
     --save-dir transformer \
@@ -357,14 +353,14 @@ fairseq-train corpus-bin \
     --lang-dict lang_list.txt \
     --lang-pairs en-bn,en-gu,en-hi,en-kn,en-ml,en-mr,en-pa,en-sd,en-si,en-ta,en-te,en-ur \
     --decoder-normalize-before --encoder-normalize-before \
-    --activation-fn gelu --adam-betas "(0.9, 0.98)"  \
+    --activation-fn gelu --adam-betas "(0.9, 0.98)" \
     --batch-size 1024 \
     --decoder-attention-heads 4 --decoder-embed-dim 256 --decoder-ffn-embed-dim 1024 --decoder-layers 6 \
     --dropout 0.5 \
     --encoder-attention-heads 4 --encoder-embed-dim 256 --encoder-ffn-embed-dim 1024 --encoder-layers 6 \
     --lr 0.001 --lr-scheduler inverse_sqrt \
     --max-epoch 51 \
-    --optimizer adam  \
+    --optimizer adam \
     --num-workers 32 \
     --warmup-init-lr 0 --warmup-updates 4000 \
     --keep-last-epochs 5 \
@@ -376,20 +372,16 @@ fairseq-train corpus-bin \
     --reset-optimizer
 ```
 
-The above steps (setup the environment, download the trained _IndicXlit_ model and prepare your custom dataset for funetuning) are further documented in our colab notebook
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1TurBNE0Pq9_hqEOXps0FXfymsdlJotE0?usp=sharing)
+The above steps (setting up the environment, downloading the trained _IndicXlit_ model and preparing your custom dataset for funetuning) are further documented in our Colab notebook --> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1TurBNE0Pq9_hqEOXps0FXfymsdlJotE0?usp=sharing)
 
 
 ## Mining details
-Following links provides the detail description of mining from various resources,
+Following links provide a detailed description of mining from various resources:
 - Samanantar: https://github.com/AI4Bharat/IndicXlit/tree/master/data_mining/transliteration_mining_samanantar
 - IndicCorp: https://github.com/AI4Bharat/IndicXlit/tree/master/data_mining/IndicCorp/skeleton/en_dict_workplace
 
-
-
-
 ## Directory structure
-<!-- dir structure for the repo -->
+<!-- directory structure for the repo -->
 ```
 IndicXlit
 ├── Checker
@@ -513,6 +505,7 @@ IndicXlit
 ## Citing
 
 If you are using any of the resources, please cite the following article:
+
 ```
 @article{Madhani2022AksharantarTB,
   title={Aksharantar: Towards building open transliteration tools for the next billion users},
@@ -522,18 +515,15 @@ If you are using any of the resources, please cite the following article:
   volume={abs/2205.03018}
 }
 ```
-We would like to hear from you if:
 
+We would like to hear from you if:
 - You are using our resources. Please let us know how you are putting these resources to use.
 - You have any feedback on these resources.
-
 
 <!-- License -->
 ### License
 
 The IndicXlit code (and models) are released under the MIT License.
-
-
 
 <!-- Contributors -->
 ### Contributors
@@ -546,15 +536,12 @@ The IndicXlit code (and models) are released under the MIT License.
  - Pratyush Kumar <sub> ([AI4Bharat](https://ai4bharat.org), [Microsoft](https://www.microsoft.com/en-in/), [IITM](https://www.iitm.ac.in)) </sub>
  - Mitesh M. Khapra <sub> ([AI4Bharat](https://ai4bharat.org), [IITM](https://www.iitm.ac.in)) </sub>
 
-
-
 <!-- Contact -->
 ### Contact
 - Anoop Kunchukuttan ([anoop.kunchukuttan@gmail.com](mailto:anoop.kunchukuttan@gmail.com))
 - Mitesh Khapra ([miteshk@cse.iitm.ac.in](mailto:miteshk@cse.iitm.ac.in))
 - Pratyush Kumar ([pratyush@cse.iitm.ac.in](mailto:pratyush@cse.iitm.ac.in))
 
-
 ## Acknowledgements
 
-We would like to thank EkStep Foundation for their generous grant which helped in setting up the Centre for AI4Bharat at IIT Madras to support our students, research staff, data and computational requirements. We would like to thank The Ministry of Electronics and Information Technology (NLTM) for its grant to support the creation of datasets and models for Indian languages under its ambitions Bhashini project. We would also like to thank the Centre for Development of Advanced Computing, India (C-DAC) for providing access to the Param Siddhi supercomputer for training our models. Lastly, we would like to thank Microsoft for its grant to create datasets, tools and resources for Indian languages.
+We would like to thank EkStep Foundation for their generous grant which helped in setting up the Centre for AI4Bharat at IIT Madras to support our students, research staff, data and computational requirements. We would like to thank The Ministry of Electronics and Information Technology (NLTM) for its grant to support the creation of datasets and models for Indian languages under its ambitious Bhashini project. We would also like to thank the Centre for Development of Advanced Computing, India (C-DAC) for providing access to the Param Siddhi supercomputer for training our models. Lastly, we would like to thank Microsoft for its grant to create datasets, tools and resources for Indian languages.
