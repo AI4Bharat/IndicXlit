@@ -154,20 +154,20 @@ The high level steps we follow for training are as follows:
 
 ```bash
 # corpus/
-# ├── train_as.as
-# ├── train_en.en
 # ├── train_bn.bn
-# ├── train_en.en
+# ├── train_bn.en
+# ├── train_gu.gu
+# ├── train_gu.en
 # ├── ....
-# ├── valid_as.as
-# ├── valid_en.en
 # ├── valid_bn.bn
-# ├── valid_en.en
+# ├── valid_bn.en
+# ├── valid_gu.gu
+# ├── valid_gu.en
 # ├── ....
-# ├── test_as.as
-# ├── test_en.en
 # ├── test_bn.bn
-# ├── test_en.en
+# ├── test_bn.en
+# ├── test_gu.gu
+# ├── test_gu.en
 # └── ....
 
 ```
@@ -190,7 +190,7 @@ fairseq-preprocess \
 
 - Create the binarized data required for Fairseq for each language separately using joint vocabulary.
 ```bash
-for lang_abr in as bn brx gom gu hi kn ks mai ml mni mr ne or pa sa sd si ta te ur
+for lang_abr in bn gu hi kn ml mr pa sd si ta te ur
 do
    fairseq-preprocess \
    --trainpref corpus/train_$lang_abr --validpref corpus/valid_$lang_abr --testpref corpus/test_$lang_abr \
@@ -205,6 +205,9 @@ done
 - Add all language codes to `lang_list.txt` file and save it in the same directory.
 
 - Start training with fairseq-train command. Please refer to [Fairseq documentaion](https://fairseq.readthedocs.io/en/latest/command_line_tools.html) to know more about each of these options.
+
+- Please refer https://github.com/facebookresearch/fairseq/tree/main/examples/multilingual to know more about the 'translation_multi_simple_epoch' task.   
+
 ```bash
 # training script
 fairseq-train corpus-bin \
@@ -215,16 +218,16 @@ fairseq-train corpus-bin \
   --sampling-temperature 1.5 \
   --encoder-langtok "tgt" \
   --lang-dict lang_list.txt \
-  --lang-pairs en-as,en-bn,en-brx,en-gom,en-gu,en-hi,en-kn,en-ks,en-mai,en-ml,en-mni,en-mr,en-ne,en-or,en-pa,en-sa,en-sd,en-si,en-ta,en-te,en-ur \
+  --lang-pairs en-bn,en-gu,en-hi,en-kn,en-ml,en-mr,en-pa,en-sd,en-si,en-ta,en-te,en-ur  \
   --decoder-normalize-before --encoder-normalize-before \
-  --activation-fn gelu --adam-betas "(0.9, 0.98)" \
+  --activation-fn gelu --adam-betas "(0.9, 0.98)"  \
   --batch-size 1024 \
   --decoder-attention-heads 4 --decoder-embed-dim 256 --decoder-ffn-embed-dim 1024 --decoder-layers 6 \
   --dropout 0.5 \
   --encoder-attention-heads 4 --encoder-embed-dim 256 --encoder-ffn-embed-dim 1024 --encoder-layers 6 \
   --lr 0.001 --lr-scheduler inverse_sqrt \
   --max-epoch 51 \
-  --optimizer adam \
+  --optimizer adam  \
   --num-workers 32 \
   --warmup-init-lr 0 --warmup-updates 4000
 ```
@@ -244,7 +247,7 @@ Please refer to section 6 of our [paper](https://arxiv.org/abs/2205.03018) for m
 
 - To generate outputs after training, use the following generation script to predict outputs which are saved in the output directory.
 ```bash
-for lang_abr in as bn brx gom gu hi kn ks mai ml mni mr ne or pa sa sd si ta te ur
+for lang_abr in bn gu hi kn ml mr pa sd si ta te ur
 do
 source_lang=en
 target_lang=$lang_abr
@@ -256,11 +259,11 @@ fairseq-generate corpus-bin \
   --nbest 4 \
   --source-lang $source_lang \
   --target-lang $target_lang \
-  --batch-size 4096 \
+  --batch-size 2048 \
   --encoder-langtok "tgt" \
   --lang-dict lang_list.txt \
   --num-workers 64 \
-  --lang-pairs en-as,en-bn,en-brx,en-gom,en-gu,en-hi,en-kn,en-ks,en-mai,en-ml,en-mni,en-mr,en-ne,en-or,en-pa,en-sa,en-sd,en-si,en-ta,en-te,en-ur  > output/${source_lang}_${target_lang}.txt
+  --lang-pairs en-bn,en-gu,en-hi,en-kn,en-ml,en-mr,en-pa,en-sd,en-si,en-ta,en-te,en-ur  > output/${source_lang}_${target_lang}.txt
 done
 ```
 
@@ -292,20 +295,20 @@ The high level steps for finetuning on your own dataset are:
 
 ```bash
 # corpus/
-# ├── train_as.as
-# ├── train_en.en
 # ├── train_bn.bn
-# ├── train_en.en
+# ├── train_bn.en
+# ├── train_gu.gu
+# ├── train_gu.en
 # ├── ....
-# ├── valid_as.as
-# ├── valid_en.en
 # ├── valid_bn.bn
-# ├── valid_en.en
+# ├── valid_bn.en
+# ├── valid_gu.gu
+# ├── valid_gu.en
 # ├── ....
-# ├── test_as.as
-# ├── test_en.en
 # ├── test_bn.bn
-# ├── test_en.en
+# ├── test_bn.en
+# ├── test_gu.gu
+# ├── test_gu.en
 # └── ....
 
 ```
@@ -321,7 +324,7 @@ unzip indicxlit-en-indic-v1.0.zip
 - Binarizing the files using the joint dictionaries.
 
 ```bash
-for lang_abr in as bn brx gu hi kn ml mr pa sd si ta te ur
+for lang_abr in bn gu hi kn ml mr pa sd si ta te ur
 do
    fairseq-preprocess \
    --trainpref corpus/train_$lang_abr --validpref corpus/valid_$lang_abr --testpref corpus/test_$lang_abr \
@@ -332,11 +335,11 @@ do
 done
 ```
 
-- Add all language codes to `lang_list.txt` file and save it in the same directory.
+- Add all language codes that models supports to `lang_list.txt` file and save it in the same directory.
 
 - Please refer to [Fairseq documentation](https://fairseq.readthedocs.io/en/latest/command_line_tools.html) to know more about each of these options.
-```bash
 
+```bash
 # We will use fairseq-train to finetune the model
 # Some notable args:
 # --lr                  -> Learning Rate. From our limited experiments, we find that lower learning rates like 3e-5 works best for finetuning.
@@ -353,14 +356,14 @@ fairseq-train corpus-bin \
     --lang-dict lang_list.txt \
     --lang-pairs en-bn,en-gu,en-hi,en-kn,en-ml,en-mr,en-pa,en-sd,en-si,en-ta,en-te,en-ur \
     --decoder-normalize-before --encoder-normalize-before \
-    --activation-fn gelu --adam-betas "(0.9, 0.98)" \
+    --activation-fn gelu --adam-betas "(0.9, 0.98)"  \
     --batch-size 1024 \
     --decoder-attention-heads 4 --decoder-embed-dim 256 --decoder-ffn-embed-dim 1024 --decoder-layers 6 \
     --dropout 0.5 \
     --encoder-attention-heads 4 --encoder-embed-dim 256 --encoder-ffn-embed-dim 1024 --encoder-layers 6 \
     --lr 0.001 --lr-scheduler inverse_sqrt \
     --max-epoch 51 \
-    --optimizer adam \
+    --optimizer adam  \
     --num-workers 32 \
     --warmup-init-lr 0 --warmup-updates 4000 \
     --keep-last-epochs 5 \
