@@ -89,7 +89,7 @@ To transliterate into Hindi, select Hindi from the list and enter your sentence 
 </details>
 	
 ### Accessing on ULCA
-You can try out our model at [ULCA](https://bhashini.gov.in/ulca/model/explore-models) and filter for IndicXlit under Transliteration models.
+You can try out our model at ***ULCA*** under [Transliteration Models](https://bhashini.gov.in/ulca/model/explore-models), and the Aksharantar dataset under [Transliteration Benchmark Datasets](https://bhashini.gov.in/ulca/model/benchmark-datasets).
 
 
 ## Running Inference
