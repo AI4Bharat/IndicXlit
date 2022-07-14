@@ -268,7 +268,7 @@ done
 
 - `evaluate_result_with_rescore_option.py` can be downloaded using the following link:
 ```bash
-wget https://storage.googleapis.com/indic-xlit-public/final_model/evaluate_result_with_rescore_option.py
+wget https://github.com/AI4Bharat/IndicXlit/releases/download/v1.0/evaluate_result_with_rescore_option.py
 ```
 
 The above evaluation steps and code for `generate_result_files.py` are further documented in the Colab notebook --> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1KM8M2hk6fPAI039bBLtHxxojHzo6oMQ7?usp=sharing)
@@ -314,7 +314,7 @@ The high level steps for finetuning on your own dataset are:
 
 ```bash
 # download the IndicXlit models
-wget https://storage.googleapis.com/indic-xlit-public/final_model/indicxlit-en-indic-v1.0.zip
+wget https://github.com/AI4Bharat/IndicXlit/releases/download/v1.0/indicxlit-en-indic-v1.0.zip
 unzip indicxlit-en-indic-v1.0.zip
 ```
 
