@@ -22,7 +22,7 @@
 
 ### Evaluation Results
 
-IndicXlit is evaluated on [Dakshina benchmark](https://github.com/google-research-datasets/dakshina) and [Aksharantar benchmark](https://indicnlp.ai4bharat.org/aksharantar/). IndicXlit achieves state-of-the-art results on the Dakshina testset and also provides baseline results on the new Aksharantar testset. The Top-1 results are summarized below. For more details, refer [paper](https://arxiv.org/abs/2205.03018).
+IndicXlit is evaluated on [Dakshina benchmark](https://github.com/google-research-datasets/dakshina) and [Aksharantar benchmark](https://indicnlp.ai4bharat.org/aksharantar/). IndicXlit achieves state-of-the-art results on the Dakshina testset and also provides baseline results on the new Aksharantar testset. The Top-1 results are summarized below. For more details, refer our [paper](https://arxiv.org/abs/2205.03018).
 
 
 | Languages | asm | ben | brx | guj | hin | kan | kas | kok | mai | mal | mni | mar | nep | ori | pan | san | tam | tel | urd |
@@ -106,7 +106,7 @@ Command line interface --> [![Open In Colab](https://colab.research.google.com/a
 <!-- colab integratation on running the model on custom input python script -->
 Python interface --> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1P78Tbr6zhe-5LeiKk525N3SGPKn2ofGg?usp=sharing)
 
-The python interface is useful in case you want to reuse the model for multiple translations and do not want to reinitialize the model each time. Moreover, re-ranking option is available in Python interface, but not in command line interface.
+The python interface is useful in case you want to reuse the model for multiple transliterations and do not want to reinitialize the model each time. Moreover, re-ranking option is available in Python interface, but not in command line interface.
 
 
 ## Training model
@@ -236,7 +236,7 @@ Please refer to section 6 of our [paper](https://arxiv.org/abs/2205.03018) for m
 [IndicXlit en-indic model](https://wandb.ai/cs20s002/transliteration_model/runs/3gdvqx6e?workspace=user-cs20s002).
 
 ### Evaluating a trained model
-- The trained model is aved in the transformer directory. It will have the following files:
+- The trained model is saved in the transformer directory. It will have the following files:
 ```bash
 # transformer/
 # └── checkpoint_best.pt
@@ -310,7 +310,7 @@ The high level steps for finetuning on your own dataset are:
 
 ```
 
-- To download and decompress the model file and joint vocabulary files use the following commmand.
+- To download and decompress the model file and joint vocabulary files use the following command.
 
 ```bash
 # download the IndicXlit models
@@ -334,14 +334,14 @@ done
 
 - Add all language codes to `lang_list.txt` file and save it in the same directory.
 
-- Please refer to [Fairseq documentaion](https://fairseq.readthedocs.io/en/latest/command_line_tools.html) to know more about each of these options.
+- Please refer to [Fairseq documentation](https://fairseq.readthedocs.io/en/latest/command_line_tools.html) to know more about each of these options.
 ```bash
 
 # We will use fairseq-train to finetune the model
 # Some notable args:
 # --lr                  -> Learning Rate. From our limited experiments, we find that lower learning rates like 3e-5 works best for finetuning.
 # --restore-file        -> Reload the pretrained checkpoint and start training from here (change this path for Indic-en; currently it is set to en-Indic).
-# --reset-*             -> reset and not use lr scheduler, dataloader, optimizer etc of the older checkpoint.
+# --reset-*             -> Reset and not use lr scheduler, dataloader, optimizer etc of the older checkpoint.
 
 fairseq-train corpus-bin \
     --save-dir transformer \
@@ -372,7 +372,7 @@ fairseq-train corpus-bin \
     --reset-optimizer
 ```
 
-The above steps (setting up the environment, downloading the trained _IndicXlit_ model and preparing your custom dataset for funetuning) are further documented in our Colab notebook --> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1TurBNE0Pq9_hqEOXps0FXfymsdlJotE0?usp=sharing)
+The above steps (setting up the environment, downloading the trained _IndicXlit_ model and preparing your custom dataset for finetuning) are further documented in our Colab notebook --> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1TurBNE0Pq9_hqEOXps0FXfymsdlJotE0?usp=sharing)
 
 
 ## Mining details
