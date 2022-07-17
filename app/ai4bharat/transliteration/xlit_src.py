@@ -10,4 +10,7 @@ def XlitEngine(
         from .rnn.engine import XlitEngineRNN
         return XlitEngineRNN(lang2use, beam_width=beam_width, rescore=rescore)
     
+    if model_type == "transformer_indic_en":
+        from .transformer_indic_en.engine import XlitEngineTransformer_Indic_en
+        return XlitEngineTransformer_Indic_en(lang2use, beam_width=beam_width)
     return None
