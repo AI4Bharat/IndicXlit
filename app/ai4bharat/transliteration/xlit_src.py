@@ -12,5 +12,5 @@ def XlitEngine(
     
     if model_type == "transformer_indic_en":
         from .transformer_indic_en.engine import XlitEngineTransformer_Indic_en
-        return XlitEngineTransformer_Indic_en(lang2use, beam_width=beam_width)
+        return XlitEngineTransformer_Indic_en(lang2use, beam_width=beam_width, rescore=rescore)
     return None

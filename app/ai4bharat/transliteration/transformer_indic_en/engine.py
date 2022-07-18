@@ -10,7 +10,7 @@ from urduhack import normalize
 import logging
 logging.basicConfig(level=logging.WARNING)
 
-from custom_interactive import Transliterator, SUPPORTED_INDIC_LANGS
+from .custom_interactive import Transliterator, SUPPORTED_INDIC_LANGS
 
 F_DIR = os.path.dirname(os.path.realpath(__file__))
 
@@ -28,16 +28,16 @@ from pydload import dload
 import zipfile
 
 # added by yash
-MODEL_DOWNLOAD_URL = 'https://github.com/AI4Bharat/IndicXlit/releases/download/v1.0/indicxlit-en-indic-v1.0.zip'
-# DICTS_DOWNLOAD_URL = 'https://github.com/AI4Bharat/IndicXlit/releases/download/v1.0/word_prob_dicts.zip'
+MODEL_DOWNLOAD_URL = 'https://github.com/AI4Bharat/IndicXlit/releases/download/v1.0/indicxlit-indic-en-v1.0.zip'
+DICTS_DOWNLOAD_URL = 'https://github.com/AI4Bharat/IndicXlit/releases/download/v1.0/en_word_prob_dict.zip'
 # MODEL_DOWNLOAD_URL = 'https://storage.googleapis.com/indic-xlit-public/final_model/indicxlit-en-indic-v1.0.zip'
 # DICTS_DOWNLOAD_URL = 'https://storage.googleapis.com/indic-xlit-public/final_model/word_prob_dicts.zip'
 XLIT_VERSION = "v1.0" # If model/dict is changed on the storage, do not forget to change this variable in-order to force-download new assets
 
-MODEL_FILE = 'transformer/indicxlit.pt'
+MODEL_FILE = 'transformer/indicxlit-indic-en.pt'
 CHARS_FOLDER = 'corpus-bin'
-# DICTS_FOLDER = 'word_prob_dicts'
-# DICT_FILE_FORMAT = '%s_word_prob_dict.json'
+DICTS_FOLDER = 'word_prob_dicts'
+DICT_FILE_FORMAT = '%s_word_prob_dict.json'
 
 def is_folder_writable(folder):
     try:
@@ -61,7 +61,7 @@ class XlitEngineTransformer_Indic_en():
 
     TODO: Ability to pass `beam_width` dynamically
     """
-    def __init__(self, lang2use = "all", beam_width=4):
+    def __init__(self, lang2use = "all", beam_width=4, rescore=True):
 
         self.langs = set()
         if isinstance(lang2use, str):
@@ -98,15 +98,15 @@ class XlitEngineTransformer_Indic_en():
             os.path.join(models_path, CHARS_FOLDER), os.path.join(models_path, MODEL_FILE), beam_width, batch_size = 32
         )
         
-        # self._rescore = rescore
-        # if self._rescore:
-        #     self.download_dicts(models_path)
-        #     # loading the word_prob_dict for rescoring module
-        #     self.word_prob_dicts = {}
-        #     for la in tqdm.tqdm(self.langs, desc="Loading dicts into RAM"):
-        #         self.word_prob_dicts[la] = json.load(open(
-        #             os.path.join(models_path, DICTS_FOLDER, DICT_FILE_FORMAT%la)
-        #         ))
+        self._rescore = rescore
+        if self._rescore:
+            self.download_dicts(models_path)
+            # loading the word_prob_dict for rescoring module
+            self.word_prob_dicts = {}
+            for la in tqdm.tqdm(self.langs, desc="Loading dicts into RAM"):
+                self.word_prob_dicts[la] = json.load(open(
+                    os.path.join(models_path, DICTS_FOLDER, DICT_FILE_FORMAT%la)
+                ))
 
 
     def download_models(self, models_path):
@@ -137,30 +137,30 @@ class XlitEngineTransformer_Indic_en():
             print("NOTE: When uninstalling this library, REMEMBER to delete the models manually")
         return
 
-    # def download_dicts(self, models_path):
-    #     '''
-    #     Download language model probablitites dictionaries
-    #     '''
-    #     dicts_folder = os.path.join(models_path, DICTS_FOLDER)
-    #     if not os.path.isdir(dicts_folder):
-    #         # added by yash
-    #         print('Downloading language model probablitites dictionaries for rescoring module')
-    #         remote_url = DICTS_DOWNLOAD_URL
-    #         downloaded_zip_path = os.path.join(models_path, 'dicts.zip')
+    def download_dicts(self, models_path):
+        '''
+        Download language model probablitites dictionaries
+        '''
+        dicts_folder = os.path.join(models_path, DICTS_FOLDER)
+        if not os.path.isdir(dicts_folder):
+            # added by yash
+            print('Downloading language model probablitites dictionaries for rescoring module')
+            remote_url = DICTS_DOWNLOAD_URL
+            downloaded_zip_path = os.path.join(models_path, 'dicts.zip')
             
-    #         dload(url=remote_url, save_to_path=downloaded_zip_path, max_time=None)
+            dload(url=remote_url, save_to_path=downloaded_zip_path, max_time=None)
 
-    #         if not os.path.isfile(downloaded_zip_path):
-    #             exit(f'ERROR: Unable to download model from {remote_url} into {models_path}')
+            if not os.path.isfile(downloaded_zip_path):
+                exit(f'ERROR: Unable to download model from {remote_url} into {models_path}')
 
-    #         with zipfile.ZipFile(downloaded_zip_path, 'r') as zip_ref:
-    #             zip_ref.extractall(models_path)
+            with zipfile.ZipFile(downloaded_zip_path, 'r') as zip_ref:
+                zip_ref.extractall(models_path)
 
-    #         if os.path.isdir(dicts_folder):
-    #             os.remove(downloaded_zip_path)
-    #         else:
-    #             exit(f'ERROR: Unable to find models in {models_path} after download')
-    #     return
+            if os.path.isdir(dicts_folder):
+                os.remove(downloaded_zip_path)
+            else:
+                exit(f'ERROR: Unable to find models in {models_path} after download')
+        return
 
 
 
@@ -168,7 +168,6 @@ class XlitEngineTransformer_Indic_en():
         
         # small caps 
         words = [word.lower() for word in words]
-
         if lang_code not in ['gom', 'ks', 'ur', 'mai', 'brx', 'mni']:
             normalizer_factory = IndicNormalizerFactory()
             normalizer = normalizer_factory.get_normalizer(lang_code)
@@ -188,7 +187,6 @@ class XlitEngineTransformer_Indic_en():
             normalizer = normalizer_factory.get_normalizer('kK')
             words = [ normalizer.normalize(word) for word in words ]
 
-
         # normalize and tokenize the words
         # normalized_words = self.normalize(words)
 
@@ -203,74 +201,74 @@ class XlitEngineTransformer_Indic_en():
 
         return words
 
-    # def rescore(self, res_dict, result_dict, target_lang, alpha ):
+    def rescore(self, res_dict, result_dict, target_lang, alpha ):
         
-    #     alpha = alpha
-    #     # word_prob_dict = {}
-    #     word_prob_dict = self.word_prob_dicts[target_lang]
+        alpha = alpha
+        # word_prob_dict = {}
+        word_prob_dict = self.word_prob_dicts[target_lang]
 
-    #     candidate_word_prob_norm_dict = {}
-    #     candidate_word_result_norm_dict = {}
+        candidate_word_prob_norm_dict = {}
+        candidate_word_result_norm_dict = {}
 
-    #     input_data = {}
-    #     for i in res_dict.keys():
-    #         input_data[res_dict[i]['S']] = []
-    #         for j in range(len(res_dict[i]['H'])):
-    #             input_data[res_dict[i]['S']].append( res_dict[i]['H'][j][0] )
+        input_data = {}
+        for i in res_dict.keys():
+            input_data[res_dict[i]['S']] = []
+            for j in range(len(res_dict[i]['H'])):
+                input_data[res_dict[i]['S']].append( res_dict[i]['H'][j][0] )
         
-    #     for src_word in input_data.keys():
-    #         candidates = input_data[src_word]
+        for src_word in input_data.keys():
+            candidates = input_data[src_word]
 
-    #         candidates = [' '.join(word.split(' ')) for word in candidates]
+            candidates = [' '.join(word.split(' ')) for word in candidates]
             
-    #         total_score = 0
+            total_score = 0
 
-    #         if src_word.lower() in result_dict.keys():
-    #             for candidate_word in candidates:
-    #                 if candidate_word in result_dict[src_word.lower()].keys():
-    #                     total_score += result_dict[src_word.lower()][candidate_word]
+            if src_word.lower() in result_dict.keys():
+                for candidate_word in candidates:
+                    if candidate_word in result_dict[src_word.lower()].keys():
+                        total_score += result_dict[src_word.lower()][candidate_word]
             
-    #         candidate_word_result_norm_dict[src_word.lower()] = {}
+            candidate_word_result_norm_dict[src_word.lower()] = {}
             
-    #         for candidate_word in candidates:
-    #             candidate_word_result_norm_dict[src_word.lower()][candidate_word] = (result_dict[src_word.lower()][candidate_word]/total_score)
+            for candidate_word in candidates:
+                candidate_word_result_norm_dict[src_word.lower()][candidate_word] = (result_dict[src_word.lower()][candidate_word]/total_score)
 
-    #         candidates = [''.join(word.split(' ')) for word in candidates ]
+            candidates = [''.join(word.split(' ')) for word in candidates ]
             
-    #         total_prob = 0 
+            total_prob = 0 
             
-    #         for candidate_word in candidates:
-    #             if candidate_word in word_prob_dict.keys():
-    #                 total_prob += word_prob_dict[candidate_word]        
+            for candidate_word in candidates:
+                if candidate_word in word_prob_dict.keys():
+                    total_prob += word_prob_dict[candidate_word]        
             
-    #         candidate_word_prob_norm_dict[src_word.lower()] = {}
-    #         for candidate_word in candidates:
-    #             if candidate_word in word_prob_dict.keys():
-    #                 candidate_word_prob_norm_dict[src_word.lower()][candidate_word] = (word_prob_dict[candidate_word]/total_prob)
+            candidate_word_prob_norm_dict[src_word.lower()] = {}
+            for candidate_word in candidates:
+                if candidate_word in word_prob_dict.keys():
+                    candidate_word_prob_norm_dict[src_word.lower()][candidate_word] = (word_prob_dict[candidate_word]/total_prob)
             
-    #     output_data = {}
-    #     for src_word in input_data.keys():
+        output_data = {}
+        for src_word in input_data.keys():
             
-    #         temp_candidates_tuple_list = []
-    #         candidates = input_data[src_word]
-    #         candidates = [ ''.join(word.split(' ')) for word in candidates]
+            temp_candidates_tuple_list = []
+            candidates = input_data[src_word]
+            candidates = [ ''.join(word.split(' ')) for word in candidates]
             
             
-    #         for candidate_word in candidates:
-    #             if candidate_word in word_prob_dict.keys():
-    #                 temp_candidates_tuple_list.append((candidate_word, alpha*candidate_word_result_norm_dict[src_word.lower()][' '.join(list(candidate_word))] + (1-alpha)*candidate_word_prob_norm_dict[src_word.lower()][candidate_word] ))
-    #             else:
-    #                 temp_candidates_tuple_list.append((candidate_word, 0 ))
+            for candidate_word in candidates:
+                if candidate_word in word_prob_dict.keys():
+                    temp_candidates_tuple_list.append((candidate_word, alpha*candidate_word_result_norm_dict[src_word.lower()][' '.join(list(candidate_word))] + (1-alpha)*candidate_word_prob_norm_dict[src_word.lower()][candidate_word] ))
+                else:
+                    temp_candidates_tuple_list.append((candidate_word, 0 ))
 
-    #         temp_candidates_tuple_list.sort(key = lambda x: x[1], reverse = True )
+            temp_candidates_tuple_list.sort(key = lambda x: x[1], reverse = True )
             
-    #         temp_candidates_list = []
-    #         for cadidate_tuple in temp_candidates_tuple_list: 
-    #             temp_candidates_list.append(' '.join(list(cadidate_tuple[0])))
+            temp_candidates_list = []
+            for cadidate_tuple in temp_candidates_tuple_list: 
+                temp_candidates_list.append(' '.join(list(cadidate_tuple[0])))
 
-    #         output_data[src_word] = temp_candidates_list
+            output_data[src_word] = temp_candidates_list
 
-    #     return output_data
+        return output_data
 
     def post_process(self, translation_str, target_lang):
         lines = translation_str.split('\n')
@@ -325,17 +323,17 @@ class XlitEngineTransformer_Indic_en():
         
         
         transliterated_word_list = []
-        # if self._rescore:
-        #     output_dir = self.rescore(res_dict, result_dict, target_lang, alpha = 0.9)            
-        #     for src_word in output_dir.keys():
-        #         for j in range(len(output_dir[src_word])):
-        #             transliterated_word_list.append( output_dir[src_word][j] )
+        if self._rescore:
+            output_dir = self.rescore(res_dict, result_dict, target_lang, alpha = 0.9)            
+            for src_word in output_dir.keys():
+                for j in range(len(output_dir[src_word])):
+                    transliterated_word_list.append( output_dir[src_word][j] )
 
-        # else:
-        for i in res_dict.keys():
-            # transliterated_word_list.append( res_dict[i]['S'] + '  :  '  + res_dict[i]['H'][0][0] )
-            for j in range(len(res_dict[i]['H'])):
-                transliterated_word_list.append( res_dict[i]['H'][j][0] )
+        else:
+            for i in res_dict.keys():
+                # transliterated_word_list.append( res_dict[i]['S'] + '  :  '  + res_dict[i]['H'][0][0] )
+                for j in range(len(res_dict[i]['H'])):
+                    transliterated_word_list.append( res_dict[i]['H'][j][0] )
 
         # remove extra spaces
         # transliterated_word_list = [''.join(pair.split(':')[0].split(' ')[1:]) + ' : ' + ''.join(pair.split(':')[1].split(' ')) for pair in transliterated_word_list]
@@ -353,6 +351,7 @@ class XlitEngineTransformer_Indic_en():
             return
         
         words = [word, ]
+
         lang_dict = {
             'as' : 'Assamese',
             'bn' : 'Bangla',
@@ -400,12 +399,13 @@ class XlitEngineTransformer_Indic_en():
                         'Urdu' : "[^\u0600-\u06FF]",
 
         }
+
         # check if there is non-english characters
-        pattern = lang_patterns_train_dict[lang_dict[lang_code]]
+        pattern = lang_patterns_train_dict[lang_dict[lang_code]]   
         words = [ word for word in words if not re.compile(pattern).search(word) ]
         
         if not words:
-            print("error : Please insert valid inputs : only pass characters of the language code you input")
+            print("error : Please insert valid inputs : only pass english characters ")
             return
         
         if (lang_code in self.langs):
@@ -443,11 +443,10 @@ class XlitEngineTransformer_Indic_en():
             print(XlitError.lang_err.value)
             return XlitError.lang_err
 
-    def translit_sentence(self, sentence, lang_code="default"):
-        if not sentence:
-            return sentence
+    def translit_sentence(self, eng_sentence, lang_code="default"):
+        if not eng_sentence:
+            return eng_sentence
         
-        # sentence = sentence.lower()
         lang_dict = {
             'as' : 'Assamese',
             'bn' : 'Bangla',
@@ -495,13 +494,15 @@ class XlitEngineTransformer_Indic_en():
             'Urdu' : "[\u0600-\u06FF]",
 
         }
-        # check if there is non-english characters
+   
+
+        # eng_sentence = eng_sentence.lower()
         pattern = lang_patterns_train_dict[lang_dict[lang_code]]
         matches = re.findall(pattern, sentence)
 
         if (lang_code in self.langs):
             try:
-                out_str = sentence
+                out_str = eng_sentence
                 for match in matches:
                     result = self.translit_word(match, lang_code, topk=1)[0]
                     out_str = re.sub(match, result, out_str, 1)
@@ -516,7 +517,7 @@ class XlitEngineTransformer_Indic_en():
             try:
                 res_dict = {}
                 for la in self.langs:
-                    out_str = sentence
+                    out_str = eng_sentence
                     for match in matches:
                         result = self.translit_word(match, la, topk=1)[0]
                         out_str = re.sub(match, result, out_str, 1)
@@ -537,6 +538,6 @@ class XlitEngineTransformer_Indic_en():
 
 if __name__ == "__main__":
 
-    engine = XlitEngine()
+    engine = XlitEngineTransformer_Indic_en()
     y = engine.translit_sentence("Hello World !")
     print(y)
