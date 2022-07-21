@@ -1,3 +1,10 @@
+Uses Ai4Bharat's Indic Xlit repository. 
+transliterate_csv.py added in inference -> cli.
+This script takes a csv file and outputs a csv with trnasliterations in Hindi.
+
+
+
+
 <div align="center">
 	<h1><b><i>IndicXlit</i></b></h1>
 	<a href="https://ai4bharat.org/indic-xlit">Website</a> |
