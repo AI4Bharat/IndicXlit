@@ -57,7 +57,7 @@ def post_process(translation_str, target_lang, _rescore):
             h_id = int(h.split('\t')[0].split('-')[1])
 
             if s_id == h_id:
-                res_dict[s_id]['H'].append( ( h.split('\t')[2], float(h.split('\t')[1]) ) )
+                res_dict[s_id]['H'].append( ( h.split('\t')[2], pow(2, float(h.split('\t')[1]) ) ) )
         
         # for d in list_d:
         #     d_id = int(d.split('\t')[0].split('-')[1])
