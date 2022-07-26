@@ -29,11 +29,11 @@ lang_dict = {
 
 lang_abr = sys.argv[1]
 lang = lang_dict[lang_abr]
-_rescore = sys.argv[2]
+_rescore = int(sys.argv[2])
 
 
 
-def post_process(translation_str, target_lang, _rescore)
+def post_process(translation_str, target_lang, _rescore):
     lines = translation_str.split('\n')
 
     list_s = [line for line in lines if 'S-' in line]
@@ -96,7 +96,7 @@ def post_process(translation_str, target_lang, _rescore)
                 transliterated_word_list.append( res_dict[i]['H'][j][0] )
 
             transliterated_word_list = [''.join(word.split(' ')) for word in transliterated_word_list]
-            output_dict[i] = transliterated_word_list
+            output_dict[res_dict[i]['S']] = transliterated_word_list
 
     # remove extra spaces
     # transliterated_word_list = [''.join(pair.split(':')[0].split(' ')[1:]) + ' : ' + ''.join(pair.split(':')[1].split(' ')) for pair in transliterated_word_list]
@@ -181,9 +181,10 @@ def rescore(res_dict, result_dict, target_lang, alpha ):
 f = open('output/en_'+lang_abr+'.txt','r')
 translation_str = f.read()
 
-lines_output = post_process(translation_str, lang_abr, _rescore)
+dict_output = post_process(translation_str, lang_abr, _rescore)
 
 f_output = open('output/final_transliteration.txt', 'w')
-f_output.write('\n'.join())
+for d in dict_output:
+    f_output.write(''.join(d.split(' ')[1:]) + '\t[' + ', '.join(dict_output[d]) + ']\n')
 f_output.close()
 f.close()
