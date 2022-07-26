@@ -112,7 +112,7 @@ def rescore(res_dict, result_dict, target_lang, alpha ):
         
     alpha = alpha
     # word_prob_dict = {}
-    word_prob_dict = json.load( open(target_lang+'_word_prob_dict.json', 'r') )
+    word_prob_dict = json.load( open('word_prob_dicts/'+ target_lang+'_word_prob_dict.json', 'r') )
 
     candidate_word_prob_norm_dict = {}
     candidate_word_result_norm_dict = {}
