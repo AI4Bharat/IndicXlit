@@ -29,15 +29,6 @@ from fairseq_cli.generate import get_symbols_to_strip_from_output
 Batch = namedtuple("Batch", "ids src_tokens src_lengths constraints")
 Translation = namedtuple("Translation", "src_str hypos pos_scores alignments")
 
-
-F_DIR = os.path.dirname(os.path.realpath(__file__))
-LANG_LIST_FILE = os.path.join(F_DIR, "models", "lang_list.txt")
-
-ALL_LANGS = open(LANG_LIST_FILE).read().strip().split('\n')
-SUPPORTED_INDIC_LANGS = set(ALL_LANGS)
-if "en" in SUPPORTED_INDIC_LANGS:
-    SUPPORTED_INDIC_LANGS.remove("en")
-
 def make_batches(lines, cfg, task, max_positions, encode_fn):
     def encode_fn_target(x):
         return encode_fn(x)
@@ -95,7 +86,7 @@ def make_batches(lines, cfg, task, max_positions, encode_fn):
 # added
 class Transliterator:
     def __init__(
-        self, data_bin_dir, model_checkpoint_path, beam, batch_size = 32
+        self, data_bin_dir, model_checkpoint_path, lang_pairs_csv, lang_list_file, beam, batch_size = 32,
     ):
 
         self.parser = options.get_interactive_generation_parser()
@@ -121,11 +112,11 @@ class Transliterator:
         
         self.args.skip_invalid_size_inputs_valid_test = False
         # self.args.lang_pairs = "en-as,en-bn,en-gom,en-gu,en-hi,en-kn,en-ks,en-mai,en-ml,en-mr,en-ne,en-or,en-pa,en-sa,en-sd,en-si,en-ta,en-te,en-ur"
-        self.args.lang_pairs = ','.join(["en-"+lang for lang in SUPPORTED_INDIC_LANGS])
-        # self.args.source_lang = 'en'
+        self.args.lang_pairs = lang_pairs_csv
+        # self.args.source_lang = 'en's
         # self.args.target_lang = 'bn'
         # self.args.encoder_langtok = 'tgt'
-        self.args.lang_dict = LANG_LIST_FILE
+        self.args.lang_dict = lang_list_file
 
         self.cfg = convert_namespace_to_omegaconf(self.args)
 
