@@ -112,6 +112,21 @@ SCRIPT_CODE_TO_UNICODE_CHARS_RANGE_STR = {
     "Thaa": "\u0780-\u07BF",
 }
 
+INDIC_TO_LATIN_PUNCT = {
+    '।': '.',
+    '॥': "..",
+
+    # Arabic
+    '۔': '.',
+    '؟': '?',
+    '،': ',',
+    '؛': ';',
+    '۝': "..",
+}
+
+INDIC_TO_LATIN_PUNCT_TRANSLATOR = str.maketrans(INDIC_TO_LATIN_PUNCT)
+
+
 # To replace last N occurences of a substring in a string
 # Src: https://stackoverflow.com/questions/2556108/
 def rreplace(text, find_pattern, replace_pattern, match_count=1):
