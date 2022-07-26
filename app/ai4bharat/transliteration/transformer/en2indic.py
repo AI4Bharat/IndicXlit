@@ -8,11 +8,8 @@ from .base_engine import BaseEngineTransformer, LANG_LIST_FILE
 
 F_DIR = os.path.dirname(os.path.realpath(__file__))
 
-# added by yash
 MODEL_DOWNLOAD_URL = 'https://github.com/AI4Bharat/IndicXlit/releases/download/v1.0/indicxlit-en-indic-v1.0.zip'
 DICTS_DOWNLOAD_URL = 'https://github.com/AI4Bharat/IndicXlit/releases/download/v1.0/word_prob_dicts.zip'
-# MODEL_DOWNLOAD_URL = 'https://storage.googleapis.com/indic-xlit-public/final_model/indicxlit-en-indic-v1.0.zip'
-# DICTS_DOWNLOAD_URL = 'https://storage.googleapis.com/indic-xlit-public/final_model/word_prob_dicts.zip'
 XLIT_VERSION = "v1.0" # If model/dict is changed on the storage, do not forget to change this variable in-order to force-download new assets
 
 def is_folder_writable(folder):
@@ -31,7 +28,7 @@ def is_directory_writable(path):
         return is_folder_writable(path)
     return os.access(path, os.W_OK | os.X_OK)
 
-class XlitEngineTransformer(BaseEngineTransformer):
+class XlitEngineTransformer_En2Indic(BaseEngineTransformer):
     """
     For Managing the top level tasks and applications of transliteration
 
@@ -44,7 +41,7 @@ class XlitEngineTransformer(BaseEngineTransformer):
         else:
             user_home = os.path.expanduser("~")
             models_path = os.path.join(user_home, '.AI4Bharat_Xlit_Models')
-        models_path = os.path.join(models_path, XLIT_VERSION)
+        models_path = os.path.join(models_path, "en2indic", XLIT_VERSION)
         os.makedirs(models_path, exist_ok=True)
 
         lang_list_file = os.path.join(models_path, LANG_LIST_FILE)
@@ -113,9 +110,3 @@ class XlitEngineTransformer(BaseEngineTransformer):
             return res_dict
         else:
             raise NotImplementedError("Unsupported lang_code: " + lang_code)
-
-if __name__ == "__main__":
-
-    engine = XlitEngine()
-    y = engine.translit_sentence("Hello World !")
-    print(y)
