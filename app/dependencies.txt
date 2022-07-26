@@ -9,3 +9,6 @@ mock
 tensorboardX
 pyarrow
 fairseq
+
+urduhack
+indic_nlp_library
