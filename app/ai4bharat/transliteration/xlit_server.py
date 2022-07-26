@@ -41,8 +41,12 @@ from .xlit_src import XlitEngine
 MAX_SUGGESTIONS = 8
 DEFAULT_NUM_SUGGESTIONS = 6
 
-engine = XlitEngine(beam_width=MAX_SUGGESTIONS, rescore=True, model_type="transformer")
-engine.exposed_langs = [
+ENGINE = {
+    "en2indic": XlitEngine(beam_width=MAX_SUGGESTIONS, rescore=True, model_type="transformer", src_script_type = "roman"),
+    "indic2en": XlitEngine(beam_width=MAX_SUGGESTIONS, rescore=False, model_type="transformer", src_script_type = "indic"),
+}
+
+EXPOSED_LANGS = [
     {
         "LangCode": lang_code, # ISO-639 code
         "Identifier": lang_code, # ISO-639 code
@@ -51,18 +55,18 @@ engine.exposed_langs = [
         "CompiledDate": "09-April-2022", # date on which model was trained
         "IsStable": True, # Set `False` if the model is experimental
         "Direction": "rtl" if lang_code in RTL_LANG_CODES else "ltr",
-    } for lang_code in sorted(engine.langs)
+    } for lang_code in sorted(ENGINE["en2indic"].all_supported_langs)
 ]
 
 def get_app():
-    return app, engine
+    return app, ENGINE
 
 ## ---------------------------- API End-points ------------------------------ ##
 
 @app.route('/languages', methods = ['GET', 'POST'])
 def supported_languages():
     # Format - https://xlit-api.ai4bharat.org/languages
-    response = make_response(jsonify(engine.exposed_langs))
+    response = make_response(jsonify(EXPOSED_LANGS))
     if 'xlit_user_id' not in request.cookies:
         # host = request.environ['HTTP_ORIGIN'].split('://')[1]
         host = '.ai4bharat.org'
@@ -80,13 +84,13 @@ def xlit_api(lang_code, eng_word):
         'result': ''
     }
 
-    if lang_code not in engine.langs:
-        response['error'] = 'Invalid scheme identifier. Supported languages are'+ str(engine.langs)
+    if lang_code not in ENGINE["en2indic"].all_supported_langs:
+        response['error'] = 'Invalid scheme identifier. Supported languages are'+ str(ENGINE["en2indic"].all_supported_langs)
         return jsonify(response)
 
     try:
         ## Limit char count to --> 70
-        xlit_result = engine.translit_word(eng_word[:70], lang_code, topk=DEFAULT_NUM_SUGGESTIONS)
+        xlit_result = ENGINE["en2indic"].translit_word(eng_word[:70], lang_code, topk=DEFAULT_NUM_SUGGESTIONS)
     except Exception as e:
         xlit_result = XlitError.internal_err
 
@@ -130,7 +134,9 @@ def ulca_api():
             }
         }), 400
     
-    if data["config"]["language"]["sourceLanguage"] != "en" or data["config"]["language"]["targetLanguage"] not in engine.langs:
+    if (data["config"]["language"]["sourceLanguage"] == "en" and data["config"]["language"]["targetLanguage"] in ENGINE["en2indic"].all_supported_langs) or (data["config"]["language"]["sourceLanguage"] in ENGINE["indic2en"].all_supported_langs and data["config"]["language"]["targetLanguage"] == 'en'):
+        pass
+    else:
         return jsonify({
             "status": {
                 "statusCode": 501,
@@ -140,15 +146,21 @@ def ulca_api():
     
     is_sentence = data["config"]["isSentence"] if "isSentence" in data["config"] else False
     num_suggestions = 1 if is_sentence else (data["config"]["numSuggestions"] if "numSuggestions" in data["config"] else 5)
-    target_lang_code = data["config"]["language"]["targetLanguage"]
+
+    if data["config"]["language"]["targetLanguage"] == "en":
+        engine = ENGINE["indic2en"]
+        lang_code = data["config"]["language"]["sourceLanguage"]
+    else:
+        engine = ENGINE["en2indic"]
+        lang_code = data["config"]["language"]["targetLanguage"]
 
     outputs = []
     for item in data["input"]:
         if is_sentence:
-            item["target"] = [engine.translit_sentence(item["source"], lang_code=target_lang_code)]
+            item["target"] = [engine.translit_sentence(item["source"], lang_code=lang_code)]
         else:
             item["source"] = item["source"][:32]
-            item["target"] = engine.translit_word(item["source"], lang_code=target_lang_code, topk=num_suggestions)
+            item["target"] = engine.translit_word(item["source"], lang_code=lang_code, topk=num_suggestions)
     
     return {
         "output": data["input"],
