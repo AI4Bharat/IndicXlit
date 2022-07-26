@@ -34,7 +34,10 @@ class BaseEngineTransformer(ABC):
         # added by yash
 
         print("Initializing Multilingual model for transliteration")
-        lang_pairs_csv = ','.join(["en-"+lang for lang in self.all_supported_langs])
+        if 'en' in self.tgt_langs:
+            lang_pairs_csv = ','.join([lang+"-en" for lang in self.all_supported_langs])
+        else:
+            lang_pairs_csv = ','.join(["en-"+lang for lang in self.all_supported_langs])
 
         # initialize the model
         from .custom_interactive import Transliterator
@@ -109,7 +112,7 @@ class BaseEngineTransformer(ABC):
                 exit(f'ERROR: Unable to find models in {models_path} after download')
         return dicts_folder
     
-    def indic_normalize(self, word, lang_code):
+    def indic_normalize(self, words, lang_code):
         if lang_code not in ['gom', 'ks', 'ur', 'mai', 'brx', 'mni']:
             normalizer_factory = IndicNormalizerFactory()
             normalizer = normalizer_factory.get_normalizer(lang_code)
