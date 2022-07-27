@@ -106,7 +106,7 @@ Command line interface --> [![Open In Colab](https://colab.research.google.com/a
 <!-- colab integratation on running the model on custom input python script -->
 Python interface --> [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/drive/1P78Tbr6zhe-5LeiKk525N3SGPKn2ofGg?usp=sharing)
 
-The python interface is useful in case you want to reuse the model for multiple transliterations and do not want to reinitialize the model each time. Moreover, re-ranking option is available in Python interface, but not in command line interface.
+The python interface is useful in case you want to reuse the model for multiple transliterations and do not want to reinitialize the model each time.
 
 
 ## Training model
