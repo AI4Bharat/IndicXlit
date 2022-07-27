@@ -245,7 +245,7 @@ Please refer to section 6 of our [paper](https://arxiv.org/abs/2205.03018) for m
 # └── checkpoint_best.pt
 ```
 
-- To generate outputs after training, use the following generation script to predict outputs which are saved in the output directory.
+- To generate outputs after training, use the following generation script to predict outputs which will be saved in the output directory.
 ```bash
 for lang_abr in bn gu hi kn ml mr pa sd si ta te ur
 do
