@@ -85,7 +85,7 @@ def xlit_api(lang_code, eng_word):
     }
 
     if lang_code not in ENGINE["en2indic"].all_supported_langs:
-        response['error'] = 'Invalid scheme identifier. Supported languages are'+ str(ENGINE["en2indic"].all_supported_langs)
+        response['error'] = 'Invalid scheme identifier. Supported languages are: '+ str(ENGINE["en2indic"].all_supported_langs)
         return jsonify(response)
 
     try:
@@ -111,11 +111,27 @@ def reverse_xlit_api(lang_code, word):
         'success': False,
         'error': '',
         'at': str(datetime.utcnow()) + ' +0000 UTC',
-        'input': word,
+        'input': word.strip(),
         'result': ''
     }
-    # TODO: Implement?
-    response['error'] = 'Not yet implemented!'
+
+    if lang_code not in ENGINE["indic2en"].all_supported_langs:
+        response['error'] = 'Invalid scheme identifier. Supported languages are: '+ str(ENGINE["indic2en"].all_supported_langs)
+        return jsonify(response)
+
+    try:
+        ## Limit char count to --> 70
+        xlit_result = ENGINE["indic2en"].translit_word(word[:70], lang_code, topk=DEFAULT_NUM_SUGGESTIONS)
+    except Exception as e:
+        xlit_result = XlitError.internal_err
+
+    if isinstance(xlit_result, XlitError):
+        response['error'] = xlit_result.value
+        print("XlitError:", traceback.format_exc())
+    else:
+        response['result'] = xlit_result
+        response['success'] = True
+
     return jsonify(response)
 
 @app.route('/transliterate', methods=['POST'])
