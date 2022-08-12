@@ -20,6 +20,8 @@ CHARS_FOLDER = 'corpus-bin'
 DICT_FILE_FORMAT = '%s_word_prob_dict.json'
 LANG_LIST_FILE = '../lang_list.txt'
 
+normalizer_factory = IndicNormalizerFactory()
+
 class BaseEngineTransformer(ABC):
 
     @abstractproperty
@@ -114,12 +116,10 @@ class BaseEngineTransformer(ABC):
     
     def indic_normalize(self, words, lang_code):
         if lang_code not in ['gom', 'ks', 'ur', 'mai', 'brx', 'mni']:
-            normalizer_factory = IndicNormalizerFactory()
             normalizer = normalizer_factory.get_normalizer(lang_code)
             words = [ normalizer.normalize(word) for word in words ]
 
         if lang_code in ['mai', 'brx' ]:
-            normalizer_factory = IndicNormalizerFactory()
             normalizer = normalizer_factory.get_normalizer('hi')
             words = [ normalizer.normalize(word) for word in words ]
 
@@ -128,7 +128,6 @@ class BaseEngineTransformer(ABC):
             words = [ shahmukhi_normalize(word) for word in words ]
             
         if lang_code == 'gom':
-            normalizer_factory = IndicNormalizerFactory()
             normalizer = normalizer_factory.get_normalizer('kK')
             words = [ normalizer.normalize(word) for word in words ]
 
@@ -318,6 +317,9 @@ class BaseEngineTransformer(ABC):
             # Not enabled for Sanskrit, as sandhi compounds are generally written word-by-word
             for i in range(len(transliteration_list)):
                 transliteration_list[i] = hardfix_wordfinal_virama(transliteration_list[i])
+                # Lang-specific patches. TODO: Move to indic-nlp-library
+                if tgt_lang == 'mr':
+                    transliteration_list[i] = transliteration_list[i].replace("अॅ", 'ॲ')
     
         if src_word == text:
             return transliteration_list
@@ -330,6 +332,7 @@ class BaseEngineTransformer(ABC):
     def batch_transliterate_words(self, words, src_lang, tgt_lang, topk=4):
         perprcossed_words = self.pre_process(words, src_lang, tgt_lang)
         translation_str = self.transliterator.translate(perprcossed_words, nbest=topk)
+        
         # FIXME: Handle properly in `post_process()` to return results for all words
         transliteration_list = self.post_process(translation_str, tgt_lang)
         return [transliteration_list]
