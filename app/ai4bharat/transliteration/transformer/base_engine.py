@@ -8,7 +8,7 @@ from abc import ABC, abstractmethod, abstractproperty
 from indicnlp.normalize.indic_normalize import IndicNormalizerFactory
 from urduhack import normalize as shahmukhi_normalize
 
-from ..utils import LANG_CODE_TO_SCRIPT_CODE, SCRIPT_CODE_TO_UNICODE_CHARS_RANGE_STR, INDIC_TO_LATIN_PUNCT_TRANSLATOR, rreplace
+from ..utils import LANG_CODE_TO_SCRIPT_CODE, SCRIPT_CODE_TO_UNICODE_CHARS_RANGE_STR, INDIC_TO_LATIN_PUNCT_TRANSLATOR, INDIC_TO_STANDARD_NUMERALS_TRANSLATOR, rreplace
 LANG_WORD_REGEXES = {
     lang_name: re.compile(f"[{SCRIPT_CODE_TO_UNICODE_CHARS_RANGE_STR[script_name]}]+")
     for lang_name, script_name in LANG_CODE_TO_SCRIPT_CODE.items()
@@ -302,6 +302,7 @@ class BaseEngineTransformer(ABC):
 
         if src_lang != 'en':
             text = text.translate(INDIC_TO_LATIN_PUNCT_TRANSLATOR)
+            text = text.translate(INDIC_TO_STANDARD_NUMERALS_TRANSLATOR)
 
         matches = LANG_WORD_REGEXES[src_lang].findall(text)
         if not matches:
@@ -332,6 +333,7 @@ class BaseEngineTransformer(ABC):
 
         if src_lang != 'en':
             text = text.translate(INDIC_TO_LATIN_PUNCT_TRANSLATOR)
+            text = text.translate(INDIC_TO_STANDARD_NUMERALS_TRANSLATOR)
 
         matches = LANG_WORD_REGEXES[src_lang].findall(text)
         if not matches:

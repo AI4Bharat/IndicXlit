@@ -126,6 +126,50 @@ INDIC_TO_LATIN_PUNCT = {
 
 INDIC_TO_LATIN_PUNCT_TRANSLATOR = str.maketrans(INDIC_TO_LATIN_PUNCT)
 
+SCRIPT_CODE_TO_NUMERALS = {
+    # ISO 15924 codes for script names
+
+    # North Indic
+    "Beng": "০১২৩৪৫৬৭৮৯",
+    "Deva": "०१२३४५६७८९",
+    "Gujr": "૦૧૨૩૪૫૬૭૮૯",
+    "Guru": "੦੧੨੩੪੫੬੭੮੯",
+    "Orya": "୦୧୨୩୪୫୬୭୮୯",
+
+    # South Indic
+    "Knda": "೦೧೨೩೪೫೬೭೮೯",
+    "Mlym": "൦൧൨൩൪൫൬൭൮൯",
+    "Taml": "௦௧௨௩௪௫௬௭௮௯",
+    "Telu": "౦౧౨౩౪౫౬౭౮౯",
+    "Sinh": "෦෧෨෩෪෫෬෭෮෯",
+
+    # Tibetic
+    "Mtei": "꯰꯱꯲꯳꯴꯵꯶꯷꯸꯹",
+
+    # Misc
+    "Arab": "۰۱۲۳۴۵۶۷۸۹", # Perso-Arabic numerals
+    "Latn": "0123456789",
+    "Olck": "᱐᱑᱒᱓᱔᱕᱖᱗᱘᱙",
+    "Thaa": "٠١٢٣٤٥٦٧٨٩", # East-Arabic numerals. (Dhivehi does code-mixing with Arabic)
+}
+
+LANG_CODE_TO_NUMERALS = {
+    lang_code: SCRIPT_CODE_TO_NUMERALS[script_code]
+    for lang_code, script_code in LANG_CODE_TO_SCRIPT_CODE.items()
+}
+
+LANG_CODE_TO_STANDARD_NUMERALS_TRANSLATORS = {
+    lang_code: str.maketrans({lang_numeral: en_numeral for lang_numeral, en_numeral in zip(lang_numerals, LANG_CODE_TO_NUMERALS["en"])})
+    for lang_code, lang_numerals in LANG_CODE_TO_NUMERALS.items()
+    if lang_code != "en"
+}
+
+INDIC_TO_STANDARD_NUMERALS_GLOBAL_MAP = {}
+for lang_code, lang_numerals in LANG_CODE_TO_NUMERALS.items():
+    map_dict = {lang_numeral: en_numeral for lang_numeral, en_numeral in zip(lang_numerals, LANG_CODE_TO_NUMERALS["en"])}
+    INDIC_TO_STANDARD_NUMERALS_GLOBAL_MAP.update(map_dict)
+
+INDIC_TO_STANDARD_NUMERALS_TRANSLATOR = str.maketrans(INDIC_TO_STANDARD_NUMERALS_GLOBAL_MAP)
 
 # To replace last N occurences of a substring in a string
 # Src: https://stackoverflow.com/questions/2556108/
