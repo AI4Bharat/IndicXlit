@@ -8,7 +8,7 @@ from abc import ABC, abstractmethod, abstractproperty
 from indicnlp.normalize.indic_normalize import IndicNormalizerFactory
 from urduhack import normalize as shahmukhi_normalize
 
-from ..utils import LANG_CODE_TO_SCRIPT_CODE, SCRIPT_CODE_TO_UNICODE_CHARS_RANGE_STR, INDIC_TO_LATIN_PUNCT_TRANSLATOR, INDIC_TO_STANDARD_NUMERALS_TRANSLATOR, rreplace
+from ..utils import LANG_CODE_TO_SCRIPT_CODE, SCRIPT_CODE_TO_UNICODE_CHARS_RANGE_STR, INDIC_TO_LATIN_PUNCT_TRANSLATOR, INDIC_TO_STANDARD_NUMERALS_TRANSLATOR, hardfix_wordfinal_virama, rreplace
 LANG_WORD_REGEXES = {
     lang_name: re.compile(f"[{SCRIPT_CODE_TO_UNICODE_CHARS_RANGE_STR[script_name]}]+")
     for lang_name, script_name in LANG_CODE_TO_SCRIPT_CODE.items()
@@ -311,6 +311,14 @@ class BaseEngineTransformer(ABC):
         src_word = matches[-1]
         
         transliteration_list = self.batch_transliterate_words([src_word], src_lang, tgt_lang, topk=topk)[0]
+        
+        if tgt_lang != 'en' or tgt_lang != 'sa':
+            # If users want to avoid yuktAkshara, this is facilitated by allowing them to type subwords inorder to construct a word
+            # For example, "ଜନ୍‍ସନ୍‍ଙ୍କୁ" can be written by "ଜନ୍‍" + "ସନ୍‍" + "କୁ"
+            # Not enabled for Sanskrit, as sandhi compounds are generally written word-by-word
+            for i in range(len(transliteration_list)):
+                transliteration_list[i] = hardfix_wordfinal_virama(transliteration_list[i])
+    
         if src_word == text:
             return transliteration_list
         

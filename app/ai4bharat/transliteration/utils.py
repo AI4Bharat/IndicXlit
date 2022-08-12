@@ -1,3 +1,5 @@
+import re
+
 LANG_CODE_TO_DISPLAY_NAME = {
     # European
     'en': "English",
@@ -98,9 +100,9 @@ SCRIPT_CODE_TO_UNICODE_CHARS_RANGE_STR = {
     # South Indic
     "Knda": "\u0C80-\u0CFF",
     "Mlym": "\u0D00-\u0D7F",
+    "Sinh": "\u0D80-\u0DFF",
     "Taml": "\u0B80-\u0BFF",
     "Telu": "\u0C00-\u0C7F",
-    "Sinh": "\u0D80-\u0DFF",
 
     # Tibetic
     "Mtei": "\uABC0-\uABFF",
@@ -139,9 +141,9 @@ SCRIPT_CODE_TO_NUMERALS = {
     # South Indic
     "Knda": "೦೧೨೩೪೫೬೭೮೯",
     "Mlym": "൦൧൨൩൪൫൬൭൮൯",
+    "Sinh": "෦෧෨෩෪෫෬෭෮෯",
     "Taml": "௦௧௨௩௪௫௬௭௮௯",
     "Telu": "౦౧౨౩౪౫౬౭౮౯",
-    "Sinh": "෦෧෨෩෪෫෬෭෮෯",
 
     # Tibetic
     "Mtei": "꯰꯱꯲꯳꯴꯵꯶꯷꯸꯹",
@@ -170,6 +172,12 @@ for lang_code, lang_numerals in LANG_CODE_TO_NUMERALS.items():
     INDIC_TO_STANDARD_NUMERALS_GLOBAL_MAP.update(map_dict)
 
 INDIC_TO_STANDARD_NUMERALS_TRANSLATOR = str.maketrans(INDIC_TO_STANDARD_NUMERALS_GLOBAL_MAP)
+
+WORDFINAL_INDIC_VIRAMA_REGEX = re.compile("(\u09cd|\u094d|\u0acd|\u0a4d|\u0b4d|\u0ccd|\u0d4d|\u0dca|\u0bcd|\u0c4d|\uaaf6)$")
+def hardfix_wordfinal_virama(text):
+    # Add ZWNJ after a word-final halanta
+    # Not applicable for non-Brahmic scripts (like Arabic & Ol-Chiki)
+    return WORDFINAL_INDIC_VIRAMA_REGEX.sub("\\1\u200c", text)
 
 # To replace last N occurences of a substring in a string
 # Src: https://stackoverflow.com/questions/2556108/
