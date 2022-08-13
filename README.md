@@ -62,6 +62,7 @@ IndicXlit is evaluated on [Dakshina benchmark](https://github.com/google-researc
 ### Download IndicXlit model
 <!-- hyperlinks for downloading the models -->
 Roman to Indic model [v1.0](https://github.com/AI4Bharat/IndicXlit/releases/download/v1.0/indicxlit-en-indic-v1.0.zip)
+
 Indic to Roman model [v1.0](https://github.com/AI4Bharat/IndicXlit/releases/download/v1.0/indicxlit-indic-en-v1.0.zip)
 <!-- mirror links set up the public drive -->	
 
