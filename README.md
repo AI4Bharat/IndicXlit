@@ -10,7 +10,7 @@
 
 <!-- description about IndicXlit -->
 
-***[IndicXlit](https://indicnlp.ai4bharat.org/indic-xlit)*** is a transformer-based multilingual transliteration model (~11M) for Roman to native script conversion that ***supports 21 Indic languages***. It is trained on ***[Aksharantar](https://indicnlp.ai4bharat.org/aksharantar/)*** dataset which is the ***largest publicly available parallel corpus containing 26 million word pairs spanning 20 Indic languages*** at the time of writing (5 May 2022). It supports the following 21 Indic languages:
+***[IndicXlit](https://indicnlp.ai4bharat.org/indic-xlit)*** is a transformer-based multilingual transliteration model (~11M) that ***supports 21 Indic languages*** for Roman to native script and native to Roman script conversion. It is trained on ***[Aksharantar](https://indicnlp.ai4bharat.org/aksharantar/)*** dataset which is the ***largest publicly available parallel corpus containing 26 million word pairs spanning 20 Indic languages*** at the time of writing (5 May 2022). It supports the following 21 Indic languages:
 
 <!-- list of languages IndicXlit supports -->
 | <!-- -->  	 | <!-- --> 	  | <!-- --> 	   | <!-- -->	     | <!-- -->       | <!-- -->      |
@@ -62,6 +62,7 @@ IndicXlit is evaluated on [Dakshina benchmark](https://github.com/google-researc
 ### Download IndicXlit model
 <!-- hyperlinks for downloading the models -->
 Roman to Indic model [v1.0](https://github.com/AI4Bharat/IndicXlit/releases/download/v1.0/indicxlit-en-indic-v1.0.zip)
+Indic to Roman model [v1.0](https://github.com/AI4Bharat/IndicXlit/releases/download/v1.0/indicxlit-indic-en-v1.0.zip)
 <!-- mirror links set up the public drive -->	
 
 ### Using hosted APIs
