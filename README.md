@@ -463,10 +463,16 @@ IndicXlit
 │       └── validation_script.py
 ├── inference
 │   ├── cli
-│   │   ├── generate_result_files.py
-│   │   ├── interactive.sh
-│   │   ├── lang_list.txt
-│   │   └── transliterate_word.sh
+│   │   ├── en-indic
+│   │   │	├── generate_result_files.py
+│   │ 	│	├── interactive.sh
+│   │   │	├── lang_list.txt
+│   │   │	└── transliterate_word.sh
+│   │   └── indic-en
+│   │   	├── generate_result_files.py
+│   │ 		├── interactive.sh
+│   │   	├── lang_list.txt
+│   │   	└── transliterate_word.sh
 │   └── python
 │       ├── custom_interactive.py
 │       ├── lang_list.txt
