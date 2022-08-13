@@ -24,13 +24,18 @@
 
 IndicXlit is evaluated on [Dakshina benchmark](https://github.com/google-research-datasets/dakshina) and [Aksharantar benchmark](https://indicnlp.ai4bharat.org/aksharantar/). IndicXlit achieves state-of-the-art results on the Dakshina testset and also provides baseline results on the new Aksharantar testset. The Top-1 results are summarized below. For more details, refer our [paper](https://arxiv.org/abs/2205.03018).
 
-
+#### En-Indic Results
 | Languages | asm | ben | brx | guj | hin | kan | kas | kok | mai | mal | mni | mar | nep | ori | pan | san | tam | tel | urd |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Dakshina | - | 55.49 | - | 62.02 | 60.56 | 77.18 | - | - | - | 63.56 | - | 64.85 | - | - | 47.24 | - | 68.10 | 73.38 | 42.12 | 61.45 |
 | Aksharantar (native words) | 60.27 | 61.70 | 70.79 | 61.89 | 55.59 | 76.18 | 28.76 | 63.06 | 72.06 | 64.73 | 83.19 | 63.72 | 80.25 | 58.90 | 40.27 | 78.63 | 69.78 | 84.69 | 48.37 |
 | Aksharantar (named entities) | 38.62 | 37.12 | 30.32 | 48.89 | 58.87 | 49.92 | 20.23 | 34.36 | 42.82 | 33.93 | 44.12 | 53.57 | 52.67 | 30.63 | 36.08 | 24.06 | 42.12 | 51.82 | 47.77 |
 
+#### Indic-En Results
+| Languages | asm | ben | brx | guj | hin | kan | kas | kok | mai | mal | mni | mar | nep | ori | pan | san | tam | tel | urd |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Aksharantar (native words) | 75.55 | 11.76 | 68.58 | 34.35 | 52.30 | 76.25 | 55.94 | 38.96 | 65.04 | 65.55 | 84.64 | 36.15 | 82.38 | 53.65 | 29.05 | 67.4 | 45.08 | 54.55 | 29.95 |
+| Aksharantar (named entities) | 37.86 | 52.54 | 35.49 | 50.56 | 59.22 | 60.77 | 12.87 | 35.09 | 38.18 | 45.23 | 34.87 | 56.76 | 54.05 | 47.68 | 48.00 | 42.71 | 35.46 | 57.57 | 23.14 |
 
 <!-- index with hyperlinks (Table of contents) -->
 ## Table of contents
