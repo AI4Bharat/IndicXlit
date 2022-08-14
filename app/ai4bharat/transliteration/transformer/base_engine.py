@@ -8,7 +8,7 @@ from abc import ABC, abstractmethod, abstractproperty
 from indicnlp.normalize.indic_normalize import IndicNormalizerFactory
 from urduhack import normalize as shahmukhi_normalize
 
-from ..utils import LANG_CODE_TO_SCRIPT_CODE, SCRIPT_CODE_TO_UNICODE_CHARS_RANGE_STR, INDIC_TO_LATIN_PUNCT_TRANSLATOR, INDIC_TO_STANDARD_NUMERALS_TRANSLATOR, hardfix_wordfinal_virama, rreplace
+from ..utils import LANG_CODE_TO_SCRIPT_CODE, SCRIPT_CODE_TO_UNICODE_CHARS_RANGE_STR, INDIC_TO_LATIN_PUNCT_TRANSLATOR, INDIC_TO_STANDARD_NUMERALS_TRANSLATOR, hardfix_wordfinal_virama, nativize_latin_fullstop, rreplace
 LANG_WORD_REGEXES = {
     lang_name: re.compile(f"[{SCRIPT_CODE_TO_UNICODE_CHARS_RANGE_STR[script_name]}]+")
     for lang_name, script_name in LANG_CODE_TO_SCRIPT_CODE.items()
@@ -305,7 +305,7 @@ class BaseEngineTransformer(ABC):
 
         matches = LANG_WORD_REGEXES[src_lang].findall(text)
         if not matches:
-            return text
+            return [nativize_latin_fullstop(text, tgt_lang)]
 
         src_word = matches[-1]
         
@@ -317,13 +317,12 @@ class BaseEngineTransformer(ABC):
             # Not enabled for Sanskrit, as sandhi compounds are generally written word-by-word
             for i in range(len(transliteration_list)):
                 transliteration_list[i] = hardfix_wordfinal_virama(transliteration_list[i])
-                # Lang-specific patches. TODO: Move to indic-nlp-library
-                if tgt_lang == 'mr':
-                    transliteration_list[i] = transliteration_list[i].replace("अॅ", 'ॲ')
     
         if src_word == text:
             return transliteration_list
         
+        text = nativize_latin_fullstop(text, tgt_lang)
+
         return [
             rreplace(text, src_word, tgt_word)
             for tgt_word in transliteration_list
@@ -335,6 +334,12 @@ class BaseEngineTransformer(ABC):
         
         # FIXME: Handle properly in `post_process()` to return results for all words
         transliteration_list = self.post_process(translation_str, tgt_lang)
+        
+        # Lang-specific patches. TODO: Move to indic-nlp-library
+        if tgt_lang == 'mr':
+            for i in range(len(transliteration_list)):
+                transliteration_list[i] = transliteration_list[i].replace("अॅ", 'ॲ')
+        
         return [transliteration_list]
 
     def _transliterate_sentence(self, text, src_lang, tgt_lang):

@@ -128,6 +128,32 @@ INDIC_TO_LATIN_PUNCT = {
 
 INDIC_TO_LATIN_PUNCT_TRANSLATOR = str.maketrans(INDIC_TO_LATIN_PUNCT)
 
+NON_LATIN_FULLSTOP_LANGS = {
+    # Brahmic
+    'as' : '।',
+    'bn' : '।',
+    'brx': '।',
+    'hi' : '।',
+    'mai': '।',
+    'mni': '꯫',
+    'ne' : '।',
+    'or' : '।',
+    'pa' : '।',
+    'sa' : '।',
+
+    # Perso-Arabic
+    'ks': '۔',
+    'sd': '۔',
+    'ur': '۔',
+}
+
+ENDS_WITH_LATIN_FULLSTOP_REGEX = re.compile("(^|[^.]+)[.]$")
+
+def nativize_latin_fullstop(text, lang_code):
+    if lang_code in NON_LATIN_FULLSTOP_LANGS and ENDS_WITH_LATIN_FULLSTOP_REGEX.match(text):
+        return text[:-1] + NON_LATIN_FULLSTOP_LANGS[lang_code]
+    return text
+
 SCRIPT_CODE_TO_NUMERALS = {
     # ISO 15924 codes for script names
 
