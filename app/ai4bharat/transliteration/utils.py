@@ -37,14 +37,16 @@ LANG_CODE_TO_DISPLAY_NAME = {
     'en' : "English",
 }
 
-RTL_LANG_CODES = {
-    'dv',  # "Dhivehi - ދިވެހި"
+PERSOARABIC_LANG_CODES = {
     'ks',  # "Kashmiri - كٲشُر"
-    'pnb', # "Punjabi (Western) - پن٘جابی"
+    'pnb', # "Panjabi (Western) - پن٘جابی"
     'sd',  # "Sindhi - سنڌي"
     'skr', # "Saraiki - سرائیکی"
     'ur',  # "Urdu - اُردُو"
 }
+
+RTL_LANG_CODES = set(PERSOARABIC_LANG_CODES)
+RTL_LANG_CODES.add('dv') # "Dhivehi - ދިވެހި"
 
 LANG_CODE_TO_SCRIPT_CODE = {
 
@@ -115,8 +117,15 @@ SCRIPT_CODE_TO_UNICODE_CHARS_RANGE_STR = {
 }
 
 INDIC_TO_LATIN_PUNCT = {
-    '।': '.',
-    '॥': "..",
+    ## List of all punctuations across languages
+
+    # Brahmic
+    '।': '.', # Nagari
+    '꯫': '.', # Meetei
+
+    # Archaic Indic
+    '॥': "..",  # Sanskrit
+    '෴': '.', # Sinhala
 
     # Arabic
     '۔': '.',
@@ -147,12 +156,21 @@ NON_LATIN_FULLSTOP_LANGS = {
     'ur': '۔',
 }
 
-ENDS_WITH_LATIN_FULLSTOP_REGEX = re.compile("(^|[^.]+)[.]$")
+ENDS_WITH_LATIN_FULLSTOP_REGEX = re.compile("(^|.*[^.])\.$")
 
 def nativize_latin_fullstop(text, lang_code):
     if lang_code in NON_LATIN_FULLSTOP_LANGS and ENDS_WITH_LATIN_FULLSTOP_REGEX.match(text):
         return text[:-1] + NON_LATIN_FULLSTOP_LANGS[lang_code]
     return text
+
+LATIN_TO_PERSOARABIC_PUNCTUATIONS = {
+    # Except full-stop (since period-mark is ambiguous in usage, like fullforms)
+    '?': '؟',
+    ',': '،',
+    ';': '؛',
+}
+
+LATIN_TO_PERSOARABIC_PUNC_TRANSLATOR = str.maketrans(LATIN_TO_PERSOARABIC_PUNCTUATIONS)
 
 SCRIPT_CODE_TO_NUMERALS = {
     # ISO 15924 codes for script names
