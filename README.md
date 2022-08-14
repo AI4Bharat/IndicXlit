@@ -72,7 +72,9 @@ Indic to Roman model [v1.0](https://github.com/AI4Bharat/IndicXlit/releases/down
 <!-- mirror links set up the public drive -->	
 
 ### Using hosted APIs
+Roman to Indic [Interface](https://xlit.ai4bharat.org/)
 
+Indic to Roman [Interface](https://xlit.ai4bharat.org/converter)
 <details><summary> Click to expand </summary>
 
 #### Sample screenshot of sentence transliteration
