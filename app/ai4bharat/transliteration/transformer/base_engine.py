@@ -1,7 +1,7 @@
 import os
 import re
 import tqdm
-import json
+import ujson
 from pydload import dload
 import zipfile
 from abc import ABC, abstractmethod, abstractproperty
@@ -57,7 +57,7 @@ class BaseEngineTransformer(ABC):
             dicts_folder = os.path.join(models_path, DICTS_FOLDER)
             self.word_prob_dicts = {}
             for la in tqdm.tqdm(self.tgt_langs, desc="Loading dicts into RAM"):
-                self.word_prob_dicts[la] = json.load(open(
+                self.word_prob_dicts[la] = ujson.load(open(
                     os.path.join(dicts_folder, DICT_FILE_FORMAT%la)
                 ))
 

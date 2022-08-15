@@ -5,6 +5,7 @@ gevent
 sacremoses
 pandas
 tqdm
+ujson
 mock
 tensorboardX
 pyarrow
