@@ -8,7 +8,7 @@ This package provides support for:
 
 ## About
 
-This library is based on our [research work](https://indicnlp.ai4bharat.org/indic-xlit/) called **Indic-Xlit** to build tools that can translit text to Indic languages from colloquially-typed content (in English alphabet), precisely called as Roman-to-Native back-transliteration. Note that currently we **do not support** Indic to English conversion (Native-to-Roman transliteration).
+This library is based on our [research work](https://ai4bharat.org/transliteration) called **Indic-Xlit** to build tools that can translit text between Indic languages and colloquially-typed content (in English alphabet). We support both Roman-to-Native back-transliteration (English script to Indic language conversion), as well as Native-to-Roman transliteration (Indic to English alphabet conversion).
 
 An online demo is available here: https://xlit.ai4bharat.org
 
@@ -53,21 +53,33 @@ from ai4bharat.transliteration import XlitEngine
 e = XlitEngine("hi", beam_width=10, rescore=True)
 out = e.translit_word("namasthe", topk=5)
 print(out)
-# output:{'hi': ['नमस्ते', 'नमस्थे', 'नामस्थे', 'नमास्थे', 'नमस्थें']}
+# output: {'hi': ['नमस्ते', 'नमस्थे', 'नामस्थे', 'नमास्थे', 'नमस्थें']}
 ```
 
-Note:
+Arguments:
 - `beam_width` increases beam search size, resulting in improved accuracy but increases time/compute. (Default: `4`)
 - `topk` returns only specified number of top results. (Default: `4`)
 - `rescore` returns the reranked suggestions after using a dictionary. (Default: `True`)
 
+Romanization: 
+- By default, `XlitEngine` will load English-to-Indic model (default: `src_script_type=roman`)
+- To load Indic-to-English model, use `src_script_type=indic`
+
+For example: (also applicable for all other examples below)
+
+```py
+e = XlitEngine(src_script_type="indic", beam_width=10, rescore=False)
+out = e.translit_word("नमस्ते", lang_code="hi", topk=5)
+print(out)
+# output: ['namaste', 'namastey', 'namasthe', 'namastay', 'namste']
+```
 
 **Example 2** : word Transliteration without rescoring
 ```py
 e = XlitEngine("hi", beam_width=10, rescore=False)
 out = e.translit_word("namasthe", topk=5)
 print(out)
-# output:{'hi': ['नमस्थे', 'नामस्थे', 'नमास्थे', 'नमस्थें', 'नमस्ते']}
+# output: {'hi': ['नमस्थे', 'नामस्थे', 'नमास्थे', 'नमस्थें', 'नमस्ते']}
 ```
 
 **Example 3** : Using Sentence Transliteration
@@ -98,7 +110,7 @@ print(out)
 # output: {'ml': 'വന്ധേ മാതരം', 'ta': 'வந்தே மாதரம்'}
 
 ## Specify language name to get only specific language result
-out = e.translit_word("amma", target_lang = "ml", topk=5)
+out = e.translit_word("amma", lang_code = "ml", topk=5)
 print(out)
 # output: ['അമ്മ', 'എമ്മ', 'അമ', 'എഎമ്മ', 'അഎമ്മ']
 ```
