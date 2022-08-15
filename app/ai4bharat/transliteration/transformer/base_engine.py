@@ -306,7 +306,7 @@ class BaseEngineTransformer(ABC):
         matches = LANG_WORD_REGEXES[src_lang].findall(text)
 
         # Intentionally done after finding matches
-        if tgt_lang in PERSOARABIC_LANG_CODES:
+        if tgt_lang in RTL_LANG_CODES:
             text = text.translate(LATIN_TO_PERSOARABIC_PUNC_TRANSLATOR)
         text = nativize_latin_fullstop(text, tgt_lang)
         
@@ -358,7 +358,7 @@ class BaseEngineTransformer(ABC):
         matches = LANG_WORD_REGEXES[src_lang].findall(text)
 
         # Intentionally done after finding matches
-        if tgt_lang in PERSOARABIC_LANG_CODES:
+        if tgt_lang in RTL_LANG_CODES:
             text = text.translate(LATIN_TO_PERSOARABIC_PUNC_TRANSLATOR)
         text = nativize_latin_fullstop(text, tgt_lang)
 

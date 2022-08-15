@@ -7,7 +7,8 @@ LANG_CODE_TO_DISPLAY_NAME = {
     # Indo-Aryan
     ## Indic-scripts
     'as' : "Assamese - অসমীয়া",
-    'bn' : "Bengali - বাংলা",
+    'bn' : "Bangla - বাংলা",
+    'doi': "Dogri - डोगरी",
     'gom': "Goan Konkani - कोंकणी",
     'gu' : "Gujarati - ગુજરાતી",
     'hi' : "Hindi - हिंदी",
@@ -32,6 +33,9 @@ LANG_CODE_TO_DISPLAY_NAME = {
     # Tibeto-Burman
     'brx': "Boro - बड़ो",
     'mni': "Manipuri - ꯃꯤꯇꯩꯂꯣꯟ",
+
+    # Munda
+    'sat': "Santali - ᱥᱟᱱᱛᱟᱲᱤ",
 
     # Misc
     'en' : "English",
@@ -127,6 +131,10 @@ INDIC_TO_LATIN_PUNCT = {
     '॥': "..",  # Sanskrit
     '෴': '.', # Sinhala
 
+    # Ol Chiki
+    '᱾': '.',
+    '᱿': '..',
+
     # Arabic
     '۔': '.',
     '؟': '?',
@@ -142,6 +150,7 @@ NON_LATIN_FULLSTOP_LANGS = {
     'as' : '।',
     'bn' : '।',
     'brx': '।',
+    'doi': '।',
     'hi' : '।',
     'mai': '।',
     'mni': '꯫',
@@ -149,6 +158,7 @@ NON_LATIN_FULLSTOP_LANGS = {
     'or' : '।',
     'pa' : '।',
     'sa' : '।',
+    'sat': '᱾',
 
     # Perso-Arabic
     'ks': '۔',

@@ -17,7 +17,7 @@
 | -------------- | -------------- | -------------- | --------------- | -------------- | ------------- |
 | Assamese (asm) | Bengali (ben)  |  Bodo (brx)    | Gujarati (guj)  | Hindi (hin)    | Kannada (kan) |
 | Kashmiri (kas) | Konkani (gom)  | Maithili (mai) | Malayalam (mal) | Manipuri (mni) | Marathi (mar) | 
-| Nepali (nep)   | Oriya (ori)    | Punjabi (pan)  |  Sanskrit (san) | Sindhi (snd)   | Sinhala (sin) |
+| Nepali (nep)   | Oriya (ori)    | Panjabi (pan)  |  Sanskrit (san) | Sindhi (snd)   | Sinhala (sin) |
 |  Tamil (tam)   |  Telugu (tel)  |   Urdu (urd)   | 
 
 ### Evaluation Results

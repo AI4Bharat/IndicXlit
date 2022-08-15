@@ -20,7 +20,7 @@ An online demo is available here: https://xlit.ai4bharat.org
 |ISO 639 code | Language |
 |---|--------------------|
 |as |Assamese - অসমীয়া   |
-|bn |Bengali - বাংলা      |
+|bn |Bangla - বাংলা       |
 |brx|Boro - बड़ो	      |
 |gu |Gujarati - ગુજરાતી   |
 |hi |Hindi - हिंदी         |
