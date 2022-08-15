@@ -1,4 +1,4 @@
-# AI4Bharat Transliteration Application
+# AI4Bharat Indic-Transliteration
 
 An AI-based transliteration engine for 21 major languages of the Indian subcontinent.
 
@@ -9,9 +9,6 @@ This package provides support for:
 ## About
 
 This library is based on our [research work](https://indicnlp.ai4bharat.org/indic-xlit/) called **Indic-Xlit** to build tools that can translit text to Indic languages from colloquially-typed content (in English alphabet), precisely called as Roman-to-Native back-transliteration. Note that currently we **do not support** Indic to English conversion (Native-to-Roman transliteration).
-
-- Example  Input: `namaste bhai`
-- Example Output: `नमस्ते भाई`
 
 An online demo is available here: https://xlit.ai4bharat.org
 
@@ -54,9 +51,9 @@ from ai4bharat.transliteration import XlitEngine
 
 ```py
 e = XlitEngine("hi", beam_width=10, rescore=True)
-out = e.translit_word("computer", topk=5)
+out = e.translit_word("namasthe", topk=5)
 print(out)
-# output:{'hi': ['कंप्यूटर', 'कम्प्यूटर', 'कॉम्प्यूटर', 'कम्प्युटर', 'कंप्युटर']}
+# output:{'hi': ['नमस्ते', 'नमस्थे', 'नामस्थे', 'नमास्थे', 'नमस्थें']}
 ```
 
 Note:
@@ -68,9 +65,9 @@ Note:
 **Example 2** : word Transliteration without rescoring
 ```py
 e = XlitEngine("hi", beam_width=10, rescore=False)
-out = e.translit_word("computer", topk=5)
+out = e.translit_word("namasthe", topk=5)
 print(out)
-# output:{'hi': ['कम्प्यूटर', 'कंप्यूटर', 'कॉम्प्यूटर', 'कम्प्युटर', 'कंप्युटर']}
+# output:{'hi': ['नमस्थे', 'नामस्थे', 'नमास्थे', 'नमस्थें', 'नमस्ते']}
 ```
 
 **Example 3** : Using Sentence Transliteration
@@ -94,11 +91,11 @@ e = XlitEngine(["ta", "ml"], beam_width=6)
 
 out = e.translit_word("amma", topk=3)
 print(out)
-# output: {'ta': ['அம்மா', 'அம்ம', 'அம்மை'], 'ml': ['അമ്മ', 'എമ്മ', 'അമ']}
+# output: {'ml': ['അമ്മ', 'എമ്മ', 'അമ'], 'ta': ['அம்மா', 'அம்ம', 'அம்மை']}
 
-out = e.translit_sentence("hello world")
+out = e.translit_sentence("vandhe maatharam")
 print(out)
-# output: {'ta': 'ஹலோ வார்ல்ட்', 'ml': 'ഹലോ വേൾഡ്'}
+# output: {'ml': 'വന്ധേ മാതരം', 'ta': 'வந்தே மாதரம்'}
 
 ## Specify language name to get only specific language result
 out = e.translit_word("amma", target_lang = "ml", topk=5)
@@ -109,9 +106,9 @@ print(out)
 **Example 5** : Transliteration for all available languages
 ```py
 e = XlitEngine(beam_width=10)
-out = e.translit_sentence("Hello World")
+out = e.translit_sentence("namaskaar bharat")
 print(out)
-# sample output: {'bn': 'হেল ওয়ার্ল্ড', 'gu': 'હેલો વર્લ્ડ', 'hi': 'हेलो वर्ल्ड', 'kn': 'ಹೆಲ್ಲೊ ವರ್ಲ್ಡ್', 'ml': 'ഹലോ വേൾഡ്', 'pa': 'ਹੇਲੋ ਵਰਲਡ', 'si': 'හිලෝ වර්ල්ඩ්', 'ta': 'ஹலோ வார்ல்ட்', 'te': 'హల్లో వరల్డ్', 'ur': 'ہیلو وارڈ'}
+# sample output: {'bn': 'নমস্কার ভারত', 'gu': 'નમસ્કાર ભારત', 'hi': 'नमस्कार भारत', 'kn': 'ನಮಸ್ಕಾರ್ ಭಾರತ್', 'ml': 'നമസ്കാർ ഭാരത്', 'pa': 'ਨਮਸਕਾਰ ਭਾਰਤ', 'si': 'නමස්කාර් භාරත්', 'ta': 'நமஸ்கார் பாரத்', 'te': 'నమస్కార్ భారత్', 'ur': 'نمسکار بھارت'}
 ```
 
 ---
