@@ -176,16 +176,23 @@ class Transliterator:
         # print("self.src_dict.__len__() : ",self.src_dict.symbols)
         # print("self.src_dict.__len__() : ",self.tgt_dict.symbols)
 
-
+        # self.cfg.common.fp16 = True
         # Optimize ensemble for generation
-        for model in self.models:
-            if model is None:
+        for i in range(len(self.models)):
+            if self.models[i] is None:
                 continue
             if self.cfg.common.fp16:
-                model.half()
+                self.models[i].half()
+            
             if self.use_cuda and not self.cfg.distributed_training.pipeline_model_parallel:
-                model.cuda()
-            model.prepare_for_inference_(self.cfg)
+                self.models[i].cuda()
+            self.models[i].prepare_for_inference_(self.cfg)
+            # # Quantize
+            # self.models[i] = torch.quantization.quantize_dynamic(
+            #     self.models[i], {torch.nn.Linear}, dtype=torch.qint8
+            # )
+            # # Torchscript
+            # self.models[i] = torch.jit.script(self.models[i])
 
         # Initialize generator
         self.generator = self.task.build_generator(self.models, self.cfg.generation)
