@@ -51,6 +51,7 @@ class BaseEngineTransformer(ABC):
             beam = beam_width, batch_size = 32,
         )
         
+        self.beam_width = beam_width
         self._rescore = rescore
         if self._rescore:
             # loading the word_prob_dict for rescoring module
@@ -367,6 +368,6 @@ class BaseEngineTransformer(ABC):
 
         out_str = text
         for match in matches:
-            result = self.batch_transliterate_words([match], src_lang, tgt_lang, topk=1)[0][0]
+            result = self.batch_transliterate_words([match], src_lang, tgt_lang, topk=self.beam_width)[0][0]
             out_str = re.sub(match, result, out_str, 1)
         return out_str

@@ -125,11 +125,12 @@ INDIC_TO_LATIN_PUNCT = {
 
     # Brahmic
     '।': '.', # Nagari
-    '꯫': '.', # Meetei
-
-    # Archaic Indic
+    ## Archaic Indic
     '॥': "..",  # Sanskrit
     '෴': '.', # Sinhala
+    ## Meetei (influenced from Burmese)
+    '꫰': ',',
+    '꯫': '.',
 
     # Ol Chiki
     '᱾': '.',

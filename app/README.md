@@ -57,13 +57,13 @@ print(out)
 ```
 
 Arguments:
-- `beam_width` increases beam search size, resulting in improved accuracy but increases time/compute. (Default: `4`)
+- `beam_width` increases search size, resulting in improved accuracy but increases time/compute. (Default: `4`)
 - `topk` returns only specified number of top results. (Default: `4`)
 - `rescore` returns the reranked suggestions after using a dictionary. (Default: `True`)
 
 Romanization: 
-- By default, `XlitEngine` will load English-to-Indic model (default: `src_script_type=roman`)
-- To load Indic-to-English model, use `src_script_type=indic`
+- By default, `XlitEngine` will load English-to-Indic model (default: `src_script_type="roman"`)
+- To load Indic-to-English model, use `src_script_type="indic"`
 
 For example: (also applicable for all other examples below)
 

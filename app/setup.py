@@ -15,17 +15,21 @@ with pathlib.Path('dependencies.txt').open() as requirements_txt:
         in pkg_resources.parse_requirements(requirements_txt)
     ]
 
+# Read meta-data
+about = {}
+exec(open('ai4bharat/transliteration/__metadata.py').read(), about)
+
 # This call to setup() does all the work
 setup(
     name="ai4bharat-transliteration",
-    version="1.1.1",
+    version=about["__version__"],
     description="Indic-Xlit: Transliteration library for Indic Languages. Conversion of text from English to 21 languages of South Asia.",
     long_description=README,
     long_description_content_type="text/markdown",
     url="https://github.com/AI4Bharat/IndicXlit",
     project_urls={
         # 'Say Thanks': 'mailto:opensource@ai4bharat.org',
-        'Our Research': 'https://indicnlp.ai4bharat.org/indic-xlit/',
+        'Our Research': 'https://ai4bharat.org/transliteration',
         'Demo Website': 'https://xlit.ai4bharat.org',
         'Report Issues': 'https://github.com/AI4Bharat/IndicXlit/issues',
         'Source Code': 'https://github.com/AI4Bharat/IndicXlit/tree/master/app',
