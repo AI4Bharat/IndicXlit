@@ -380,6 +380,6 @@ class BaseEngineTransformer(ABC):
 
         out_str = text
         for match in matches:
-            result = self.batch_transliterate_words([match], src_lang, tgt_lang, topk=self.beam_width)[0][0]
+            result = self.batch_transliterate_words([match], src_lang, tgt_lang)[0][0]
             out_str = re.sub(match, result, out_str, 1)
         return out_str

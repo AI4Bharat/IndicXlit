@@ -39,7 +39,7 @@ app.config['JSON_AS_ASCII'] = False
 from .xlit_src import XlitEngine
 
 MAX_SUGGESTIONS = 8
-DEFAULT_NUM_SUGGESTIONS = 6
+DEFAULT_NUM_SUGGESTIONS = 5
 
 ENGINE = {
     "en2indic": XlitEngine(beam_width=MAX_SUGGESTIONS, rescore=True, model_type="transformer", src_script_type = "roman"),
@@ -85,6 +85,7 @@ def xlit_api(lang_code, eng_word):
     }
 
     transliterate_numerals = request.args.get('transliterate_numerals', default=False, type=lambda v: v.lower() == 'true')
+    num_suggestions = request.args.get('num_suggestions', default=DEFAULT_NUM_SUGGESTIONS, type=int)
 
     if lang_code not in ENGINE["en2indic"].all_supported_langs:
         response['error'] = 'Invalid scheme identifier. Supported languages are: '+ str(ENGINE["en2indic"].all_supported_langs)
@@ -92,7 +93,7 @@ def xlit_api(lang_code, eng_word):
 
     try:
         ## Limit char count to --> 70
-        xlit_result = ENGINE["en2indic"].translit_word(eng_word[:70], lang_code, topk=DEFAULT_NUM_SUGGESTIONS, transliterate_numerals=transliterate_numerals)
+        xlit_result = ENGINE["en2indic"].translit_word(eng_word[:70], lang_code, topk=num_suggestions, transliterate_numerals=transliterate_numerals)
     except Exception as e:
         xlit_result = XlitError.internal_err
 
@@ -121,9 +122,11 @@ def reverse_xlit_api(lang_code, word):
         response['error'] = 'Invalid scheme identifier. Supported languages are: '+ str(ENGINE["indic2en"].all_supported_langs)
         return jsonify(response)
 
+    num_suggestions = request.args.get('num_suggestions', default=DEFAULT_NUM_SUGGESTIONS, type=int)
+
     try:
         ## Limit char count to --> 70
-        xlit_result = ENGINE["indic2en"].translit_word(word[:70], lang_code, topk=DEFAULT_NUM_SUGGESTIONS)
+        xlit_result = ENGINE["indic2en"].translit_word(word[:70], lang_code, topk=num_suggestions)
     except Exception as e:
         xlit_result = XlitError.internal_err
 
