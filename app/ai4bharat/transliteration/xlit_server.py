@@ -84,13 +84,15 @@ def xlit_api(lang_code, eng_word):
         'result': ''
     }
 
+    transliterate_numerals = request.args.get('transliterate_numerals', default=False, type=lambda v: v.lower() == 'true')
+
     if lang_code not in ENGINE["en2indic"].all_supported_langs:
         response['error'] = 'Invalid scheme identifier. Supported languages are: '+ str(ENGINE["en2indic"].all_supported_langs)
         return jsonify(response)
 
     try:
         ## Limit char count to --> 70
-        xlit_result = ENGINE["en2indic"].translit_word(eng_word[:70], lang_code, topk=DEFAULT_NUM_SUGGESTIONS)
+        xlit_result = ENGINE["en2indic"].translit_word(eng_word[:70], lang_code, topk=DEFAULT_NUM_SUGGESTIONS, transliterate_numerals=transliterate_numerals)
     except Exception as e:
         xlit_result = XlitError.internal_err
 

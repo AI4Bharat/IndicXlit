@@ -305,18 +305,16 @@ class BaseEngineTransformer(ABC):
             # So process them first so that they are not considered for transliteration
             text = text.translate(INDIC_TO_LATIN_PUNCT_TRANSLATOR)
             text = text.translate(INDIC_TO_STANDARD_NUMERALS_TRANSLATOR)
-
-        matches = LANG_WORD_REGEXES[src_lang].findall(text)
-
-        # Transliterate punctuations & numerals if tgt_lang is Indic
-        # (Intentionally done after finding matches)
-        if src_lang == 'en':
+        else:
+            # Transliterate punctuations & numerals if tgt_lang is Indic
             if nativize_punctuations:
                 if tgt_lang in RTL_LANG_CODES:
                     text = text.translate(LATIN_TO_PERSOARABIC_PUNC_TRANSLATOR)
                 text = nativize_latin_fullstop(text, tgt_lang)
             if nativize_numerals:
                 text = text.translate(LATIN_TO_NATIVE_NUMERALS_TRANSLATORS[tgt_lang])
+
+        matches = LANG_WORD_REGEXES[src_lang].findall(text)
 
         if not matches:
             return [text]
@@ -366,18 +364,16 @@ class BaseEngineTransformer(ABC):
             # So process them first so that they are not considered for transliteration
             text = text.translate(INDIC_TO_LATIN_PUNCT_TRANSLATOR)
             text = text.translate(INDIC_TO_STANDARD_NUMERALS_TRANSLATOR)
-
-        matches = LANG_WORD_REGEXES[src_lang].findall(text)
-
-        # Transliterate punctuations & numerals if tgt_lang is Indic
-        # (Intentionally done after finding matches)
-        if src_lang == 'en':
+        else:
+            # Transliterate punctuations & numerals if tgt_lang is Indic
             if nativize_punctuations:
                 if tgt_lang in RTL_LANG_CODES:
                     text = text.translate(LATIN_TO_PERSOARABIC_PUNC_TRANSLATOR)
                 text = nativize_latin_fullstop(text, tgt_lang)
             if nativize_numerals:
                 text = text.translate(LATIN_TO_NATIVE_NUMERALS_TRANSLATORS[tgt_lang])
+
+        matches = LANG_WORD_REGEXES[src_lang].findall(text)
 
         if not matches:
             return text
