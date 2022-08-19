@@ -215,18 +215,24 @@ LANG_CODE_TO_NUMERALS = {
     for lang_code, script_code in LANG_CODE_TO_SCRIPT_CODE.items()
 }
 
-LANG_CODE_TO_STANDARD_NUMERALS_TRANSLATORS = {
-    lang_code: str.maketrans({lang_numeral: en_numeral for lang_numeral, en_numeral in zip(lang_numerals, LANG_CODE_TO_NUMERALS["en"])})
-    for lang_code, lang_numerals in LANG_CODE_TO_NUMERALS.items()
-    if lang_code != "en"
-}
-
 INDIC_TO_STANDARD_NUMERALS_GLOBAL_MAP = {}
 for lang_code, lang_numerals in LANG_CODE_TO_NUMERALS.items():
     map_dict = {lang_numeral: en_numeral for lang_numeral, en_numeral in zip(lang_numerals, LANG_CODE_TO_NUMERALS["en"])}
     INDIC_TO_STANDARD_NUMERALS_GLOBAL_MAP.update(map_dict)
 
 INDIC_TO_STANDARD_NUMERALS_TRANSLATOR = str.maketrans(INDIC_TO_STANDARD_NUMERALS_GLOBAL_MAP)
+
+NATIVE_TO_LATIN_NUMERALS_TRANSLATORS = {
+    lang_code: str.maketrans({lang_numeral: en_numeral for lang_numeral, en_numeral in zip(lang_numerals, LANG_CODE_TO_NUMERALS["en"])})
+    for lang_code, lang_numerals in LANG_CODE_TO_NUMERALS.items()
+    if lang_code != "en"
+}
+
+LATIN_TO_NATIVE_NUMERALS_TRANSLATORS = {
+    lang_code: str.maketrans({en_numeral: lang_numeral for en_numeral, lang_numeral in zip(LANG_CODE_TO_NUMERALS["en"], lang_numerals)})
+    for lang_code, lang_numerals in LANG_CODE_TO_NUMERALS.items()
+    if lang_code != "en"
+}
 
 WORDFINAL_INDIC_VIRAMA_REGEX = re.compile("(\u09cd|\u094d|\u0acd|\u0a4d|\u0b4d|\u0ccd|\u0d4d|\u0dca|\u0bcd|\u0c4d|\uaaf6)$")
 def hardfix_wordfinal_virama(text):

@@ -295,22 +295,29 @@ class BaseEngineTransformer(ABC):
 
         return transliterated_word_list
 
-    def _transliterate_word(self, text, src_lang, tgt_lang, topk=4):
+    def _transliterate_word(self, text, src_lang, tgt_lang, topk=4, nativize_punctuations=True, nativize_numerals=False):
         if not text:
             return text
         text = text.lower().strip()
 
         if src_lang != 'en':
+            # Our model does not transliterate native punctuations or numerals
+            # So process them first so that they are not considered for transliteration
             text = text.translate(INDIC_TO_LATIN_PUNCT_TRANSLATOR)
             text = text.translate(INDIC_TO_STANDARD_NUMERALS_TRANSLATOR)
 
         matches = LANG_WORD_REGEXES[src_lang].findall(text)
 
-        # Intentionally done after finding matches
-        if tgt_lang in RTL_LANG_CODES:
-            text = text.translate(LATIN_TO_PERSOARABIC_PUNC_TRANSLATOR)
-        text = nativize_latin_fullstop(text, tgt_lang)
-        
+        # Transliterate punctuations & numerals if tgt_lang is Indic
+        # (Intentionally done after finding matches)
+        if src_lang == 'en':
+            if nativize_punctuations:
+                if tgt_lang in RTL_LANG_CODES:
+                    text = text.translate(LATIN_TO_PERSOARABIC_PUNC_TRANSLATOR)
+                text = nativize_latin_fullstop(text, tgt_lang)
+            if nativize_numerals:
+                text = text.translate(LATIN_TO_NATIVE_NUMERALS_TRANSLATORS[tgt_lang])
+
         if not matches:
             return [text]
 
@@ -347,21 +354,30 @@ class BaseEngineTransformer(ABC):
         
         return [transliteration_list]
 
-    def _transliterate_sentence(self, text, src_lang, tgt_lang):
+    def _transliterate_sentence(self, text, src_lang, tgt_lang, nativize_punctuations=True, nativize_numerals=False):
+        # TODO: Minimize code redundancy with `_transliterate_word()`
+
         if not text:
             return text
         text = text.lower().strip()
 
         if src_lang != 'en':
+            # Our model does not transliterate native punctuations or numerals
+            # So process them first so that they are not considered for transliteration
             text = text.translate(INDIC_TO_LATIN_PUNCT_TRANSLATOR)
             text = text.translate(INDIC_TO_STANDARD_NUMERALS_TRANSLATOR)
 
         matches = LANG_WORD_REGEXES[src_lang].findall(text)
 
-        # Intentionally done after finding matches
-        if tgt_lang in RTL_LANG_CODES:
-            text = text.translate(LATIN_TO_PERSOARABIC_PUNC_TRANSLATOR)
-        text = nativize_latin_fullstop(text, tgt_lang)
+        # Transliterate punctuations & numerals if tgt_lang is Indic
+        # (Intentionally done after finding matches)
+        if src_lang == 'en':
+            if nativize_punctuations:
+                if tgt_lang in RTL_LANG_CODES:
+                    text = text.translate(LATIN_TO_PERSOARABIC_PUNC_TRANSLATOR)
+                text = nativize_latin_fullstop(text, tgt_lang)
+            if nativize_numerals:
+                text = text.translate(LATIN_TO_NATIVE_NUMERALS_TRANSLATORS[tgt_lang])
 
         if not matches:
             return text

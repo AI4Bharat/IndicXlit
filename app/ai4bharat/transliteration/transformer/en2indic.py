@@ -85,28 +85,28 @@ class XlitEngineTransformer_En2Indic(BaseEngineTransformer):
     def tgt_langs(self):
         return self._tgt_langs
 
-    def translit_word(self, word, lang_code="default", topk=4):
+    def translit_word(self, word, lang_code="default", topk=4, transliterate_numerals=False):
         
         if lang_code in self.tgt_langs:
-            transliterated_word_list = self._transliterate_word(word, src_lang='en', tgt_lang=lang_code, topk=topk)
+            transliterated_word_list = self._transliterate_word(word, src_lang='en', tgt_lang=lang_code, topk=topk, nativize_numerals=transliterate_numerals)
             return transliterated_word_list
         elif lang_code == "default":
             res_dict = {}
             for la in self.tgt_langs:
-                transliterated_word_list = self._transliterate_word(word, src_lang='en', tgt_lang=la, topk=topk)
+                transliterated_word_list = self._transliterate_word(word, src_lang='en', tgt_lang=la, topk=topk, nativize_numerals=transliterate_numerals)
                 res_dict[la] = transliterated_word_list
             return res_dict
         else:
             raise NotImplementedError("Unsupported lang_code: " + lang_code)
 
-    def translit_sentence(self, eng_sentence, lang_code="default"):
+    def translit_sentence(self, eng_sentence, lang_code="default", transliterate_numerals=True):
 
         if lang_code in self.tgt_langs:
-            return self._transliterate_sentence(eng_sentence, src_lang='en', tgt_lang=lang_code)
+            return self._transliterate_sentence(eng_sentence, src_lang='en', tgt_lang=lang_code, nativize_numerals=transliterate_numerals)
         elif lang_code == "default":
             res_dict = {}
             for la in self.tgt_langs:
-                res_dict[la] = self._transliterate_sentence(eng_sentence, src_lang='en', tgt_lang=la)
+                res_dict[la] = self._transliterate_sentence(eng_sentence, src_lang='en', tgt_lang=la, nativize_numerals=transliterate_numerals)
             return res_dict
         else:
             raise NotImplementedError("Unsupported lang_code: " + lang_code)
