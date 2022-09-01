@@ -1,9 +1,6 @@
 import re
 
 LANG_CODE_TO_DISPLAY_NAME = {
-    # European
-    'en': "English",
-
     # Indo-Aryan
     ## Indic-scripts
     'as' : "Assamese - অসমীয়া",
@@ -13,22 +10,26 @@ LANG_CODE_TO_DISPLAY_NAME = {
     'gu' : "Gujarati - ગુજરાતી",
     'hi' : "Hindi - हिंदी",
     'mai': "Maithili - मैथिली",
-    'mr': "Marathi - मराठी",
-    'ne': "Nepali - नेपाली",
-    'or': "Oriya - ଓଡ଼ିଆ",
-    'pa': "Panjabi - ਪੰਜਾਬੀ",
-    'sa': "Sanskrit - संस्कृतम्",
-    'si': "Sinhala - සිංහල",
+    'mr' : "Marathi - मराठी",
+    'ne' : "Nepali - नेपाली",
+    'or' : "Oriya - ଓଡ଼ିଆ",
+    'pa' : "Panjabi - ਪੰਜਾਬੀ",
+    'sa' : "Sanskrit - संस्कृतम्",
+    'si' : "Sinhala - සිංහල",
     ## Perso-Arabic scripts
-    'ks': "Kashmiri - كٲشُر",
-    'sd': "Sindhi - سنڌي",
-    'ur': "Urdu - اُردُو",
+    'ks' : "Kashmiri - كٲشُر",
+    'pnb': "Panjabi (Western) - پن٘جابی",
+    'sd' : "Sindhi - سنڌي",
+    'skr': "Saraiki - سرائیکی",
+    'ur' : "Urdu - اُردُو",
+    ## Misc
+    'dv' : "Dhivehi - ދިވެހި",
 
     # Dravidian
-    'kn': "Kannada - ಕನ್ನಡ",
-    'ml': "Malayalam - മലയാളം",
-    'ta': "Tamil - தமிழ்",
-    'te': "Telugu - తెలుగు",
+    'kn' : "Kannada - ಕನ್ನಡ",
+    'ml' : "Malayalam - മലയാളം",
+    'ta' : "Tamil - தமிழ்",
+    'te' : "Telugu - తెలుగు",
     
     # Tibeto-Burman
     'brx': "Boro - बड़ो",
@@ -42,15 +43,15 @@ LANG_CODE_TO_DISPLAY_NAME = {
 }
 
 PERSOARABIC_LANG_CODES = {
-    'ks',  # "Kashmiri - كٲشُر"
-    'pnb', # "Panjabi (Western) - پن٘جابی"
-    'sd',  # "Sindhi - سنڌي"
-    'skr', # "Saraiki - سرائیکی"
-    'ur',  # "Urdu - اُردُو"
+    'ks',
+    'pnb',
+    'sd',
+    'skr',
+    'ur',
 }
 
 RTL_LANG_CODES = set(PERSOARABIC_LANG_CODES)
-RTL_LANG_CODES.add('dv') # "Dhivehi - ދިވެހި"
+RTL_LANG_CODES.add('dv')
 
 LANG_CODE_TO_SCRIPT_CODE = {
 
@@ -62,19 +63,19 @@ LANG_CODE_TO_SCRIPT_CODE = {
     "gom"  : "Deva",
     "gu"   : "Gujr",
     "hi"   : "Deva",
-    "ks"   : "Arab",
+    "ks"   : "Aran",
     "mai"  : "Deva",
     "mr"   : "Deva",
     "ne"   : "Deva",
     "or"   : "Orya",
     "pa"   : "Guru",
-    "pnb"  : "Arab",
+    "pnb"  : "Aran",
     "sa"   : "Deva",
-    "sd"   : "Arab",
+    "sd"   : "Aran",
     "sd_IN": "Deva",
     "si"   : "Sinh",
-    "skr"  : "Arab",
-    "ur"   : "Arab",
+    "skr"  : "Aran",
+    "ur"   : "Aran",
 
     # Dravidian
     "kn"   : "Knda",
@@ -114,7 +115,7 @@ SCRIPT_CODE_TO_UNICODE_CHARS_RANGE_STR = {
     "Mtei": "\uABC0-\uABFF",
 
     # Misc
-    "Arab": "\u0600-\u06FF\u0750-\u077F\u0870-\u089F\u08A0-\u08FF",
+    "Aran": "\u0600-\u06FF\u0750-\u077F\u0870-\u089F\u08A0-\u08FF", # Arabic (Nastaliq variant)
     "Latn": "\u0041-\u005A\u0061-\u007A", # includes only basic/unaccented Roman
     "Olck": "\u1C50-\u1C7F",
     "Thaa": "\u0780-\u07BF",
@@ -161,10 +162,12 @@ NON_LATIN_FULLSTOP_LANGS = {
     'sa' : '।',
     'sat': '᱾',
 
-    # Perso-Arabic
-    'ks': '۔',
-    'sd': '۔',
-    'ur': '۔',
+    # Nastaliq
+    'ks' : '۔',
+    'pnb': '۔',
+    # 'sd' : '۔', # Sindhi uses Naskh, hence use latin
+    'skr': '۔',
+    'ur' : '۔',
 }
 
 ENDS_WITH_LATIN_FULLSTOP_REGEX = re.compile("(^|.*[^.])\.$")
@@ -204,7 +207,7 @@ SCRIPT_CODE_TO_NUMERALS = {
     "Mtei": "꯰꯱꯲꯳꯴꯵꯶꯷꯸꯹",
 
     # Misc
-    "Arab": "۰۱۲۳۴۵۶۷۸۹", # Perso-Arabic numerals
+    "Aran": "۰۱۲۳۴۵۶۷۸۹", # Perso-Arabic numerals
     "Latn": "0123456789",
     "Olck": "᱐᱑᱒᱓᱔᱕᱖᱗᱘᱙",
     "Thaa": "٠١٢٣٤٥٦٧٨٩", # East-Arabic numerals. (Dhivehi does code-mixing with Arabic)
