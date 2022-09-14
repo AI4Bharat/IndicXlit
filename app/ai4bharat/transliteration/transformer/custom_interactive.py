@@ -113,7 +113,7 @@ class Transliterator:
         self.args.skip_invalid_size_inputs_valid_test = False
         # self.args.lang_pairs = "en-as,en-bn,en-gom,en-gu,en-hi,en-kn,en-ks,en-mai,en-ml,en-mr,en-ne,en-or,en-pa,en-sa,en-sd,en-si,en-ta,en-te,en-ur"
         self.args.lang_pairs = lang_pairs_csv
-        # self.args.source_lang = 'en's
+        # self.args.source_lang = 'en'
         # self.args.target_lang = 'bn'
         # self.args.encoder_langtok = 'tgt'
         self.args.lang_dict = lang_list_file

@@ -4,7 +4,8 @@
 	<a href="#download-indicxlit-model">Downloads</a> |
 	<a href="https://arxiv.org/abs/2205.03018">Paper</a> |
   <a href="https://xlit.ai4bharat.org/">Demo</a> |
-  <a href="https://pypi.org/project/ai4bharat-transliteration">Python Library</a>
+  <a href="https://pypi.org/project/ai4bharat-transliteration">Python Library</a> |
+  <a href="https://www.npmjs.com/package/@ai4bharat/indic-transliterate">JavaScript Library</a>
   <br><br>
 </div>
 

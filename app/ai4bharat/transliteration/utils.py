@@ -53,6 +53,7 @@ PERSOARABIC_LANG_CODES = {
 RTL_LANG_CODES = set(PERSOARABIC_LANG_CODES)
 RTL_LANG_CODES.add('dv')
 
+# Default/Official language to script mapping
 LANG_CODE_TO_SCRIPT_CODE = {
 
     # Indo-Aryan
@@ -71,8 +72,7 @@ LANG_CODE_TO_SCRIPT_CODE = {
     "pa"   : "Guru",
     "pnb"  : "Aran",
     "sa"   : "Deva",
-    "sd"   : "Aran",
-    "sd_IN": "Deva",
+    "sd"   : "Arab",
     "si"   : "Sinh",
     "skr"  : "Aran",
     "ur"   : "Aran",
@@ -115,7 +115,8 @@ SCRIPT_CODE_TO_UNICODE_CHARS_RANGE_STR = {
     "Mtei": "\uABC0-\uABFF",
 
     # Misc
-    "Aran": "\u0600-\u06FF\u0750-\u077F\u0870-\u089F\u08A0-\u08FF", # Arabic (Nastaliq variant)
+    "Arab": "\u0600-\u06FF\u0750-\u077F\u0870-\u089F\u08A0-\u08FF", # Perso-Arabic
+    "Aran": "\u0600-\u06FF\u0750-\u077F\u0870-\u089F\u08A0-\u08FF", # Perso-Arabic (Nastaliq code)
     "Latn": "\u0041-\u005A\u0061-\u007A", # includes only basic/unaccented Roman
     "Olck": "\u1C50-\u1C7F",
     "Thaa": "\u0780-\u07BF",
@@ -207,6 +208,7 @@ SCRIPT_CODE_TO_NUMERALS = {
     "Mtei": "꯰꯱꯲꯳꯴꯵꯶꯷꯸꯹",
 
     # Misc
+    "Arab": "۰۱۲۳۴۵۶۷۸۹", # Perso-Arabic numerals
     "Aran": "۰۱۲۳۴۵۶۷۸۹", # Perso-Arabic numerals
     "Latn": "0123456789",
     "Olck": "᱐᱑᱒᱓᱔᱕᱖᱗᱘᱙",

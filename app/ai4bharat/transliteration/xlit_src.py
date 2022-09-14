@@ -12,7 +12,7 @@ def XlitEngine(
             return XlitEngineTransformer_Indic2En(beam_width=beam_width, rescore=rescore)
     
     elif model_type == "rnn":
-        assert src_script_type == "indic"
+        assert src_script_type in {"roman", "latin", "en"}
         from .rnn.engine import XlitEngineRNN
         return XlitEngineRNN(lang2use, beam_width=beam_width, rescore=rescore)
            
