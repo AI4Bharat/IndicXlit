@@ -1,0 +1,1 @@
+- tokenize_and_normalize.py : tokenize and normalize the native script text for Indian languages 
