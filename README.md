@@ -62,7 +62,7 @@ IndicXlit is evaluated on [Dakshina benchmark](https://github.com/google-researc
   - [License](#license)
   - [Contributors](#contributors)
   - [Contact](#contact)
-
+- [Acknowledgements](#acknowledgements)
 
 ## Resources
 ### Download IndicXlit model
