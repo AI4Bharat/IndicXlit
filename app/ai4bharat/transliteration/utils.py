@@ -262,15 +262,22 @@ LATIN_TO_NATIVE_NUMERALS_TRANSLATORS = {
 }
 
 WORDFINAL_INDIC_VIRAMA_REGEX = re.compile("(\u09cd|\u094d|\u0acd|\u0a4d|\u0b4d|\u0ccd|\u0d4d|\u0dca|\u0bcd|\u0c4d|\uaaf6)$")
-def hardfix_wordfinal_virama(text):
+def hardfix_wordfinal_virama(word):
     # Add ZWNJ after a word-final halanta
     # Not applicable for non-Brahmic scripts (like Arabic & Ol-Chiki)
-    return WORDFINAL_INDIC_VIRAMA_REGEX.sub("\\1\u200c", text)
+    return WORDFINAL_INDIC_VIRAMA_REGEX.sub("\\1\u200c", word)
 
 ODIA_CONFUSING_YUKTAKSHARA_REGEX = re.compile("(\u0b4d)(ବ|ଵ|ୱ|ଯ|ୟ)")
-def fix_odia_confusing_ambiguous_yuktakshara(text):
+def fix_odia_confusing_ambiguous_yuktakshara(word):
     # Add ZWNJ in-between to force-render virama in conjunct
-    return ODIA_CONFUSING_YUKTAKSHARA_REGEX.sub("\\1\u200c\\2", text)
+    return ODIA_CONFUSING_YUKTAKSHARA_REGEX.sub("\\1\u200c\\2", word)
+
+LATIN_WORDFINAL_CONSONANTS_CHECKER_REGEX = re.compile(".*([bcdfghjklmnpqrstvwxyz])$")
+DEVANAGARI_WORDFINAL_CONSONANTS_REGEX = re.compile("([\u0915-\u0939\u0958-\u095f\u0979-\u097c\u097e-\u097f])$")
+def explicit_devanagari_wordfinal_schwa_delete(roman_word, indic_word):
+    if LATIN_WORDFINAL_CONSONANTS_CHECKER_REGEX.match(roman_word):
+        indic_word = DEVANAGARI_WORDFINAL_CONSONANTS_REGEX.sub("\\1\u094d", indic_word)
+    return indic_word
 
 # To replace last N occurences of a substring in a string
 # Src: https://stackoverflow.com/questions/2556108/

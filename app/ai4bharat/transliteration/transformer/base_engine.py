@@ -354,6 +354,12 @@ class BaseEngineTransformer(ABC):
             for i in range(len(transliteration_list)):
                 transliteration_list[i] = fix_odia_confusing_ambiguous_yuktakshara(transliteration_list[i])
         
+        if tgt_lang == 'sa':
+            for i in range(len(transliteration_list)):
+                transliteration_list[i] = explicit_devanagari_wordfinal_schwa_delete(words[0], transliteration_list[i])
+            # Retain only unique, preserving order
+            transliteration_list = list(dict.fromkeys(transliteration_list))
+        
         return [transliteration_list]
 
     def _transliterate_sentence(self, text, src_lang, tgt_lang, nativize_punctuations=True, nativize_numerals=False):
