@@ -22,7 +22,7 @@ from datetime import datetime
 import traceback
 import enum
 
-from .utils import LANG_CODE_TO_DISPLAY_NAME, RTL_LANG_CODES, LANG_CODE_TO_SCRIPT_CODE
+from .utils import LANG_CODE_TO_DISPLAY_NAME, RTL_LANG_CODES, LANG_CODE_TO_SCRIPT_CODE, GOOGLE_FONTS, FALLBACK_FONTS
 
 class XlitError(enum.Enum):
     lang_err = "Unsupported langauge ID requested ;( Please check available languages."
@@ -56,6 +56,8 @@ EXPOSED_LANGS = [
         "IsStable": True, # Set `False` if the model is experimental
         "Direction": "rtl" if lang_code in RTL_LANG_CODES else "ltr",
         "ScriptCode": LANG_CODE_TO_SCRIPT_CODE[lang_code],
+        "GoogleFont": GOOGLE_FONTS[lang_code] if lang_code in GOOGLE_FONTS else None,
+        "FallbackFont": FALLBACK_FONTS[lang_code] if lang_code in FALLBACK_FONTS else None,
     } for lang_code in sorted(ENGINE["en2indic"].all_supported_langs)
 ]
 

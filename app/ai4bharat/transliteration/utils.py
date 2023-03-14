@@ -122,6 +122,28 @@ SCRIPT_CODE_TO_UNICODE_CHARS_RANGE_STR = {
     "Thaa": "\u0780-\u07BF",
 }
 
+GOOGLE_FONTS = {
+    "gom": "Tiro Devanagari Marathi",
+    "ks" : "Noto Nastaliq Urdu",
+    "mni": "Noto Sans Meetei Mayek",
+    "mr" : "Tiro Devanagari Marathi",
+    "sa" : "Tiro Devanagari Sanskrit",
+    "sat": "Noto Sans Ol Chiki",
+    "sd" : "Lateef",
+    "ur" : "Noto Nastaliq Urdu",
+}
+
+FALLBACK_FONTS = {
+    "gom": "serif",
+    "ks" : "serif",
+    "mni": "sans-serif",
+    "mr" : "serif",
+    "sa" : "serif",
+    "sat": "sans-serif",
+    "sd" : "serif",
+    "ur" : "serif",
+}
+
 INDIC_TO_LATIN_PUNCT = {
     ## List of all punctuations across languages
 
