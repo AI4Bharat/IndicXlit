@@ -267,6 +267,11 @@ def hardfix_wordfinal_virama(text):
     # Not applicable for non-Brahmic scripts (like Arabic & Ol-Chiki)
     return WORDFINAL_INDIC_VIRAMA_REGEX.sub("\\1\u200c", text)
 
+ODIA_CONFUSING_YUKTAKSHARA_REGEX = re.compile("(\u0b4d)(ବ|ଵ|ୱ|ଯ|ୟ)")
+def fix_odia_confusing_ambiguous_yuktakshara(text):
+    # Add ZWNJ in-between to force-render virama in conjunct
+    return ODIA_CONFUSING_YUKTAKSHARA_REGEX.sub("\\1\u200c\\2", text)
+
 # To replace last N occurences of a substring in a string
 # Src: https://stackoverflow.com/questions/2556108/
 def rreplace(text, find_pattern, replace_pattern, match_count=1):

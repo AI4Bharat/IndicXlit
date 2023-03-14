@@ -350,6 +350,10 @@ class BaseEngineTransformer(ABC):
             for i in range(len(transliteration_list)):
                 transliteration_list[i] = transliteration_list[i].replace("अॅ", 'ॲ')
         
+        if tgt_lang == 'or':
+            for i in range(len(transliteration_list)):
+                transliteration_list[i] = fix_odia_confusing_ambiguous_yuktakshara(transliteration_list[i])
+        
         return [transliteration_list]
 
     def _transliterate_sentence(self, text, src_lang, tgt_lang, nativize_punctuations=True, nativize_numerals=False):
