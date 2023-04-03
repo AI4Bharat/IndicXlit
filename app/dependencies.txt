@@ -1,6 +1,7 @@
 pydload
 flask
 flask_cors
+Flask-Limiter
 gevent
 sacremoses
 pandas

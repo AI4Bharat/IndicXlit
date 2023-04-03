@@ -17,6 +17,7 @@ FORMAT:
 """
 
 from flask import Flask, jsonify, request, make_response
+from flask_limiter import Limiter
 from uuid import uuid4
 from datetime import datetime
 import traceback
@@ -31,8 +32,16 @@ class XlitError(enum.Enum):
     unknown_err = "Unknown Failure"
     loading_err = "Loading failed ;( Check if metadata/paths are correctly configured."
 
+def get_remote_address() -> str:
+    return request.headers.get('X-Forwarded-For', request.remote_addr) or "127.0.0.1"
+
 app = Flask(__name__)
 app.config['JSON_AS_ASCII'] = False
+limiter = Limiter(
+    get_remote_address,
+    app=app,
+    storage_uri="memory://",
+)
 
 ## ----------------------------- Xlit Engine -------------------------------- ##
 
@@ -76,7 +85,8 @@ def supported_languages():
         response.set_cookie('xlit_user_id', uuid4().hex, max_age=365*24*60*60, domain=host, samesite='None', secure=True, httponly=True)
     return response
 
-@app.route('/tl/<lang_code>/<eng_word>', methods = ['GET', 'POST'])
+@app.route('/tl/<lang_code>/<eng_word>', methods = ['GET'])
+@limiter.limit("5/second")
 def xlit_api(lang_code, eng_word):
     # Format: https://xlit-api.ai4bharat.org/tl/ta/bharat
     response = {
@@ -110,9 +120,10 @@ def xlit_api(lang_code, eng_word):
 
     return jsonify(response)
 
-@app.route('/rtl/<lang_code>/<word>', methods = ['GET', 'POST'])
+@app.route('/rtl/<lang_code>/<word>', methods = ['GET'])
+@limiter.limit("5/second")
 def reverse_xlit_api(lang_code, word):
-    # Format: https://api.varnamproject.com/rtl/hi/%E0%A4%AD%E0%A4%BE%E0%A4%B0%E0%A4%A4
+    # Format: https://api.varnamproject.com/rtl/hi/भारत
     response = {
         'success': False,
         'error': '',
@@ -143,6 +154,7 @@ def reverse_xlit_api(lang_code, word):
     return jsonify(response)
 
 @app.route('/transliterate', methods=['POST'])
+@limiter.limit("5/second")
 def ulca_api():
     '''
     ULCA-compliant endpoint. See for sample request-response:
