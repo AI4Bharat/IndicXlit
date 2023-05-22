@@ -119,6 +119,22 @@ Python interface --> [![Open In Colab](https://colab.research.google.com/assets/
 The python interface is useful in case you want to reuse the model for multiple transliterations and do not want to reinitialize the model each time.
 
 
+## Details of models and hyperparameters
+<!-- network and training details and link to the paper -->
+
+- Architecture: IndicXlit uses 6 encoder and decoder layers, input embeddings of size 256 with 4 attention heads and
+feedforward dimension of 1024, with a total of 11M parameters.
+- Loss: Cross-Entropy loss
+- Optimizer: Adam
+- Adam-betas: (0.9, 0.98)
+- Peak-learning-rate: 0.001
+- Learning-rate-scheduler: inverse-sqrt
+- Temperature-sampling (T): 1.5
+- Warmup-steps: 4000
+
+Please refer to section 6 of our [paper](https://arxiv.org/abs/2205.03018) for more details on training setup.
+
+
 ## Training model
 ###  Setting up your environment
 <details><summary> Click to expand </summary>
@@ -138,21 +154,6 @@ pip install --editable ./
 ```
 </details>
 
-
-## Details of models and hyperparameters
-<!-- network and training details and link to the paper -->
-
-- Architecture: IndicXlit uses 6 encoder and decoder layers, input embeddings of size 256 with 4 attention heads and
-feedforward dimension of 1024, with a total of 11M parameters.
-- Loss: Cross-Entropy loss
-- Optimizer: Adam
-- Adam-betas: (0.9, 0.98)
-- Peak-learning-rate: 0.001
-- Learning-rate-scheduler: inverse-sqrt
-- Temperature-sampling (T): 1.5
-- Warmup-steps: 4000
-
-Please refer to section 6 of our [paper](https://arxiv.org/abs/2205.03018) for more details on training setup.
 
 ### Training procedure and code
 
