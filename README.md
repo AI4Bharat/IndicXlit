@@ -38,6 +38,9 @@ IndicXlit is evaluated on [Dakshina benchmark](https://github.com/google-researc
 | Aksharantar (native words) | 75.55 | 11.76 | 68.58 | 34.35 | 52.30 | 76.25 | 55.94 | 38.96 | 65.04 | 65.55 | 84.64 | 36.15 | 82.38 | 53.65 | 29.05 | 67.4 | 45.08 | 54.55 | 29.95 |
 | Aksharantar (named entities) | 37.86 | 52.54 | 35.49 | 50.56 | 59.22 | 60.77 | 12.87 | 35.09 | 38.18 | 45.23 | 34.87 | 56.76 | 54.05 | 47.68 | 48.00 | 42.71 | 35.46 | 57.57 | 23.14 |
 
+### Zero-shot results on Dogri (using __hi__ prefix token)
+Aksharantar (native words): 37.72
+
 <!-- index with hyperlinks (Table of contents) -->
 ## Table of contents
 - [Table of contents](#table-of-contents)
