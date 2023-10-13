@@ -75,6 +75,9 @@ Roman to Indic model [v1.0](https://github.com/AI4Bharat/IndicXlit/releases/down
 Indic to Roman model [v1.0](https://github.com/AI4Bharat/IndicXlit/releases/download/v1.0/indicxlit-indic-en-v1.0.zip)
 <!-- mirror links set up the public drive -->	
 
+### Download Aksharantar Dataset
+Aksharantar-Dataset: [Huggingface](https://huggingface.co/datasets/ai4bharat/Aksharantar)
+
 ### Download Aksharantar test set
 [Transliteration-word-pairs](https://huggingface.co/datasets/ai4bharat/Aksharantar)
 
